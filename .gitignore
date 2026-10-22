@@ -17,7 +17,7 @@
 /dist/
 *.test
 *.out
-coverage.*
+/coverage.*
 
 # Editor / OS
 .idea/
