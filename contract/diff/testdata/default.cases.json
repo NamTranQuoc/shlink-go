@@ -1,0 +1,634 @@
+[
+ {
+  "name": "base url",
+  "seed": true,
+  "method": "GET",
+  "path": "/"
+ },
+ {
+  "name": "rest root",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest"
+ },
+ {
+  "name": "rest root slash",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/"
+ },
+ {
+  "name": "rest upper case prefix",
+  "seed": true,
+  "method": "GET",
+  "path": "/REST/v3/health"
+ },
+ {
+  "name": "unknown api version",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v4/health"
+ },
+ {
+  "name": "health xml accept",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/health",
+  "headers": {
+   "Accept": "application/xml"
+  }
+ },
+ {
+  "name": "missing key xml",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls",
+  "headers": {
+   "Accept": "application/xml"
+  }
+ },
+ {
+  "name": "missing key html accept",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls",
+  "headers": {
+   "Accept": "text/html"
+  }
+ },
+ {
+  "name": "missing key json low q",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls",
+  "headers": {
+   "Accept": "application/json;q=0.5, application/xml"
+  }
+ },
+ {
+  "name": "missing key problem json accept",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls",
+  "headers": {
+   "Accept": "application/problem+json"
+  }
+ },
+ {
+  "name": "not found xml",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/nope",
+  "headers": {
+   "Accept": "application/xml"
+  }
+ },
+ {
+  "name": "not found html",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/nope",
+  "headers": {
+   "Accept": "text/html"
+  }
+ },
+ {
+  "name": "malformed json",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{nope"
+ },
+ {
+  "name": "zero body",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "0"
+ },
+ {
+  "name": "scalar json body",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "5"
+ },
+ {
+  "name": "null json body",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "null"
+ },
+ {
+  "name": "list json body",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "[]"
+ },
+ {
+  "name": "invalid utf8 body",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "bodyBase64": "eyJsb25nVXJsIjoiaHR0cHM6Ly9lLnRlc3Qv/yJ9"
+ },
+ {
+  "name": "form body",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/x-www-form-urlencoded"
+  },
+  "body": "longUrl=https%3A%2F%2Fe.test%2Fform&customSlug=form-slug&tags[]=a&tags[]=b"
+ },
+ {
+  "name": "duplicated json keys",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"longUrl\":\"https://e.test/1\",\"longUrl\":\"https://e.test/2\",\"customSlug\":\"dup-keys\"}"
+ },
+ {
+  "name": "duplicated tags",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"longUrl\": \"https://e.test\", \"customSlug\": \"dup-tags\", \"tags\": [\"foo\", \"Foo \", \"b ar\", \"foo\"]}"
+ },
+ {
+  "name": "tags as object",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"longUrl\": \"https://e.test\", \"customSlug\": \"obj-tags\", \"tags\": {\"x\": \"one\", \"y\": \"two\"}}"
+ },
+ {
+  "name": "numeric strings",
+  "seed": true,
+  "method": "POST",
+  "path": "/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"longUrl\": \"https://e.test\", \"customSlug\": \"nums\", \"maxVisits\": \"5\", \"crawlable\": \"1\", \"forwardQuery\": 0, \"findIfExists\": \"false\"}"
+ },
+ {
+  "name": "list tags array query",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?tags[]=foo&tags[]=bar",
+  "apiKey": true
+ },
+ {
+  "name": "list tags string query",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?tags=foo",
+  "apiKey": true
+ },
+ {
+  "name": "list bad page",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?page=abc&itemsPerPage=-1",
+  "apiKey": true
+ },
+ {
+  "name": "list order invalid direction",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?orderBy=shortCode-WRONG",
+  "apiKey": true
+ },
+ {
+  "name": "list order lower desc",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?orderBy=shortCode-desc",
+  "apiKey": true
+ },
+ {
+  "name": "list unknown order field",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?orderBy=foo-ASC",
+  "apiKey": true
+ },
+ {
+  "name": "list empty search",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?searchTerm=&itemsPerPage=2",
+  "apiKey": true
+ },
+ {
+  "name": "list dotted param",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?search.Term=x&itemsPerPage=1",
+  "apiKey": true
+ },
+ {
+  "name": "list unparseable date",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?startDate=2020-13-45",
+  "apiKey": true
+ },
+ {
+  "name": "list default domain filter",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls?domain=s.test",
+  "apiKey": true
+ },
+ {
+  "name": "tags list paginated",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/tags?page=1&itemsPerPage=1&orderBy=tag-DESC",
+  "apiKey": true
+ },
+ {
+  "name": "tags stats ordered",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/tags/stats?orderBy=visits-DESC",
+  "apiKey": true
+ },
+ {
+  "name": "delete tags string",
+  "seed": true,
+  "method": "DELETE",
+  "path": "/rest/v3/tags?tags=foo",
+  "apiKey": true
+ },
+ {
+  "name": "rename tag ints",
+  "seed": true,
+  "method": "PUT",
+  "path": "/rest/v3/tags",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"oldName\": 1, \"newName\": 2}"
+ },
+ {
+  "name": "rename tag missing",
+  "seed": true,
+  "method": "PUT",
+  "path": "/rest/v3/tags",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"oldName\": \"foo\"}"
+ },
+ {
+  "name": "edit invalid long url",
+  "seed": true,
+  "method": "PATCH",
+  "path": "/rest/v3/short-urls/abc123",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"longUrl\": \"invalid\"}"
+ },
+ {
+  "name": "edit tags keep order",
+  "seed": true,
+  "method": "PATCH",
+  "path": "/rest/v3/short-urls/abc123",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"tags\": [\"zzz\", \"aaa\", \"zzz\"]}"
+ },
+ {
+  "name": "resolve domain array",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/abc123?domain[]=x",
+  "apiKey": true
+ },
+ {
+  "name": "visits invalid type",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/visits/orphan?type=nope",
+  "apiKey": true
+ },
+ {
+  "name": "visits page params",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/abc123/visits?page=2&itemsPerPage=1",
+  "apiKey": true
+ },
+ {
+  "name": "visits exclude bots presence",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/def456/visits?excludeBots",
+  "apiKey": true
+ },
+ {
+  "name": "domains list",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/domains",
+  "apiKey": true
+ },
+ {
+  "name": "domain redirects default domain",
+  "seed": true,
+  "method": "PATCH",
+  "path": "/rest/v3/domains/redirects",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"domain\": \"s.test\", \"baseUrlRedirect\": \"https://b.test\"}"
+ },
+ {
+  "name": "domain redirects invalid url",
+  "seed": true,
+  "method": "PATCH",
+  "path": "/rest/v3/domains/redirects",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"domain\": \"new.test\", \"baseUrlRedirect\": \"invalid\"}"
+ },
+ {
+  "name": "single step missing long url",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/shorten?apiKey=valid_api_key"
+ },
+ {
+  "name": "single step invalid key",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/shorten?apiKey=nope&longUrl=https://e.test"
+ },
+ {
+  "name": "single step array key",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/shorten?apiKey[]=x&longUrl=https://e.test"
+ },
+ {
+  "name": "single step text error",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/shorten?apiKey=valid_api_key&format=txt"
+ },
+ {
+  "name": "redirect",
+  "seed": true,
+  "method": "GET",
+  "path": "/abc123"
+ },
+ {
+  "name": "redirect head",
+  "seed": true,
+  "method": "HEAD",
+  "path": "/def456"
+ },
+ {
+  "name": "redirect post",
+  "seed": true,
+  "method": "POST",
+  "path": "/def456"
+ },
+ {
+  "name": "redirect options",
+  "seed": true,
+  "method": "OPTIONS",
+  "path": "/def456"
+ },
+ {
+  "name": "redirect trailing slash",
+  "seed": true,
+  "method": "GET",
+  "path": "/def456/"
+ },
+ {
+  "name": "redirect forwards query",
+  "seed": true,
+  "method": "GET",
+  "path": "/def456?foo=bar%20baz&x[]=1&x[]=2&a.b=c&empty&=v"
+ },
+ {
+  "name": "redirect no forward",
+  "seed": true,
+  "method": "GET",
+  "path": "/custom?foo=bar"
+ },
+ {
+  "name": "redirect encoded path",
+  "seed": true,
+  "method": "GET",
+  "path": "/%64ef456"
+ },
+ {
+  "name": "redirect encoded slash",
+  "seed": true,
+  "method": "GET",
+  "path": "/def%2F456"
+ },
+ {
+  "name": "redirect encoded newline",
+  "seed": true,
+  "method": "GET",
+  "path": "/def456%0A"
+ },
+ {
+  "name": "redirect other domain",
+  "seed": true,
+  "method": "GET",
+  "path": "/def456",
+  "headers": {
+   "Host": "example.com"
+  }
+ },
+ {
+  "name": "redirect custom domain",
+  "seed": true,
+  "method": "GET",
+  "path": "/custom-with-domain",
+  "headers": {
+   "Host": "some-domain.com"
+  }
+ },
+ {
+  "name": "redirect host with port",
+  "seed": true,
+  "method": "GET",
+  "path": "/def456",
+  "headers": {
+   "Host": "s.test:8080"
+  }
+ },
+ {
+  "name": "pixel",
+  "seed": true,
+  "method": "GET",
+  "path": "/def456/track"
+ },
+ {
+  "name": "robots",
+  "seed": true,
+  "method": "GET",
+  "path": "/robots.txt"
+ },
+ {
+  "name": "favicon",
+  "seed": true,
+  "method": "GET",
+  "path": "/favicon.ico"
+ },
+ {
+  "name": "favicon post",
+  "seed": true,
+  "method": "POST",
+  "path": "/favicon.ico"
+ },
+ {
+  "name": "index php",
+  "seed": true,
+  "method": "GET",
+  "path": "/index.php"
+ },
+ {
+  "name": "htaccess",
+  "seed": true,
+  "method": "GET",
+  "path": "/.htaccess"
+ },
+ {
+  "name": "options rest with origin",
+  "seed": true,
+  "method": "OPTIONS",
+  "path": "/rest/v3/short-urls",
+  "headers": {
+   "Origin": "https://o.test",
+   "Access-Control-Request-Headers": "x-api-key, content-type"
+  }
+ },
+ {
+  "name": "options rest unknown",
+  "seed": true,
+  "method": "OPTIONS",
+  "path": "/rest/v3/nope",
+  "headers": {
+   "Origin": "https://o.test"
+  }
+ },
+ {
+  "name": "get with origin",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/health",
+  "headers": {
+   "Origin": "https://o.test"
+  }
+ },
+ {
+  "name": "head health",
+  "seed": true,
+  "method": "HEAD",
+  "path": "/rest/health"
+ },
+ {
+  "name": "orphan visit recorded",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/visits/orphan",
+  "apiKey": true,
+  "before": [
+   {
+    "name": "b1",
+    "method": "GET",
+    "path": "/not-there?x=1",
+    "headers": {
+     "X-Forwarded-For": "1.2.3.4, 10.0.0.1",
+     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+     "Referer": "https://ref.test"
+    }
+   },
+   {
+    "name": "b2",
+    "method": "GET",
+    "path": "/",
+    "headers": {
+     "User-Agent": "curl/8.0"
+    }
+   }
+  ]
+ },
+ {
+  "name": "short url visit recorded",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/v3/short-urls/def456/visits",
+  "apiKey": true,
+  "before": [
+   {
+    "name": "b1",
+    "method": "GET",
+    "path": "/def456",
+    "headers": {
+     "CF-Connecting-IP": "2001:db8::1",
+     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)"
+    }
+   }
+  ]
+ }
+]

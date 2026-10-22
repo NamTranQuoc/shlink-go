@@ -1,0 +1,5 @@
+exit: 0
+--- stdout
+Processed long URL: https://example.com
+Generated short URL: http://s.test/prewith-slash-and-space
+--- stderr

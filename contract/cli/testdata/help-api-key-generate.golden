@@ -1,0 +1,35 @@
+exit: 0
+--- stdout
+Description:
+  Generate a new valid API key
+
+Usage:
+  api-key:generate [options]
+
+Options:
+  -m, --name=NAME                        The unique name by which this API key will be known
+  -e, --expiration-date=EXPIRATION-DATE  The date in which the API key should expire. Use any valid PHP format
+  -a, --author-only                      Adds the "AUTHORED_SHORT_URLS" role to the new API key
+  -d, --domain-only=DOMAIN-ONLY          Adds the "DOMAIN_SPECIFIC" role to the new API key, with provided domain
+  -o, --no-orphan-visits                 Adds the "NO_ORPHAN_VISITS" role to the new API key
+  -h, --help                             Display help for the given command. When no command is given display help for the list command
+      --silent                           Do not output any message
+  -q, --quiet                            Only errors are displayed. All other output is suppressed
+  -V, --version                          Display this application version
+      --ansi|--no-ansi                   Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction                   Do not ask any interactive question
+  -v|vv|vvv, --verbose                   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Help:
+  The api-key:generate generates a new valid API key.
+  
+      /usr/local/bin/shlink api-key:generate
+  
+  You can optionally set its name for tracking purposes with --name or -m:
+  
+      /usr/local/bin/shlink api-key:generate --name Alice
+  
+  You can optionally set its expiration date with --expiration-date or -e:
+  
+      /usr/local/bin/shlink api-key:generate --expiration-date 2020-01-01
+--- stderr

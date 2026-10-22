@@ -1,0 +1,242 @@
+exit: 0
+--- stdout
+ Welcome to Shlink!!
+ This tool will guide you through the installation process.
+
+SERVER
+======
+
+ Select the runtime you are planning to use to serve Shlink (this is only used to conditionally skip some follow-up questions) [RoadRunner]:
+  [0] RoadRunner
+  [1] Classic web server (Nginx, Apache, etc)
+ > 
+ What is the maximum amount of RAM every process run by Shlink should be allowed to use? (Provide a number for bytes, a number followed by K for kilobytes, M for Megabytes or G for Gigabytes) [512M]:
+ > 
+
+ [ERROR] Provided value is invalid. It should be an amount in bytes (1024), or a
+         number followed by K, M, or G (512M, 1G)                               
+
+ What is the maximum amount of RAM every process run by Shlink should be allowed to use? (Provide a number for bytes, a number followed by K for kilobytes, M for Megabytes or G for Gigabytes) [512M]:
+ > 
+ In what format do you want Shlink to generate logs? [console]:
+  [0] console
+  [1] json
+ > 
+DATABASE
+========
+
+ Select database type [MySQL]:
+  [0] MySQL
+  [1] MariaDB
+  [2] PostgreSQL
+  [3] MicrosoftSQL
+  [4] SQLite [Not supported for production]
+ > 
+URL SHORTENER
+=============
+
+ Default domain for generated short URLs:
+ > 
+
+ [ERROR] The "domain" is required and can't be empty                            
+
+ Default domain for generated short URLs:
+ > 
+ Is HTTPS enabled on this server? (yes/no) [yes]:
+ > 
+ What is the default length you want generated short codes to have? (You will still be able to override this on every created short URL) [5]:
+ > 
+
+ [ERROR] Provided value "3" is invalid. Expected a number greater or equal than 
+         4                                                                      
+
+ What is the default length you want generated short codes to have? (You will still be able to override this on every created short URL) [5]:
+ > 
+ Do you want Shlink to resolve the short URL title based on the long URL's title tag (if any)? Otherwise, it will be kept empty unless explicitly provided. (yes/no) [yes]:
+ > 
+ Do you want Shlink to redirect short URLs as soon as the first segment of the path matches a short code?
+
+  append:
+    * {shortDomain}/{shortCode}/[...extraPath] -> {longUrl}/[...extraPath]
+    * https://s.test/abc123                    -> https://www.example.com
+    * https://s.test/abc123/shlinkio           -> https://www.example.com/shlinkio
+
+  ignore:
+    * {shortDomain}/{shortCode}/[...extraPath] -> {longUrl}
+    * https://s.test/abc123                    -> https://www.example.com
+    * https://s.test/abc123/shlinkio           -> https://www.example.com
+
+ [Match strictly]:
+  [default] Match strictly
+  [append ] Append extra path
+  [ignore ] Discard extra path
+ > 
+ Do you want to support short URLs with multi-segment custom slugs? (for example, https://example.com/foo/bar) [Slugs and short codes will support only one segment (https://example.com/foo). Orphan visits will have one of "base_url", "invalid_short_url" or "regular_404" type.]:
+  [yes] Custom slugs will support multiple segments (https://example.com/foo/bar/baz). Orphan visits will only have either "base_url" or "invalid_short_url" type.
+  [no ] Slugs and short codes will support only one segment (https://example.com/foo). Orphan visits will have one of "base_url", "invalid_short_url" or "regular_404" type.
+ > 
+ Do you want to support trailing slashes in short URLs? (https://s.test/foo and https://s.test/foo/ will be considered the same) (yes/no) [no]:
+ > 
+ How do you want short URLs to be matched?
+ Warning! This feature is experimental. It only applies to public routes (short URLs and QR codes). REST API routes always use strict match.
+ [Short codes and custom slugs will be matched in a case-sensitive way ("foo" !== "FOO"). Generated short codes will include lowercase letters, uppercase letters and numbers.]:
+  [strict] Short codes and custom slugs will be matched in a case-sensitive way ("foo" !== "FOO"). Generated short codes will include lowercase letters, uppercase letters and numbers.
+  [loose ] Short codes and custom slugs will be matched in a case-insensitive way ("foo" === "FOO"). Generated short codes will include only lowercase letters and numbers.
+ > 
+ Provide a GeoLite2 license key. Leave empty to disable geolocation. (Go to https://shlink.io/documentation/geolite-license-key to know how to generate it):
+ > 
+ What kind of redirect do you want your short URLs to have? [All visits will always be tracked. Not that good for SEO. Only GET requests will be redirected.]:
+  [302] All visits will always be tracked. Not that good for SEO. Only GET requests will be redirected.
+  [301] Best option for SEO. Redirect will be cached for a short period of time, making some visits not to be tracked. Only GET requests will be redirected.
+  [307] Same as 302, but Shlink will also redirect on non-GET requests.
+  [308] Same as 301, but Shlink will also redirect on non-GET requests.
+ > 
+ How long (in seconds) do you want your redirects to be cached by visitors? [30]:
+ > 
+
+ [ERROR] Provided value "0" is invalid. Expected a number greater or equal than 
+         1                                                                      
+
+ How long (in seconds) do you want your redirects to be cached by visitors? [30]:
+ > 
+ Do you want redirects to be cached by reverse proxies? (yes/no) [no]:
+ > 
+TRACKING
+========
+
+ Do you want to completely disable visits tracking? (yes/no) [no]:
+ > 
+ Do you want track orphan visits? (visits to the base URL, invalid short URLs or other "not found" URLs) (yes/no) [yes]:
+ > 
+ Provide a parameter name that you will be able to use to disable tracking on specific request to short URLs (leave empty and this feature won't be enabled):
+ > 
+ Provide a comma-separated list of IP addresses, CIDR blocks or wildcard addresses (1.2.*.*) from which you want tracking to be disabled:
+ > 
+ Do you want to disable tracking of visitors' IP addresses? (yes/no) [no]:
+ > 
+ Do you want visitors' remote IP addresses to be anonymized before persisting them to the database? (yes/no) [yes]:
+ > 
+ [WARNING] Careful! If you disable IP address anonymization, you will no longer 
+           be in compliance with the GDPR and other similar data protection     
+           regulations.                                                         
+
+ Do you still want to disable anonymization? (yes/no) [no]:
+ > 
+ Do you want to disable tracking of visitors' "User Agents"? (yes/no) [no]:
+ > 
+ Do you want to disable tracking of visitors' "Referrers"? (yes/no) [no]:
+ > 
+REDIRECTS
+=========
+
+ Custom URL to redirect to when a user hits Shlink's base URL (If no value is provided, the user will see a default "404 not found" page):
+ > 
+
+ [ERROR] Provided value "not-a-url" is not a valid URL                          
+
+ Custom URL to redirect to when a user hits Shlink's base URL (If no value is provided, the user will see a default "404 not found" page):
+ > 
+ Custom URL to redirect to when a user hits an invalid short URL (If no value is provided, the user will see a default "404 not found" page):
+ > 
+ Custom URL to redirect to when a user hits a not found URL other than an invalid short URL (If no value is provided, the user will see a default "404 not found" page):
+ > 
+ROBOTS
+======
+
+ Do you want all short URLs to be crawlable/allowed by the robots.txt file? You can still allow them individually, regardless of this. (yes/no) [no]:
+ > 
+ Provide a comma-separated list of user agents for your robots.txt file. Defaults to all user agents (*):
+ > 
+CORS
+====
+
+ How do you want Shlink to determine which origins are allowed for CORS requests? [All hosts are implicitly allowed (Access-Control-Allow-Origin is set to "*")]:
+  [*        ] All hosts are implicitly allowed (Access-Control-Allow-Origin is set to "*")
+  [<origin> ] All hosts are explicitly allowed (Access-Control-Allow-Origin is set to the value in request's Origin header)
+  [allowlist] Provide a list of hosts that are allowed
+ > 
+ Provide a comma-separated list of origins that should be allowed to perform CORS requests to Shlink:
+ > 
+ Do you want browsers to forward credentials to your Shlink server during CORS requests? (yes/no) [no]:
+ > 
+ How long (in seconds) do you want CORS config to be cached by browsers? [3600]:
+ > 
+APPLICATION
+===========
+
+ What is the amount of visits from which the system will not allow short URLs to be deleted? Leave empty to always allow deleting short URLs, no matter what:
+ > 
+ What is the path from which shlink is going to be served? (It must include a leading bar, like "/shlink". Leave empty if you plan to serve shlink from the root of the domain):
+ > 
+ Set the timezone in which your Shlink instance is running (leave empty to use the one set in PHP config):
+ > 
+ Prefix for cache entry keys. (Change this if you run multiple Shlink instances on this server, or they share the same redis instance) [Shlink]:
+ > 
+ Do you have more than one proxy in front of this Shlink instance? (yes/no) [no]:
+ > 
+ How do you want your proxies IP addresses to be identified, so that the visitor IP address can be properly determined? [Define a comma-separated list of IP addresses, CIDR blocks or wildcard addresses (1.2.*.*)]:
+  [amount] Just set the amount of proxies
+  [list  ] Define a comma-separated list of IP addresses, CIDR blocks or wildcard addresses (1.2.*.*)
+ > 
+ How many proxies do you have in front of Shlink?:
+ > 
+INTEGRATIONS
+============
+
+ Do you want to use a redis instance, redis cluster or redis sentinels as a shared cache for Shlink? (recommended if you run a cluster of Shlink instances) (yes/no) [no]:
+ > 
+ Do you want Shlink to publish real-time updates in a Mercure hub server? (yes/no) [no]:
+ > 
+ Public URL of the mercure hub server:
+ > 
+
+ [ERROR] The "public hub URL" is required and can't be empty                    
+
+ Public URL of the mercure hub server:
+ > 
+ Internal URL of the mercure hub server (leave empty to use the public one):
+ > 
+ The secret key known by the mercure hub server to validate JWTs:
+ > 
+ Do you want Shlink to publish real-time updates in a RabbitMQ instance? (yes/no) [no]:
+ > 
+ Do you want Shlink to send all visits to an external Matomo server? (yes/no) [no]:
+ > 
+ Matomo server URL:
+ > 
+ Matomo site ID:
+ > 
+
+ [ERROR] The "Matomo site ID" is required and can't be empty                    
+
+ Matomo site ID:
+ > 
+ Matomo API token:
+ > 
+ Do you want to enable individual real-time updates topics? (All topics will be enabled otherwise) (yes/no) [no]:
+ > 
+ Notify general non-orphan visits? (yes/no) [yes]:
+ > 
+ Notify short-url visits? (A different topic per short URL will be created) (yes/no) [yes]:
+ > 
+ Notify orphan visits? (yes/no) [yes]:
+ > 
+ Notify created short URLs? (yes/no) [yes]:
+ > 
+ Custom configuration properly generated!
+
+Initializing database if needed... Success!
+Updating database... Success!
+Generating proxies... Success!
+Downloading GeoLite2 db file... Warning! Run with -vvv to see error.
+Generating first API key... Success!
+ 
+ [OK] Generated API key: "xxxxxxxx-xxxx-4xxx-xxxx-xxxxxxxxxxxx"                 
+
+ [WARNING] Save the key in a secure location. You will not be able to get it    
+           afterwards.                                                          
+
+
+ [OK] Installation complete!                                                    
+
+--- stderr

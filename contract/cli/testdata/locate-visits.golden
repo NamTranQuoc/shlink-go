@@ -1,0 +1,13 @@
+exit: 1
+--- stdout
+ Downloading GeoLite2 db file...
+
+ [WARNING] It was not possible to download GeoLite2 db, because a license was   
+           not provided.                                                        
+
+Processing IP 44.55.66.0
+
+ [ERROR] The file "/etc/shlink/config/autoload/../../data/GeoLite2-City.mmdb"   
+         does not exist or is not readable.                                     
+
+--- stderr

@@ -1,0 +1,277 @@
+exit: 0
+--- stdout
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+  Priority   Conditions                                                            Redirect to                                
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+  1          en language is accepted AND query string contains  param              https://example.com/english-and-foo-query  
+  2          query string contains hello=world AND query string contains foo=bar   https://example.com/multiple-query-params  
+  3          en language is accepted                                               https://example.com/only-english           
+  4          device is android                                                     android://foo/bar                          
+  5          device is ios                                                         fb://profile/33138223345                   
+  6          IP address matches 1.2.3.4                                            https://example.com/static-ip-address      
+  7          device is linux                                                       https://example.com/linux                  
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ Rule priority (the lower the value, the higher the priority) [8]:
+ > 
+ Long URL to redirect when the rule matches:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Device to match?:
+  [0] android
+  [1] ios
+  [2] mobile
+  [3] windows
+  [4] macos
+  [5] linux
+  [6] chromeos
+  [7] desktop
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Query param name?:
+ > 
+ Query param value?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Query param name?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Query param name?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ IP address, CIDR block or wildcard-pattern (1.2.*.*):
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Country code to match?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ City name to match?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Date to match?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Date to match?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Browser to match?:
+  [0] chrome
+  [1] firefox
+  [2] edge
+  [3] safari
+  [4] opera
+  [5] android_browser
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------- 
+  Priority   Conditions                                                                                                                                                                                                                                                                                                                                             Redirect to                                
+ ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------- 
+  1          en language is accepted AND query string contains  param                                                                                                                                                                                                                                                                                               https://example.com/english-and-foo-query  
+  2          query string contains hello=world AND query string contains foo=bar                                                                                                                                                                                                                                                                                    https://example.com/multiple-query-params  
+  3          en language is accepted                                                                                                                                                                                                                                                                                                                                https://example.com/only-english           
+  4          device is android                                                                                                                                                                                                                                                                                                                                      android://foo/bar                          
+  5          device is ios                                                                                                                                                                                                                                                                                                                                          fb://profile/33138223345                   
+  6          IP address matches 1.2.3.4                                                                                                                                                                                                                                                                                                                             https://example.com/static-ip-address      
+  7          device is linux                                                                                                                                                                                                                                                                                                                                        https://example.com/linux                  
+  8          device is ios AND query string contains k=v AND query string contains  param AND query string contains  param without a value (https://example.com?foo) AND IP address matches 1.2.3.4 AND country code is ES AND city name is Madrid AND date is before 2030-01-01T00:00:00+00:00 AND date is after 2020-01-01T08:00:00+00:00 AND browser is safari   https://example.com/all                    
+ ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------- 
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ Rule priority (the lower the value, the higher the priority) [9]:
+ > 
+ Long URL to redirect when the rule matches:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Language to match?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------- 
+  Priority   Conditions                                                                                                                                                                                                                                                                                                                                             Redirect to                                
+ ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------- 
+  1          en language is accepted                                                                                                                                                                                                                                                                                                                                https://example.com/first                  
+  2          en language is accepted AND query string contains  param                                                                                                                                                                                                                                                                                               https://example.com/english-and-foo-query  
+  3          query string contains hello=world AND query string contains foo=bar                                                                                                                                                                                                                                                                                    https://example.com/multiple-query-params  
+  4          en language is accepted                                                                                                                                                                                                                                                                                                                                https://example.com/only-english           
+  5          device is android                                                                                                                                                                                                                                                                                                                                      android://foo/bar                          
+  6          device is ios                                                                                                                                                                                                                                                                                                                                          fb://profile/33138223345                   
+  7          IP address matches 1.2.3.4                                                                                                                                                                                                                                                                                                                             https://example.com/static-ip-address      
+  8          device is linux                                                                                                                                                                                                                                                                                                                                        https://example.com/linux                  
+  9          device is ios AND query string contains k=v AND query string contains  param AND query string contains  param without a value (https://example.com?foo) AND IP address matches 1.2.3.4 AND country code is ES AND city name is Madrid AND date is before 2030-01-01T00:00:00+00:00 AND date is after 2020-01-01T08:00:00+00:00 AND browser is safari   https://example.com/all                    
+ ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ------------------------------------------- 
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ [OK] Rules properly saved                                                      
+
+--- stderr

@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                                                               
+  The value "x" is not valid for the "max-visits" option. Expected a value of  
+   type "int".                                                                 
+                                                                               
+
+short-url:edit [-t|--tag TAG] [-s|--valid-since VALID-SINCE] [-u|--valid-until VALID-UNTIL] [-m|--max-visits MAX-VISITS] [--title TITLE] [-r|--crawlable|--no-crawlable] [-w|--no-forward-query|--no-no-forward-query] [-d|--domain DOMAIN] [-l|--long-url LONG-URL] [--] <short-code>
+

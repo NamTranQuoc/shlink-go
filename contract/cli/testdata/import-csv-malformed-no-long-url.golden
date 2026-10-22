@@ -1,0 +1,32 @@
+exit: 255
+--- stdout
+
+ What's the path for the CSV file you want to import:
+ > 
+ What's the delimiter used to separate values? [Comma]:
+  [,] Comma
+  [;] Semicolon
+ > 
+Importing short URLs
+====================
+
+
+Warning: Undefined array key "longurl" in /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Csv/CsvImporter.php on line 59
+
+Fatal error: Uncaught TypeError: Shlinkio\Shlink\Importer\Model\ImportedShlinkUrl::__construct(): Argument #2 ($longUrl) must be of type string, null given, called in /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Csv/CsvImporter.php on line 57 and defined in /etc/shlink/vendor/shlinkio/shlink-importer/src/Model/ImportedShlinkUrl.php:18
+Stack trace:
+#0 /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Csv/CsvImporter.php(57): Shlinkio\Shlink\Importer\Model\ImportedShlinkUrl->__construct(Shlinkio\Shlink\Importer\Sources\ImportSource::CSV, NULL, Array, Object(DateTimeImmutable), NULL, 'nl-1', 'Some long title...')
+#1 /etc/shlink/module/Core/src/Util/DoctrineBatchHelper.php(29): Shlinkio\Shlink\Importer\Sources\Csv\CsvImporter->importShortUrls(Object(Shlinkio\Shlink\Importer\Sources\Csv\CsvParams))
+#2 /etc/shlink/module/Core/src/Importer/ImportedLinksProcessor.php(60): Shlinkio\Shlink\Core\Util\DoctrineBatchHelper->wrapIterable(Object(Generator), 100)
+#3 /etc/shlink/module/Core/src/Importer/ImportedLinksProcessor.php(42): Shlinkio\Shlink\Core\Importer\ImportedLinksProcessor->importShortUrls(Object(Symfony\Component\Console\Style\SymfonyStyle), Object(Generator), Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#4 /etc/shlink/vendor/shlinkio/shlink-importer/src/Command/ImportCommand.php(48): Shlinkio\Shlink\Core\Importer\ImportedLinksProcessor->process(Object(Symfony\Component\Console\Style\SymfonyStyle), Object(Shlinkio\Shlink\Importer\Model\ImportResult), Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#5 [internal function]: Shlinkio\Shlink\Importer\Command\ImportCommand->__invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::CSV)
+#6 /etc/shlink/vendor/symfony/console/Command/InvokableCommand.php(65): ReflectionFunction->invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::CSV)
+#7 /etc/shlink/vendor/symfony/console/Command/Command.php(282): Symfony\Component\Console\Command\InvokableCommand->__invoke(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#8 /etc/shlink/vendor/symfony/console/Application.php(1129): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#9 /etc/shlink/vendor/symfony/console/Application.php(380): Symfony\Component\Console\Application->doRunCommand(Object(Shlinkio\Shlink\Importer\Command\ImportCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#10 /etc/shlink/vendor/symfony/console/Application.php(219): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#11 /etc/shlink/bin/cli(10): Symfony\Component\Console\Application->run()
+#12 {main}
+  thrown in /etc/shlink/vendor/shlinkio/shlink-importer/src/Model/ImportedShlinkUrl.php on line 18
+--- stderr

@@ -1,0 +1,12 @@
+exit: 1
+--- stdout
+--- stderr
+
+In Chronos.php line 242:
+                                                                               
+  Failed to parse time string (nope) at position 0 (n): The timezone could no  
+  t be found in the database                                                   
+                                                                               
+
+short-url:list [-p|--page PAGE] [--all] [-s|--start-date START-DATE] [-e|--end-date END-DATE] [-st|--search-term SEARCH-TERM] [-d|--domain DOMAIN] [-t|--tag TAG] [--tags-all] [-et|--exclude-tag EXCLUDE-TAG] [--exclude-tags-all] [--exclude-max-visits-reached] [--exclude-past-valid-until] [-o|--order-by ORDER-BY] [-kn|--api-key-name API-KEY-NAME] [--show-tags] [--show-domain] [-k|--show-api-key]
+

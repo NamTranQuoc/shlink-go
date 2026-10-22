@@ -1,0 +1,9 @@
+exit: 0
+--- stdout
+Migrating database...
+  RUN  '/usr/local/bin/php' 'vendor/doctrine/migrations/bin/doctrine-migrations.php' 'migrations:migrate' '--no-interaction'
+  RES  Command ran successfully
+
+ [OK] Database properly migrated!                                               
+
+--- stderr

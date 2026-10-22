@@ -1,0 +1,13 @@
+exit: 1
+--- stdout
+
+ What is the source you want to import from:
+ > --- stderr
+
+                                                                               
+  The value "foo" is not valid for the "source" argument. Supported values ar  
+  e "bitly", "yourls", "csv", "shlink", "kutt".                                
+                                                                               
+
+short-url:import <source>
+

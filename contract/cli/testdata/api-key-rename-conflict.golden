@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+In ApiKeyConflictException.php line 13:
+                                                        
+  An API key with name "author_api_key" already exists  
+                                                        
+
+api-key:rename <old-name> <new-name>
+

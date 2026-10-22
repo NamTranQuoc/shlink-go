@@ -1,0 +1,5 @@
+exit: 0
+--- stdout
+Processed long URL: https://example.com/new
+Generated short URL: http://s.test/new-slug
+--- stderr

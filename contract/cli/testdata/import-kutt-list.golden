@@ -1,0 +1,13 @@
+exit: 0
+--- stdout
++------------+-----------+--------------------------------+---------------------------+---------------------------+--------------+------------------+
+| Short Code | Title     | Short URL                      | Long URL                  | Date created              | Visits count | Domain           |
++------------+-----------+--------------------------------+---------------------------+---------------------------+--------------+------------------+
+| anonymous  |           | http://s.test/anonymous        | https://kutt.it/anonymous | YYYY-MM-DDTHH:MM:SS+00:00 | 0            | DEFAULT          |
+| kutt-2     |           | http://custom.kutt.test/kutt-2 | https://kutt.it/two       | YYYY-MM-DDTHH:MM:SS+00:00 | 0            | custom.kutt.test |
+| kutt-1     | Kutt link | http://s.test/kutt-1           | https://kutt.it/one       | YYYY-MM-DDTHH:MM:SS+00:00 | 0            | DEFAULT          |
++------------+-----------+--------------------------------+--------- Page 1 of 1 -----+---------------------------+--------------+------------------+
+
+ [OK] Short URLs properly listed                                                
+
+--- stderr

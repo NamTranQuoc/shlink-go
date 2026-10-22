@@ -1,0 +1,12 @@
+exit: 0
+--- stdout
+
+ [WARNING] You are about to delete all orphan visits. This operation cannot be  
+           undone                                                               
+
+ Do you want to proceed? (yes/no) [no]:
+ > 
+
+ [INFO] Operation aborted                                                       
+
+--- stderr

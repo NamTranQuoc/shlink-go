@@ -1,0 +1,351 @@
+exit: 0
+--- stdout
+Shlink 5.1.8
+============
+
+* [`completion`](#completion)
+* [`help`](#help)
+* [`list`](#list)
+
+**api-key:**
+
+* [`api-key:delete`](#api-keydelete)
+* [`api-key:disable`](#api-keydisable)
+* [`api-key:generate`](#api-keygenerate)
+* [`api-key:initial`](#api-keyinitial)
+* [`api-key:list`](#api-keylist)
+* [`api-key:rename`](#api-keyrename)
+
+**db:**
+
+
+
+**domain:**
+
+* [`domain:list`](#domainlist)
+* [`domain:redirects`](#domainredirects)
+* [`domain:visits`](#domainvisits)
+
+**env-var:**
+
+
+
+**integration:**
+
+* [`integration:matomo:send-visits`](#integrationmatomosend-visits)
+
+**short-url:**
+
+* [`short-url:create`](#short-urlcreate)
+* [`short-url:delete`](#short-urldelete)
+* [`short-url:delete-expired`](#short-urldelete-expired)
+* [`short-url:edit`](#short-urledit)
+* [`short-url:import`](#short-urlimport)
+* [`short-url:list`](#short-urllist)
+* [`short-url:manage-rules`](#short-urlmanage-rules)
+* [`short-url:resolve`](#short-urlresolve)
+* [`short-url:visits`](#short-urlvisits)
+* [`short-url:visits-delete`](#short-urlvisits-delete)
+
+**tag:**
+
+* [`tag:delete`](#tagdelete)
+* [`tag:list`](#taglist)
+* [`tag:rename`](#tagrename)
+* [`tag:visits`](#tagvisits)
+
+**visit:**
+
+* [`visit:download-db`](#visitdownload-db)
+* [`visit:locate`](#visitlocate)
+* [`visit:non-orphan`](#visitnon-orphan)
+* [`visit:orphan`](#visitorphan)
+* [`visit:orphan-delete`](#visitorphan-delete)
+
+`completion`
+------------
+
+Dump the shell completion script
+
+### Usage
+
+
+
+`help`
+------
+
+Display help for a command
+
+### Usage
+
+
+
+`list`
+------
+
+List commands
+
+### Usage
+
+
+
+`api-key:delete`
+----------------
+
+Deletes an API key by name
+
+### Usage
+
+
+
+`api-key:disable`
+-----------------
+
+Disables an API key by name
+
+### Usage
+
+
+
+`api-key:generate`
+------------------
+
+Generate a new valid API key
+
+### Usage
+
+
+
+`api-key:initial`
+-----------------
+
+Tries to create initial API key
+
+### Usage
+
+
+
+`api-key:list`
+--------------
+
+Lists all the available API keys.
+
+### Usage
+
+
+
+`api-key:rename`
+----------------
+
+Renames an API key by name
+
+### Usage
+
+
+
+`domain:list`
+-------------
+
+List all domains that have been ever used for some short URL
+
+### Usage
+
+
+
+`domain:redirects`
+------------------
+
+Set specific "not found" redirects for individual domains.
+
+### Usage
+
+
+
+`domain:visits`
+---------------
+
+Returns the list of visits for provided domain
+
+### Usage
+
+
+
+`integration:matomo:send-visits`
+--------------------------------
+
+Send existing visits to the configured matomo instance
+
+### Usage
+
+
+
+`short-url:create`
+------------------
+
+Generates a short URL for provided long URL and returns it
+
+### Usage
+
+
+
+`short-url:delete`
+------------------
+
+Deletes a short URL
+
+### Usage
+
+
+
+`short-url:delete-expired`
+--------------------------
+
+Deletes all short URLs that are considered expired, because they have a validUntil date in the past
+
+### Usage
+
+
+
+`short-url:edit`
+----------------
+
+Edit an existing short URL
+
+### Usage
+
+
+
+`short-url:import`
+------------------
+
+Allows to import short URLs from third party sources
+
+### Usage
+
+
+
+`short-url:list`
+----------------
+
+List all short URLs
+
+### Usage
+
+
+
+`short-url:manage-rules`
+------------------------
+
+Set redirect rules for a short URL
+
+### Usage
+
+
+
+`short-url:resolve`
+-------------------
+
+Returns the long URL behind a short code
+
+### Usage
+
+
+
+`short-url:visits`
+------------------
+
+Returns the detailed visits information for provided short code
+
+### Usage
+
+
+
+`short-url:visits-delete`
+-------------------------
+
+Deletes visits from a short URL
+
+### Usage
+
+
+
+`tag:delete`
+------------
+
+Deletes one or more tags.
+
+### Usage
+
+
+
+`tag:list`
+----------
+
+Lists existing tags.
+
+### Usage
+
+
+
+`tag:rename`
+------------
+
+Renames one existing tag.
+
+### Usage
+
+
+
+`tag:visits`
+------------
+
+Returns the list of visits for provided tag
+
+### Usage
+
+
+
+`visit:download-db`
+-------------------
+
+Checks if the GeoLite2 db file is too old or it does not exist, and tries to download an up-to-date copy if so
+
+### Usage
+
+
+
+`visit:locate`
+--------------
+
+Resolves visits origin locations. It implicitly downloads/updates the GeoLite2 db file if needed
+
+### Usage
+
+
+
+`visit:non-orphan`
+------------------
+
+Returns the list of non-orphan visits
+
+### Usage
+
+
+
+`visit:orphan`
+--------------
+
+Returns the list of orphan visits
+
+### Usage
+
+
+
+`visit:orphan-delete`
+---------------------
+
+Deletes all orphan visits
+
+### Usage
+
+--- stderr

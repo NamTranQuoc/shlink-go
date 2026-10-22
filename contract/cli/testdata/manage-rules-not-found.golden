@@ -1,0 +1,6 @@
+exit: 1
+--- stdout
+
+ [ERROR] Short URL for example.com/abc123 not found                             
+
+--- stderr

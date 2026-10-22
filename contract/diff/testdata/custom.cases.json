@@ -1,0 +1,204 @@
+[
+ {
+  "name": "root outside base path",
+  "seed": true,
+  "method": "GET",
+  "path": "/"
+ },
+ {
+  "name": "base path",
+  "seed": true,
+  "method": "GET",
+  "path": "/s"
+ },
+ {
+  "name": "base path slash",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/"
+ },
+ {
+  "name": "health in base path",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/rest/v3/health"
+ },
+ {
+  "name": "health outside base path",
+  "seed": true,
+  "method": "GET",
+  "path": "/rest/health"
+ },
+ {
+  "name": "redirect",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/def456"
+ },
+ {
+  "name": "redirect trailing slash",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/def456/"
+ },
+ {
+  "name": "redirect head",
+  "seed": true,
+  "method": "HEAD",
+  "path": "/s/def456"
+ },
+ {
+  "name": "redirect post",
+  "seed": true,
+  "method": "POST",
+  "path": "/s/def456"
+ },
+ {
+  "name": "redirect extra path",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/def456/extra/path?x=1"
+ },
+ {
+  "name": "redirect extra path trailing",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/def456/extra/"
+ },
+ {
+  "name": "redirect disable track param",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/def456?nostat=1&a=b"
+ },
+ {
+  "name": "not found deep",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/nope/deeper?q=1"
+ },
+ {
+  "name": "pixel",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/def456/track"
+ },
+ {
+  "name": "robots",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/robots.txt"
+ },
+ {
+  "name": "robots outside base path",
+  "seed": true,
+  "method": "GET",
+  "path": "/robots.txt"
+ },
+ {
+  "name": "create multi segment slug",
+  "seed": true,
+  "method": "POST",
+  "path": "/s/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"longUrl\": \"https://e.test/multi\", \"customSlug\": \"Foo/Bar Baz/qux\"}"
+ },
+ {
+  "name": "create with path prefix",
+  "seed": true,
+  "method": "POST",
+  "path": "/s/rest/v3/short-urls",
+  "apiKey": true,
+  "headers": {
+   "Content-Type": "application/json"
+  },
+  "body": "{\"longUrl\": \"https://e.test/prefix\", \"customSlug\": \"slug\", \"pathPrefix\": \"Some Prefix/x\"}"
+ },
+ {
+  "name": "redirect multi segment",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/foo/bar-baz/qux/",
+  "before": [
+   {
+    "name": "create",
+    "method": "POST",
+    "path": "/s/rest/v3/short-urls",
+    "apiKey": true,
+    "headers": {
+     "Content-Type": "application/json"
+    },
+    "body": "{\"longUrl\": \"https://e.test/multi?k=v\", \"customSlug\": \"foo/bar baz/qux\"}"
+   }
+  ]
+ },
+ {
+  "name": "resolve multi segment",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/rest/v3/short-urls/def456",
+  "apiKey": true
+ },
+ {
+  "name": "list shows https urls",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/rest/v3/short-urls?itemsPerPage=2&orderBy=shortCode-ASC",
+  "apiKey": true
+ },
+ {
+  "name": "cors allowed origin",
+  "seed": true,
+  "method": "OPTIONS",
+  "path": "/s/rest/v3/short-urls",
+  "headers": {
+   "Origin": "https://b.test",
+   "Access-Control-Request-Headers": "x-api-key"
+  }
+ },
+ {
+  "name": "cors other origin",
+  "seed": true,
+  "method": "OPTIONS",
+  "path": "/s/rest/v3/short-urls",
+  "headers": {
+   "Origin": "https://c.test"
+  }
+ },
+ {
+  "name": "cors get",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/rest/v3/health",
+  "headers": {
+   "Origin": "https://a.test"
+  }
+ },
+ {
+  "name": "orphan visits",
+  "seed": true,
+  "method": "GET",
+  "path": "/s/rest/v3/visits/orphan",
+  "apiKey": true,
+  "before": [
+   {
+    "name": "b1",
+    "method": "GET",
+    "path": "/s/nope"
+   },
+   {
+    "name": "b2",
+    "method": "GET",
+    "path": "/s"
+   },
+   {
+    "name": "b3",
+    "method": "GET",
+    "path": "/elsewhere"
+   }
+  ]
+ }
+]

@@ -1,0 +1,233 @@
+{
+  "tables": {
+    "api_key_roles": [
+      "api_key_id | bigint(20) unsigned | NO |  |  |  | ",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "meta | longtext | NO |  |  | utf8mb4 | utf8mb4_bin",
+      "role_name | varchar(255) | NO |  |  | utf8mb4 | utf8mb4_uca1400_ai_ci"
+    ],
+    "api_keys": [
+      "enabled | tinyint(4) | NO |  |  |  | ",
+      "expiration_date | datetime | YES | NULL |  |  | ",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "key | varchar(255) | NO |  |  | utf8mb4 | utf8mb4_uca1400_ai_ci",
+      "name | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_uca1400_ai_ci"
+    ],
+    "domains": [
+      "authority | varchar(255) | NO |  |  | utf8mb4 | utf8mb4_unicode_ci",
+      "base_url_redirect | text | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "invalid_short_url_redirect | text | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "regular_not_found_redirect | text | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci"
+    ],
+    "geolocation_db_updates": [
+      "date_created | datetime | NO |  |  |  | ",
+      "date_updated | datetime | YES | NULL |  |  | ",
+      "error | varchar(1024) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "filesystem_id | varchar(512) | NO |  |  | utf8mb4 | utf8mb4_unicode_ci",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "reason | varchar(1024) | NO |  |  | utf8mb4 | utf8mb4_unicode_ci",
+      "status | varchar(128) | NO |  |  | utf8mb4 | utf8mb4_uca1400_ai_ci"
+    ],
+    "migrations": [
+      "executed_at | datetime | YES | NULL |  |  | ",
+      "execution_time | int(11) | YES | NULL |  |  | ",
+      "version | varchar(191) | NO |  |  | utf8mb4 | utf8mb4_uca1400_ai_ci"
+    ],
+    "orphan_visits_counts": [
+      "count | bigint(20) unsigned | NO | 1 |  |  | ",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "potential_bot | tinyint(4) | NO | 0 |  |  | ",
+      "slot_id | int(10) unsigned | NO |  |  |  | "
+    ],
+    "redirect_conditions": [
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "match_key | varchar(512) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "match_value | varchar(512) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "type | varchar(255) | NO |  |  | utf8mb4 | utf8mb4_uca1400_ai_ci"
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "redirect_condition_id | bigint(20) unsigned | NO |  |  |  | ",
+      "short_url_redirect_rule_id | bigint(20) unsigned | NO |  |  |  | "
+    ],
+    "short_url_redirect_rules": [
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "long_url | text | NO |  |  | utf8mb4 | utf8mb4_unicode_ci",
+      "priority | int(11) | NO |  |  |  | ",
+      "short_url_id | bigint(20) unsigned | NO |  |  |  | "
+    ],
+    "short_url_visits_counts": [
+      "count | bigint(20) unsigned | NO | 1 |  |  | ",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "potential_bot | tinyint(4) | NO | 0 |  |  | ",
+      "short_url_id | bigint(20) unsigned | YES | NULL |  |  | ",
+      "slot_id | int(10) unsigned | NO |  |  |  | "
+    ],
+    "short_urls": [
+      "author_api_key_id | bigint(20) unsigned | YES | NULL |  |  | ",
+      "crawlable | tinyint(4) | NO | 0 |  |  | ",
+      "date_created | datetime | NO |  |  |  | ",
+      "domain_id | bigint(20) unsigned | YES | NULL |  |  | ",
+      "forward_query | tinyint(4) | NO | 1 |  |  | ",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "import_original_short_code | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "import_source | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_uca1400_ai_ci",
+      "long_url_hash | varbinary(32) | NO |  |  |  | ",
+      "max_visits | int(11) | YES | NULL |  |  | ",
+      "original_url | text | NO |  |  | utf8mb4 | utf8mb4_unicode_ci",
+      "short_code | varchar(255) | NO |  |  | utf8mb4 | utf8mb4_bin",
+      "title | varchar(512) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "title_was_auto_resolved | tinyint(4) | NO | 0 |  |  | ",
+      "valid_since | datetime | YES | NULL |  |  | ",
+      "valid_until | datetime | YES | NULL |  |  | "
+    ],
+    "short_urls_in_tags": [
+      "short_url_id | bigint(20) unsigned | NO |  |  |  | ",
+      "tag_id | bigint(20) unsigned | NO |  |  |  | "
+    ],
+    "tags": [
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "name | varchar(255) | NO |  |  | utf8mb4 | utf8mb4_unicode_ci"
+    ],
+    "visit_locations": [
+      "city_name | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "country_code | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "country_name | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "is_empty | tinyint(4) | NO | 0 |  |  | ",
+      "lat | double | NO |  |  |  | ",
+      "lon | double | NO |  |  |  | ",
+      "region_name | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "timezone | varchar(255) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci"
+    ],
+    "visits": [
+      "date | datetime | NO |  |  |  | ",
+      "id | bigint(20) unsigned | NO |  | auto_increment |  | ",
+      "potential_bot | tinyint(4) | NO | 0 |  |  | ",
+      "redirect_url | varchar(2048) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "referer | varchar(1024) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "remote_addr | varchar(256) | YES | NULL |  | utf8mb4 | utf8mb4_uca1400_ai_ci",
+      "short_url_id | bigint(20) unsigned | YES | NULL |  |  | ",
+      "type | varchar(255) | NO |  |  | utf8mb4 | utf8mb4_uca1400_ai_ci",
+      "user_agent | varchar(512) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci",
+      "visit_location_id | bigint(20) unsigned | YES | NULL |  |  | ",
+      "visited_url | varchar(2048) | YES | NULL |  | utf8mb4 | utf8mb4_unicode_ci"
+    ]
+  },
+  "indexes": {
+    "api_key_roles": [
+      "IDX_29D4F6738BE312B3 | 1 | 1 | api_key_id | ",
+      "PRIMARY | 0 | 1 | id | ",
+      "UQ_role_plus_api_key | 0 | 1 | role_name | ",
+      "UQ_role_plus_api_key | 0 | 2 | api_key_id | "
+    ],
+    "api_keys": [
+      "PRIMARY | 0 | 1 | id | ",
+      "UNIQ_9579321F4E645A7E | 0 | 1 | key | "
+    ],
+    "domains": [
+      "PRIMARY | 0 | 1 | id | ",
+      "UNIQ_8C7BBF9D4AF96AFC | 0 | 1 | authority | "
+    ],
+    "geolocation_db_updates": [
+      "IDX_geolocation_date_updated | 1 | 1 | date_updated | ",
+      "IDX_geolocation_status_filesystem | 1 | 1 | filesystem_id | ",
+      "PRIMARY | 0 | 1 | id | "
+    ],
+    "migrations": [
+      "PRIMARY | 0 | 1 | version | "
+    ],
+    "orphan_visits_counts": [
+      "PRIMARY | 0 | 1 | id | ",
+      "UQ_slot | 0 | 1 | potential_bot | ",
+      "UQ_slot | 0 | 2 | slot_id | "
+    ],
+    "redirect_conditions": [
+      "PRIMARY | 0 | 1 | id | "
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "IDX_62CF4FA49AE7732E | 1 | 1 | redirect_condition_id | ",
+      "IDX_62CF4FA4BE19B441 | 1 | 1 | short_url_redirect_rule_id | ",
+      "PRIMARY | 0 | 1 | short_url_redirect_rule_id | ",
+      "PRIMARY | 0 | 2 | redirect_condition_id | "
+    ],
+    "short_url_redirect_rules": [
+      "IDX_448348BCF1252BC8 | 1 | 1 | short_url_id | ",
+      "PRIMARY | 0 | 1 | id | "
+    ],
+    "short_url_visits_counts": [
+      "IDX_28E514E3F1252BC8 | 1 | 1 | short_url_id | ",
+      "PRIMARY | 0 | 1 | id | ",
+      "UQ_slot_per_short_url | 0 | 1 | short_url_id | ",
+      "UQ_slot_per_short_url | 0 | 2 | potential_bot | ",
+      "UQ_slot_per_short_url | 0 | 3 | slot_id | "
+    ],
+    "short_urls": [
+      "IDX_4A53F934115F0EE5 | 1 | 1 | domain_id | ",
+      "IDX_4A53F934C9EA6E08 | 1 | 1 | author_api_key_id | ",
+      "IDX_long_url_hash | 1 | 1 | long_url_hash | ",
+      "PRIMARY | 0 | 1 | id | ",
+      "unique_short_code_plus_domain | 0 | 1 | short_code | ",
+      "unique_short_code_plus_domain | 0 | 2 | domain_id | "
+    ],
+    "short_urls_in_tags": [
+      "IDX_59775203BAD26311 | 1 | 1 | tag_id | ",
+      "IDX_59775203F1252BC8 | 1 | 1 | short_url_id | ",
+      "PRIMARY | 0 | 1 | short_url_id | ",
+      "PRIMARY | 0 | 2 | tag_id | "
+    ],
+    "tags": [
+      "PRIMARY | 0 | 1 | id | ",
+      "UNIQ_6FBC94265E237E06 | 0 | 1 | name | "
+    ],
+    "visit_locations": [
+      "PRIMARY | 0 | 1 | id | "
+    ],
+    "visits": [
+      "IDX_444839EA8297882E | 1 | 1 | visit_location_id | ",
+      "IDX_444839EAF1252BC8 | 1 | 1 | short_url_id | ",
+      "IDX_visits_date | 1 | 1 | date | ",
+      "PRIMARY | 0 | 1 | id | ",
+      "visits_potential_bot_IDX | 1 | 1 | potential_bot | "
+    ]
+  },
+  "foreignKeys": {
+    "api_key_roles": [
+      "FK_29D4F6738BE312B3 | api_key_id | api_keys | CASCADE"
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "FK_62CF4FA49AE7732E | redirect_condition_id | redirect_conditions | CASCADE",
+      "FK_62CF4FA4BE19B441 | short_url_redirect_rule_id | short_url_redirect_rules | CASCADE"
+    ],
+    "short_url_redirect_rules": [
+      "FK_448348BCF1252BC8 | short_url_id | short_urls | CASCADE"
+    ],
+    "short_url_visits_counts": [
+      "FK_28E514E3F1252BC8 | short_url_id | short_urls | CASCADE"
+    ],
+    "short_urls": [
+      "FK_4A53F934115F0EE5 | domain_id | domains | RESTRICT",
+      "FK_4A53F934C9EA6E08 | author_api_key_id | api_keys | SET NULL"
+    ],
+    "short_urls_in_tags": [
+      "FK_59775203BAD26311 | tag_id | tags | CASCADE",
+      "FK_59775203F1252BC8 | short_url_id | short_urls | CASCADE"
+    ],
+    "visits": [
+      "FK_444839EA8297882E | visit_location_id | visit_locations | SET NULL",
+      "FK_444839EAF1252BC8 | short_url_id | short_urls | CASCADE"
+    ]
+  },
+  "migrations": [
+    "ShlinkMigrations\\Version20230211171904",
+    "ShlinkMigrations\\Version20230303164233",
+    "ShlinkMigrations\\Version20240220214031",
+    "ShlinkMigrations\\Version20240318084804",
+    "ShlinkMigrations\\Version20240331111447",
+    "ShlinkMigrations\\Version20241105094747",
+    "ShlinkMigrations\\Version20241105215309",
+    "ShlinkMigrations\\Version20250722060208",
+    "ShlinkMigrations\\Version20260524105410",
+    "ShlinkMigrations\\Version20260607082210"
+  ]
+}

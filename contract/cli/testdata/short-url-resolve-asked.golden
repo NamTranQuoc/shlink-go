@@ -1,0 +1,7 @@
+exit: 0
+--- stdout
+
+ A short code was not provided. Which short code do you want to resolve?:
+ > 
+Long URL: https://blog.alejandrocelaya.com/2019/04/27/considerations-to-properly-use-open-source-software-projects/
+--- stderr

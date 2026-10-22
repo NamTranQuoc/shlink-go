@@ -1,0 +1,10 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                          
+  The "--input" option requires a value.  
+                                          
+
+_complete [-s|--shell SHELL] [-i|--input INPUT] [-c|--current CURRENT] [-a|--api-version API-VERSION] [-S|--symfony SYMFONY]
+

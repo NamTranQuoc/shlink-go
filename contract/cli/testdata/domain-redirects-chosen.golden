@@ -1,0 +1,19 @@
+exit: 0
+--- stdout
+
+ Select the domain to configure:
+  [0] detached-with-redirects.com
+  [1] example.com
+  [2] some-domain.com
+  [3] New domain
+ > 
+
+ URL to redirect to when a user hits this domain's base URL (Leave empty for no redirect):
+ > 
+ URL to redirect to when a user hits a not found URL other than an invalid short URL (Leave empty for no redirect):
+ > 
+ URL to redirect to when a user hits an invalid short URL (Leave empty for no redirect):
+ > 
+ [OK] "Not found" redirects properly set for "example.com"                      
+
+--- stderr

@@ -1,0 +1,17 @@
+exit: 0
+--- stdout
+
+ [OK] Generated API key: "xxxxxxxx-xxxx-4xxx-xxxx-xxxxxxxxxxxx"                 
+
+ [WARNING] Save the key in a secure location. You will not be able to get it    
+           afterwards.                                                          
+
++--------------------- Roles ----------------------+
+| Role name           | Role metadata              |
++---------------------+----------------------------+
+| AUTHORED_SHORT_URLS |                            |
+| DOMAIN_SPECIFIC     | 'domain_id' => N           |
+|                     | 'authority' => example.com |
+| NO_ORPHAN_VISITS    |                            |
++---------------------+----------------------------+
+--- stderr

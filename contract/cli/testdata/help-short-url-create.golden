@@ -1,0 +1,32 @@
+exit: 0
+--- stdout
+Description:
+  Generates a short URL for provided long URL and returns it
+
+Usage:
+  short-url:create [options] [--] <long-url>
+
+Arguments:
+  long-url                                      The long URL to set
+
+Options:
+  -t, --tag=TAG                                 Tags to apply to the short URL (multiple values allowed)
+  -s, --valid-since=VALID-SINCE                 The date from which this short URL will be valid. If someone tries to access it before this date, it will not be found
+  -u, --valid-until=VALID-UNTIL                 The date until which this short URL will be valid. If someone tries to access it after this date, it will not be found
+  -m, --max-visits=MAX-VISITS                   This will limit the number of visits for this short URL
+      --title=TITLE                             A descriptive title for the short URL
+  -r, --crawlable|--no-crawlable                Tells if this short URL will be included as "Allow" in Shlink's robots.txt
+  -w, --no-forward-query|--no-no-forward-query  Disables the forwarding of the query string to the long URL, when the short URL is visited
+  -d, --domain=DOMAIN                           The domain to which this short URL will be attached
+  -c, --custom-slug=CUSTOM-SLUG                 If provided, this slug will be used instead of generating a short code
+  -l, --short-code-length=SHORT-CODE-LENGTH     The length for generated short code (it will be ignored if --custom-slug was provided)
+  -p, --path-prefix=PATH-PREFIX                 Prefix to prepend before the generated short code or provided custom slug
+  -f, --find-if-exists                          This will force existing matching URL to be returned if found, instead of creating a new one
+  -h, --help                                    Display help for the given command. When no command is given display help for the list command
+      --silent                                  Do not output any message
+  -q, --quiet                                   Only errors are displayed. All other output is suppressed
+  -V, --version                                 Display this application version
+      --ansi|--no-ansi                          Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction                          Do not ask any interactive question
+  -v|vv|vvv, --verbose                          Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+--- stderr

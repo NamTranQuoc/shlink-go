@@ -1,0 +1,21 @@
+exit: 1
+--- stdout
+
+ What's the path for the CSV file you want to import:
+ > 
+ What's the delimiter used to separate values? [Comma]:
+  [,] Comma
+  [;] Semicolon
+ > 
+Importing short URLs
+====================
+
+--- stderr
+
+In UnavailableFeature.php line 41:
+                                    
+  stream does not support seeking.  
+                                    
+
+short-url:import <source>
+

@@ -1,0 +1,6 @@
+exit: 0
+--- stdout
+
+ [OK] 2 expired short URLs have been deleted                                    
+
+--- stderr

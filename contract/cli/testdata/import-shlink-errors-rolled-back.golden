@@ -1,0 +1,9 @@
+exit: 0
+--- stdout
++------------+-------+-----------+----------+--------------+--------------+
+| Short Code | Title | Short URL | Long URL | Date created | Visits count |
++------------+-------+--------- Page 1 of 1 +--------------+--------------+
+
+ [OK] Short URLs properly listed                                                
+
+--- stderr

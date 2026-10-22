@@ -1,0 +1,15 @@
+exit: 0
+--- stdout
+
+ [WARNING] Careful!                                                             
+                                                                                
+           You are about to perform a destructive operation that can result in  
+           deleted short URLs and visits.                                       
+                                                                                
+           This action cannot be undone. Proceed at your own risk               
+
+ Continue? (yes/no) [no]:
+ > 
+ [OK] 1 expired short URLs have been deleted                                    
+
+--- stderr

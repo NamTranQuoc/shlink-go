@@ -1,0 +1,4 @@
+# The upstream arm64 image has no MS SQL driver; run it emulated when testing against MS SQL.
+services:
+  shlink-php:
+    platform: linux/amd64

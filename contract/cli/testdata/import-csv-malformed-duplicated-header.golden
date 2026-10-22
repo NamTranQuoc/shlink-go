@@ -1,0 +1,21 @@
+exit: 1
+--- stdout
+
+ What's the path for the CSV file you want to import:
+ > 
+ What's the delimiter used to separate values? [Comma]:
+  [,] Comma
+  [;] Semicolon
+ > 
+Importing short URLs
+====================
+
+--- stderr
+
+In SyntaxError.php line 55:
+                                                      
+  The header record contains duplicate column names.  
+                                                      
+
+short-url:import <source>
+

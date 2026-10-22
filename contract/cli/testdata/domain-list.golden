@@ -1,0 +1,11 @@
+exit: 0
+--- stdout
++-----------------------------+------------+
+| Domain                      | Is default |
++-----------------------------+------------+
+| s.test                      | Yes        |
+| detached-with-redirects.com | No         |
+| example.com                 | No         |
+| some-domain.com             | No         |
++-----------------------------+------------+
+--- stderr

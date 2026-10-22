@@ -1,0 +1,115 @@
+exit: 0
+--- stdout
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+  Priority   Conditions                                                            Redirect to                                
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+  1          en language is accepted AND query string contains  param              https://example.com/english-and-foo-query  
+  2          query string contains hello=world AND query string contains foo=bar   https://example.com/multiple-query-params  
+  3          en language is accepted                                               https://example.com/only-english           
+  4          device is android                                                     android://foo/bar                          
+  5          device is ios                                                         fb://profile/33138223345                   
+  6          IP address matches 1.2.3.4                                            https://example.com/static-ip-address      
+  7          device is linux                                                       https://example.com/linux                  
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ What rule do you want to delete?:
+  [1] 1 - https://example.com/english-and-foo-query
+  [2] 2 - https://example.com/multiple-query-params
+  [3] 3 - https://example.com/only-english
+  [4] 4 - android://foo/bar
+  [5] 5 - fb://profile/33138223345
+  [6] 6 - https://example.com/static-ip-address
+  [7] 7 - https://example.com/linux
+ > 
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+  Priority   Conditions                                                 Redirect to                                
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+  1          en language is accepted AND query string contains  param   https://example.com/english-and-foo-query  
+  2          en language is accepted                                    https://example.com/only-english           
+  3          device is android                                          android://foo/bar                          
+  4          device is ios                                              fb://profile/33138223345                   
+  5          IP address matches 1.2.3.4                                 https://example.com/static-ip-address      
+  6          device is linux                                            https://example.com/linux                  
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ What rule do you want to re-arrange?:
+  [1] 1 - https://example.com/english-and-foo-query
+  [2] 2 - https://example.com/only-english
+  [3] 3 - android://foo/bar
+  [4] 4 - fb://profile/33138223345
+  [5] 5 - https://example.com/static-ip-address
+  [6] 6 - https://example.com/linux
+ > 
+ Rule priority (the lower the value, the higher the priority) [6]:
+ > 
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+  Priority   Conditions                                                 Redirect to                                
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+  1          en language is accepted                                    https://example.com/only-english           
+  2          device is android                                          android://foo/bar                          
+  3          device is ios                                              fb://profile/33138223345                   
+  4          IP address matches 1.2.3.4                                 https://example.com/static-ip-address      
+  5          en language is accepted AND query string contains  param   https://example.com/english-and-foo-query  
+  6          device is linux                                            https://example.com/linux                  
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ What rule do you want to delete?:
+  [1] 1 - https://example.com/only-english
+  [2] 2 - android://foo/bar
+  [3] 3 - fb://profile/33138223345
+  [4] 4 - https://example.com/static-ip-address
+  [5] 5 - https://example.com/english-and-foo-query
+  [6] 6 - https://example.com/linux
+ > 
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+  Priority   Conditions                                                 Redirect to                                
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+  1          en language is accepted                                    https://example.com/only-english           
+  2          device is ios                                              fb://profile/33138223345                   
+  3          IP address matches 1.2.3.4                                 https://example.com/static-ip-address      
+  4          en language is accepted AND query string contains  param   https://example.com/english-and-foo-query  
+  5          device is linux                                            https://example.com/linux                  
+ ---------- ---------------------------------------------------------- ------------------------------------------- 
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+
+ [ERROR] Value "8 - https://example.com/linux" is invalid                       
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ [OK] Rules properly saved                                                      
+
+--- stderr

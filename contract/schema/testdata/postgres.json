@@ -1,0 +1,226 @@
+{
+  "tables": {
+    "api_key_roles": [
+      "api_key_id | int8 |  | NO |  | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "meta | json |  | NO |  | ",
+      "role_name | varchar | 255 | NO |  | "
+    ],
+    "api_keys": [
+      "enabled | bool |  | NO |  | ",
+      "expiration_date | timestamp |  | YES | NULL::timestamp without time zone | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "key | varchar | 255 | NO |  | ",
+      "name | varchar | 255 | YES | NULL::character varying | "
+    ],
+    "domains": [
+      "authority | varchar | 255 | NO |  | ",
+      "base_url_redirect | text |  | YES |  | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "invalid_short_url_redirect | text |  | YES |  | ",
+      "regular_not_found_redirect | text |  | YES |  | "
+    ],
+    "geolocation_db_updates": [
+      "date_created | timestamp |  | NO |  | ",
+      "date_updated | timestamp |  | YES | NULL::timestamp without time zone | ",
+      "error | varchar | 1024 | YES | NULL::character varying | ",
+      "filesystem_id | varchar | 512 | NO |  | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "reason | varchar | 1024 | NO |  | ",
+      "status | varchar | 128 | NO |  | "
+    ],
+    "migrations": [
+      "executed_at | timestamp |  | YES | NULL::timestamp without time zone | ",
+      "execution_time | int4 |  | YES |  | ",
+      "version | varchar | 191 | NO |  | "
+    ],
+    "orphan_visits_counts": [
+      "count | int8 |  | NO | 1 | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "potential_bot | bool |  | NO | false | ",
+      "slot_id | int4 |  | NO |  | "
+    ],
+    "redirect_conditions": [
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "match_key | varchar | 512 | YES | NULL::character varying | ",
+      "match_value | varchar | 512 | YES | NULL::character varying | ",
+      "type | varchar | 255 | NO |  | "
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "redirect_condition_id | int8 |  | NO |  | ",
+      "short_url_redirect_rule_id | int8 |  | NO |  | "
+    ],
+    "short_url_redirect_rules": [
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "long_url | text |  | NO |  | ",
+      "priority | int4 |  | NO |  | ",
+      "short_url_id | int8 |  | NO |  | "
+    ],
+    "short_url_visits_counts": [
+      "count | int8 |  | NO | 1 | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "potential_bot | bool |  | NO | false | ",
+      "short_url_id | int8 |  | YES |  | ",
+      "slot_id | int4 |  | NO |  | "
+    ],
+    "short_urls": [
+      "author_api_key_id | int8 |  | YES |  | ",
+      "crawlable | bool |  | NO | false | ",
+      "date_created | timestamp |  | NO |  | ",
+      "domain_id | int8 |  | YES |  | ",
+      "forward_query | bool |  | NO | true | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "import_original_short_code | varchar | 255 | YES | NULL::character varying | ",
+      "import_source | varchar | 255 | YES | NULL::character varying | ",
+      "long_url_hash | bytea |  | NO |  | ",
+      "max_visits | int4 |  | YES |  | ",
+      "original_url | text |  | NO |  | ",
+      "short_code | varchar | 255 | NO |  | ",
+      "title | varchar | 512 | YES | NULL::character varying | ",
+      "title_was_auto_resolved | bool |  | NO | false | ",
+      "valid_since | timestamp |  | YES | NULL::timestamp without time zone | ",
+      "valid_until | timestamp |  | YES | NULL::timestamp without time zone | "
+    ],
+    "short_urls_in_tags": [
+      "short_url_id | int8 |  | NO |  | ",
+      "tag_id | int8 |  | NO |  | "
+    ],
+    "tags": [
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "name | varchar | 255 | NO |  | "
+    ],
+    "visit_locations": [
+      "city_name | varchar | 255 | YES | NULL::character varying | ",
+      "country_code | varchar | 255 | YES | NULL::character varying | ",
+      "country_name | varchar | 255 | YES | NULL::character varying | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "is_empty | bool |  | NO | false | ",
+      "lat | float8 |  | NO |  | ",
+      "lon | float8 |  | NO |  | ",
+      "region_name | varchar | 255 | YES | NULL::character varying | ",
+      "timezone | varchar | 255 | YES | NULL::character varying | "
+    ],
+    "visits": [
+      "date | timestamp |  | NO |  | ",
+      "id | int8 |  | NO |  | BY DEFAULT",
+      "potential_bot | bool |  | NO | false | ",
+      "redirect_url | varchar | 2048 | YES | NULL::character varying | ",
+      "referer | varchar | 1024 | YES | NULL::character varying | ",
+      "remote_addr | varchar | 256 | YES | NULL::character varying | ",
+      "short_url_id | int8 |  | YES |  | ",
+      "type | varchar | 255 | NO |  | ",
+      "user_agent | varchar | 512 | YES | NULL::character varying | ",
+      "visit_location_id | int8 |  | YES |  | ",
+      "visited_url | varchar | 2048 | YES | NULL::character varying | "
+    ]
+  },
+  "indexes": {
+    "api_key_roles": [
+      "CREATE INDEX idx_29d4f6738be312b3 ON public.api_key_roles USING btree (api_key_id)",
+      "CREATE UNIQUE INDEX api_key_roles_pkey ON public.api_key_roles USING btree (id)",
+      "CREATE UNIQUE INDEX uq_role_plus_api_key ON public.api_key_roles USING btree (role_name, api_key_id)"
+    ],
+    "api_keys": [
+      "CREATE UNIQUE INDEX api_keys_pkey ON public.api_keys USING btree (id)",
+      "CREATE UNIQUE INDEX uniq_9579321ff48571eb ON public.api_keys USING btree (key)"
+    ],
+    "domains": [
+      "CREATE UNIQUE INDEX domains_pkey ON public.domains USING btree (id)",
+      "CREATE UNIQUE INDEX uniq_8c7bbf9d4af96afc ON public.domains USING btree (authority)"
+    ],
+    "geolocation_db_updates": [
+      "CREATE INDEX idx_geolocation_date_updated ON public.geolocation_db_updates USING btree (date_updated)",
+      "CREATE INDEX idx_geolocation_status_filesystem ON public.geolocation_db_updates USING btree (filesystem_id)",
+      "CREATE UNIQUE INDEX geolocation_db_updates_pkey ON public.geolocation_db_updates USING btree (id)"
+    ],
+    "migrations": [
+      "CREATE UNIQUE INDEX migrations_pkey ON public.migrations USING btree (version)"
+    ],
+    "orphan_visits_counts": [
+      "CREATE UNIQUE INDEX orphan_visits_counts_pkey ON public.orphan_visits_counts USING btree (id)",
+      "CREATE UNIQUE INDEX uq_slot ON public.orphan_visits_counts USING btree (potential_bot, slot_id)"
+    ],
+    "redirect_conditions": [
+      "CREATE UNIQUE INDEX redirect_conditions_pkey ON public.redirect_conditions USING btree (id)"
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "CREATE INDEX idx_62cf4fa49ae7732e ON public.redirect_conditions_in_short_url_redirect_rules USING btree (redirect_condition_id)",
+      "CREATE INDEX idx_62cf4fa4be19b441 ON public.redirect_conditions_in_short_url_redirect_rules USING btree (short_url_redirect_rule_id)",
+      "CREATE UNIQUE INDEX redirect_conditions_in_short_url_redirect_rules_pkey ON public.redirect_conditions_in_short_url_redirect_rules USING btree (short_url_redirect_rule_id, redirect_condition_id)"
+    ],
+    "short_url_redirect_rules": [
+      "CREATE INDEX idx_448348bcf1252bc8 ON public.short_url_redirect_rules USING btree (short_url_id)",
+      "CREATE UNIQUE INDEX short_url_redirect_rules_pkey ON public.short_url_redirect_rules USING btree (id)"
+    ],
+    "short_url_visits_counts": [
+      "CREATE INDEX idx_28e514e3f1252bc8 ON public.short_url_visits_counts USING btree (short_url_id)",
+      "CREATE UNIQUE INDEX short_url_visits_counts_pkey ON public.short_url_visits_counts USING btree (id)",
+      "CREATE UNIQUE INDEX uq_slot_per_short_url ON public.short_url_visits_counts USING btree (short_url_id, potential_bot, slot_id)"
+    ],
+    "short_urls": [
+      "CREATE INDEX idx_4a53f934115f0ee5 ON public.short_urls USING btree (domain_id)",
+      "CREATE INDEX idx_4a53f934c9ea6e08 ON public.short_urls USING btree (author_api_key_id)",
+      "CREATE INDEX idx_long_url_hash ON public.short_urls USING btree (long_url_hash)",
+      "CREATE UNIQUE INDEX short_urls_pkey ON public.short_urls USING btree (id)",
+      "CREATE UNIQUE INDEX unique_short_code_plus_domain ON public.short_urls USING btree (short_code, domain_id)"
+    ],
+    "short_urls_in_tags": [
+      "CREATE INDEX idx_59775203bad26311 ON public.short_urls_in_tags USING btree (tag_id)",
+      "CREATE INDEX idx_59775203f1252bc8 ON public.short_urls_in_tags USING btree (short_url_id)",
+      "CREATE UNIQUE INDEX short_urls_in_tags_pkey ON public.short_urls_in_tags USING btree (short_url_id, tag_id)"
+    ],
+    "tags": [
+      "CREATE UNIQUE INDEX tags_pkey ON public.tags USING btree (id)",
+      "CREATE UNIQUE INDEX uniq_6fbc94265e237e06 ON public.tags USING btree (name)"
+    ],
+    "visit_locations": [
+      "CREATE UNIQUE INDEX visit_locations_pkey ON public.visit_locations USING btree (id)"
+    ],
+    "visits": [
+      "CREATE INDEX idx_444839ea8297882e ON public.visits USING btree (visit_location_id)",
+      "CREATE INDEX idx_444839eaf1252bc8 ON public.visits USING btree (short_url_id)",
+      "CREATE INDEX idx_visits_date ON public.visits USING btree (date)",
+      "CREATE INDEX visits_potential_bot_idx ON public.visits USING btree (potential_bot)",
+      "CREATE UNIQUE INDEX visits_pkey ON public.visits USING btree (id)"
+    ]
+  },
+  "foreignKeys": {
+    "api_key_roles": [
+      "fk_29d4f6738be312b3 | api_key_id | api_keys | CASCADE"
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "fk_62cf4fa49ae7732e | redirect_condition_id | redirect_conditions | CASCADE",
+      "fk_62cf4fa4be19b441 | short_url_redirect_rule_id | short_url_redirect_rules | CASCADE"
+    ],
+    "short_url_redirect_rules": [
+      "fk_448348bcf1252bc8 | short_url_id | short_urls | CASCADE"
+    ],
+    "short_url_visits_counts": [
+      "fk_28e514e3f1252bc8 | short_url_id | short_urls | CASCADE"
+    ],
+    "short_urls": [
+      "fk_4a53f934115f0ee5 | domain_id | domains | RESTRICT",
+      "fk_4a53f934c9ea6e08 | author_api_key_id | api_keys | SET NULL"
+    ],
+    "short_urls_in_tags": [
+      "fk_59775203bad26311 | tag_id | tags | CASCADE",
+      "fk_59775203f1252bc8 | short_url_id | short_urls | CASCADE"
+    ],
+    "visits": [
+      "fk_444839ea8297882e | visit_location_id | visit_locations | SET NULL",
+      "fk_444839eaf1252bc8 | short_url_id | short_urls | CASCADE"
+    ]
+  },
+  "migrations": [
+    "ShlinkMigrations\\Version20230211171904",
+    "ShlinkMigrations\\Version20230303164233",
+    "ShlinkMigrations\\Version20240220214031",
+    "ShlinkMigrations\\Version20240318084804",
+    "ShlinkMigrations\\Version20240331111447",
+    "ShlinkMigrations\\Version20241105094747",
+    "ShlinkMigrations\\Version20241105215309",
+    "ShlinkMigrations\\Version20250722060208",
+    "ShlinkMigrations\\Version20260524105410",
+    "ShlinkMigrations\\Version20260607082210"
+  ]
+}

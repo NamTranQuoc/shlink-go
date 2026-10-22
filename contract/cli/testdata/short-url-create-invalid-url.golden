@@ -1,0 +1,13 @@
+exit: 1
+--- stdout
+--- stderr
+
+In TypeTreeMapper.php line 38:
+                                                                               
+  Could not map type `Shlinkio\Shlink\Core\ShortUrl\Model\ShortUrlCreation`.   
+  An error occurred at path longUrl: Provided value does not match a loose UR  
+  I pattern                                                                    
+                                                                               
+
+short-url:create [-t|--tag TAG] [-s|--valid-since VALID-SINCE] [-u|--valid-until VALID-UNTIL] [-m|--max-visits MAX-VISITS] [--title TITLE] [-r|--crawlable|--no-crawlable] [-w|--no-forward-query|--no-no-forward-query] [-d|--domain DOMAIN] [-c|--custom-slug CUSTOM-SLUG] [-l|--short-code-length SHORT-CODE-LENGTH] [-p|--path-prefix PATH-PREFIX] [-f|--find-if-exists] [--] <long-url>
+

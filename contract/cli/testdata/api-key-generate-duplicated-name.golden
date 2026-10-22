@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+In ApiKeyService.php line 45:
+                                                            
+  Another API key with name "valid_api_key" already exists  
+                                                            
+
+api-key:generate [-m|--name NAME] [-e|--expiration-date EXPIRATION-DATE] [-a|--author-only] [-d|--domain-only DOMAIN-ONLY] [-o|--no-orphan-visits]
+

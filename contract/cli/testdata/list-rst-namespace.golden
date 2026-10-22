@@ -1,0 +1,227 @@
+exit: 0
+--- stdout
+Shlink 5.1.8
+============
+
+Table of Contents
+-----------------
+
+
+
+api-key
+~~~~~~~
+
+
+
+- `api-key:generate`_
+- `api-key:disable`_
+- `api-key:delete`_
+- `api-key:list`_
+- `api-key:initial`_
+- `api-key:rename`_
+
+Commands
+--------
+
+api-key
+~~~~~~~
+
+api-key:generate
+................
+
+Generate a new valid API key
+
+Usage
+^^^^^
+
+- ``api-key:generate [-m|--name NAME] [-e|--expiration-date EXPIRATION-DATE] [-a|--author-only] [-d|--domain-only DOMAIN-ONLY] [-o|--no-orphan-visits]``
+
+The api-key:generate generates a new valid API key.
+
+    /usr/local/bin/shlink api-key:generate
+
+You can optionally set its name for tracking purposes with --name or -m:
+
+    /usr/local/bin/shlink api-key:generate --name Alice
+
+You can optionally set its expiration date with --expiration-date or -e:
+
+    /usr/local/bin/shlink api-key:generate --expiration-date 2020-01-01
+
+Options
+^^^^^^^
+
+\-\-name|-m
+"""""""""""
+
+The unique name by which this API key will be known
+
+- **Accept value**: yes
+- **Is value required**: yes
+- **Is multiple**: no
+- **Is negatable**: no
+- **Default**: ``NULL``
+
+\-\-expiration-date|-e
+""""""""""""""""""""""
+
+The date in which the API key should expire. Use any valid PHP format
+
+- **Accept value**: yes
+- **Is value required**: yes
+- **Is multiple**: no
+- **Is negatable**: no
+- **Default**: ``NULL``
+
+\-\-author-only|-a
+""""""""""""""""""
+
+Adds the "AUTHORED_SHORT_URLS" role to the new API key
+
+- **Accept value**: no
+- **Is value required**: no
+- **Is multiple**: no
+- **Is negatable**: no
+- **Default**: ``false``
+
+\-\-domain-only|-d
+""""""""""""""""""
+
+Adds the "DOMAIN_SPECIFIC" role to the new API key, with provided domain
+
+- **Accept value**: yes
+- **Is value required**: yes
+- **Is multiple**: no
+- **Is negatable**: no
+- **Default**: ``NULL``
+
+\-\-no-orphan-visits|-o
+"""""""""""""""""""""""
+
+Adds the "NO_ORPHAN_VISITS" role to the new API key
+
+- **Accept value**: no
+- **Is value required**: no
+- **Is multiple**: no
+- **Is negatable**: no
+- **Default**: ``false``
+
+
+
+api-key:disable
+...............
+
+Disables an API key by name
+
+Usage
+^^^^^
+
+- ``api-key:disable [<name>]``
+
+The api-key:disable command allows you to disable an existing API key.
+
+If no arguments are provided, you will be prompted to select one of the existing non-disabled API keys.
+
+    /usr/local/bin/shlink api-key:disable
+
+You can optionally pass the API key name to be disabled:
+
+    /usr/local/bin/shlink api-key:disable the_key_name
+
+
+Arguments
+^^^^^^^^^
+
+name
+
+api-key:delete
+..............
+
+Deletes an API key by name
+
+Usage
+^^^^^
+
+- ``api-key:delete [<name>]``
+
+The api-key:delete command allows you to delete an existing API key via its name.
+
+If no arguments are provided, you will be prompted to select one of the existing API keys.
+
+    /usr/local/bin/shlink api-key:delete
+
+You can optionally pass the API key name to be disabled:
+
+    /usr/local/bin/shlink api-key:delete the_key_name
+
+
+Arguments
+^^^^^^^^^
+
+name
+
+api-key:list
+............
+
+Lists all the available API keys.
+
+Usage
+^^^^^
+
+- ``api-key:list [-e|--enabled-only]``
+
+Lists all the available API keys.
+
+Options
+^^^^^^^
+
+\-\-enabled-only|-e
+"""""""""""""""""""
+
+Tells if only enabled API keys should be returned.
+
+- **Accept value**: no
+- **Is value required**: no
+- **Is multiple**: no
+- **Is negatable**: no
+- **Default**: ``false``
+
+
+
+api-key:initial
+...............
+
+Tries to create initial API key
+
+Usage
+^^^^^
+
+- ``api-key:initial <api-key>``
+
+Tries to create initial API key
+
+Arguments
+^^^^^^^^^
+
+api-key
+
+api-key:rename
+..............
+
+Renames an API key by name
+
+Usage
+^^^^^
+
+- ``api-key:rename <old-name> <new-name>``
+
+Renames an API key by name
+
+Arguments
+^^^^^^^^^
+
+old-name
+
+new-name
+
+--- stderr

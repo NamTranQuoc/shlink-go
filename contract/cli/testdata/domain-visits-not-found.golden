@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+In DomainNotFoundException.php line 39:
+                                                          
+  Domain with authority "invalid.com" could not be found  
+                                                          
+
+domain:visits [-s|--start-date START-DATE] [-e|--end-date END-DATE] [-f|--format FORMAT] [--] <domain>
+

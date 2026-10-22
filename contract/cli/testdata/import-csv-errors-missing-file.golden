@@ -1,0 +1,18 @@
+exit: 1
+--- stdout
+
+ What's the path for the CSV file you want to import:
+ > 
+
+ [ERROR] The file "/nope" does not seem to exist. Try another one.              
+
+ What's the path for the CSV file you want to import:
+ > --- stderr
+
+In InvalidPathException.php line 21:
+                                                             
+  The file "/nope" does not seem to exist. Try another one.  
+                                                             
+
+short-url:import <source>
+

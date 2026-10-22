@@ -1,0 +1,7 @@
+exit: 0
+--- stdout
+Initializing database if needed... Success!
+Updating database... Success!
+Generating proxies... Success!
+Clearing entities cache... Success!
+--- stderr

@@ -1,0 +1,22 @@
+exit: 0
+--- stdout
++-----------------------------+------------+--------------------------+
+| Domain                      | Is default | "Not found" redirects    |
++-----------------------------+------------+--------------------------+
+| s.test                      | Yes        | * Base URL: N/A          |
+|                             |            | * Regular 404: N/A       |
+|                             |            | * Invalid short URL: N/A |
++-----------------------------+------------+--------------------------+
+| detached-with-redirects.com | No         | * Base URL: foo.com      |
+|                             |            | * Regular 404: bar.com   |
+|                             |            | * Invalid short URL: N/A |
++-----------------------------+------------+--------------------------+
+| example.com                 | No         | * Base URL: N/A          |
+|                             |            | * Regular 404: N/A       |
+|                             |            | * Invalid short URL: N/A |
++-----------------------------+------------+--------------------------+
+| some-domain.com             | No         | * Base URL: N/A          |
+|                             |            | * Regular 404: N/A       |
+|                             |            | * Invalid short URL: N/A |
++-----------------------------+------------+--------------------------+
+--- stderr

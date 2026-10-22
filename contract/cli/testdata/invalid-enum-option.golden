@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                                                               
+  The value "bad" is not valid for the "format" option. Supported values are   
+  "full", "paginated", "csv".                                                  
+                                                                               
+
+visit:orphan [-s|--start-date START-DATE] [-e|--end-date END-DATE] [-f|--format FORMAT] [-d|--domain DOMAIN] [-t|--type TYPE]
+

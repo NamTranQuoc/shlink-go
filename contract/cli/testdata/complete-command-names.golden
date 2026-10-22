@@ -1,0 +1,35 @@
+exit: 0
+--- stdout
+help
+list
+completion
+api-key:delete
+api-key:generate
+api-key:initial
+api-key:list
+domain:list
+domain:redirects
+domain:visits
+integration:matomo:send-visits
+short-url:create
+short-url:delete
+short-url:delete-expired
+short-url:edit
+short-url:import
+short-url:list
+short-url:manage-rules
+short-url:resolve
+short-url:visits
+short-url:visits-delete
+tag:delete
+tag:list
+tag:rename
+tag:visits
+visit:download-db
+visit:locate
+visit:non-orphan
+visit:orphan
+visit:orphan-delete
+api-key:disable
+api-key:rename
+--- stderr

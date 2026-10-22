@@ -1,0 +1,208 @@
+exit: 0
+--- stdout
+<?xml version="1.0" encoding="UTF-8"?>
+<symfony name="Shlink" version="5.1.8">
+  <commands>
+    <command id="_complete" name="_complete" hidden="1">
+      <usages/>
+      <description>Internal command to provide shell completion suggestions</description>
+    </command>
+    <command id="completion" name="completion" hidden="0">
+      <usages/>
+      <description>Dump the shell completion script</description>
+    </command>
+    <command id="help" name="help" hidden="0">
+      <usages/>
+      <description>Display help for a command</description>
+    </command>
+    <command id="list" name="list" hidden="0">
+      <usages/>
+      <description>List commands</description>
+    </command>
+    <command id="api-key:delete" name="api-key:delete" hidden="0">
+      <usages/>
+      <description>Deletes an API key by name</description>
+    </command>
+    <command id="api-key:disable" name="api-key:disable" hidden="0">
+      <usages/>
+      <description>Disables an API key by name</description>
+    </command>
+    <command id="api-key:generate" name="api-key:generate" hidden="0">
+      <usages/>
+      <description>Generate a new valid API key</description>
+    </command>
+    <command id="api-key:initial" name="api-key:initial" hidden="0">
+      <usages/>
+      <description>Tries to create initial API key</description>
+    </command>
+    <command id="api-key:list" name="api-key:list" hidden="0">
+      <usages/>
+      <description>Lists all the available API keys.</description>
+    </command>
+    <command id="api-key:rename" name="api-key:rename" hidden="0">
+      <usages/>
+      <description>Renames an API key by name</description>
+    </command>
+    <command id="db:create" name="db:create" hidden="1">
+      <usages/>
+      <description>Creates the database needed for shlink to work. It will do nothing if the database already exists</description>
+    </command>
+    <command id="db:migrate" name="db:migrate" hidden="1">
+      <usages/>
+      <description>Runs database migrations, which will ensure the shlink database is up to date</description>
+    </command>
+    <command id="domain:list" name="domain:list" hidden="0">
+      <usages/>
+      <description>List all domains that have been ever used for some short URL</description>
+    </command>
+    <command id="domain:redirects" name="domain:redirects" hidden="0">
+      <usages/>
+      <description>Set specific "not found" redirects for individual domains.</description>
+    </command>
+    <command id="domain:visits" name="domain:visits" hidden="0">
+      <usages/>
+      <description>Returns the list of visits for provided domain</description>
+    </command>
+    <command id="env-var:read" name="env-var:read" hidden="1">
+      <usages/>
+      <description>Display current value for an env var</description>
+    </command>
+    <command id="integration:matomo:send-visits" name="integration:matomo:send-visits" hidden="0">
+      <usages/>
+      <description>Send existing visits to the configured matomo instance</description>
+    </command>
+    <command id="short-url:create" name="short-url:create" hidden="0">
+      <usages/>
+      <description>Generates a short URL for provided long URL and returns it</description>
+    </command>
+    <command id="short-url:delete" name="short-url:delete" hidden="0">
+      <usages/>
+      <description>Deletes a short URL</description>
+    </command>
+    <command id="short-url:delete-expired" name="short-url:delete-expired" hidden="0">
+      <usages/>
+      <description>Deletes all short URLs that are considered expired, because they have a validUntil date in the past</description>
+    </command>
+    <command id="short-url:edit" name="short-url:edit" hidden="0">
+      <usages/>
+      <description>Edit an existing short URL</description>
+    </command>
+    <command id="short-url:import" name="short-url:import" hidden="0">
+      <usages/>
+      <description>Allows to import short URLs from third party sources</description>
+    </command>
+    <command id="short-url:list" name="short-url:list" hidden="0">
+      <usages/>
+      <description>List all short URLs</description>
+    </command>
+    <command id="short-url:manage-rules" name="short-url:manage-rules" hidden="0">
+      <usages/>
+      <description>Set redirect rules for a short URL</description>
+    </command>
+    <command id="short-url:resolve" name="short-url:resolve" hidden="0">
+      <usages/>
+      <description>Returns the long URL behind a short code</description>
+    </command>
+    <command id="short-url:visits" name="short-url:visits" hidden="0">
+      <usages/>
+      <description>Returns the detailed visits information for provided short code</description>
+    </command>
+    <command id="short-url:visits-delete" name="short-url:visits-delete" hidden="0">
+      <usages/>
+      <description>Deletes visits from a short URL</description>
+    </command>
+    <command id="tag:delete" name="tag:delete" hidden="0">
+      <usages/>
+      <description>Deletes one or more tags.</description>
+    </command>
+    <command id="tag:list" name="tag:list" hidden="0">
+      <usages/>
+      <description>Lists existing tags.</description>
+    </command>
+    <command id="tag:rename" name="tag:rename" hidden="0">
+      <usages/>
+      <description>Renames one existing tag.</description>
+    </command>
+    <command id="tag:visits" name="tag:visits" hidden="0">
+      <usages/>
+      <description>Returns the list of visits for provided tag</description>
+    </command>
+    <command id="visit:download-db" name="visit:download-db" hidden="0">
+      <usages/>
+      <description>Checks if the GeoLite2 db file is too old or it does not exist, and tries to download an up-to-date copy if so</description>
+    </command>
+    <command id="visit:locate" name="visit:locate" hidden="0">
+      <usages/>
+      <description>Resolves visits origin locations. It implicitly downloads/updates the GeoLite2 db file if needed</description>
+    </command>
+    <command id="visit:non-orphan" name="visit:non-orphan" hidden="0">
+      <usages/>
+      <description>Returns the list of non-orphan visits</description>
+    </command>
+    <command id="visit:orphan" name="visit:orphan" hidden="0">
+      <usages/>
+      <description>Returns the list of orphan visits</description>
+    </command>
+    <command id="visit:orphan-delete" name="visit:orphan-delete" hidden="0">
+      <usages/>
+      <description>Deletes all orphan visits</description>
+    </command>
+  </commands>
+  <namespaces>
+    <namespace id="_global">
+      <command>_complete</command>
+      <command>completion</command>
+      <command>help</command>
+      <command>list</command>
+    </namespace>
+    <namespace id="api-key">
+      <command>api-key:delete</command>
+      <command>api-key:disable</command>
+      <command>api-key:generate</command>
+      <command>api-key:initial</command>
+      <command>api-key:list</command>
+      <command>api-key:rename</command>
+    </namespace>
+    <namespace id="db">
+      <command>db:create</command>
+      <command>db:migrate</command>
+    </namespace>
+    <namespace id="domain">
+      <command>domain:list</command>
+      <command>domain:redirects</command>
+      <command>domain:visits</command>
+    </namespace>
+    <namespace id="env-var">
+      <command>env-var:read</command>
+    </namespace>
+    <namespace id="integration">
+      <command>integration:matomo:send-visits</command>
+    </namespace>
+    <namespace id="short-url">
+      <command>short-url:create</command>
+      <command>short-url:delete</command>
+      <command>short-url:delete-expired</command>
+      <command>short-url:edit</command>
+      <command>short-url:import</command>
+      <command>short-url:list</command>
+      <command>short-url:manage-rules</command>
+      <command>short-url:resolve</command>
+      <command>short-url:visits</command>
+      <command>short-url:visits-delete</command>
+    </namespace>
+    <namespace id="tag">
+      <command>tag:delete</command>
+      <command>tag:list</command>
+      <command>tag:rename</command>
+      <command>tag:visits</command>
+    </namespace>
+    <namespace id="visit">
+      <command>visit:download-db</command>
+      <command>visit:locate</command>
+      <command>visit:non-orphan</command>
+      <command>visit:orphan</command>
+      <command>visit:orphan-delete</command>
+    </namespace>
+  </namespaces>
+</symfony>
+--- stderr

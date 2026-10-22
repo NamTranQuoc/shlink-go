@@ -1,0 +1,48 @@
+# Benchmark topology: one PostgreSQL, one app container at a time (upstream or the Go port) with identical limits.
+name: shlink-bench
+
+x-app: &app
+  depends_on:
+    postgres: {condition: service_healthy}
+  environment:
+    DEFAULT_DOMAIN: s.test
+    IS_HTTPS_ENABLED: "false"
+    DB_DRIVER: postgres
+    DB_HOST: postgres
+    DB_NAME: shlink
+    DB_USER: postgres
+    DB_PASSWORD: root
+    TIMEZONE: UTC
+    SKIP_INITIAL_GEOLITE_DOWNLOAD: "true"
+    AUTO_RESOLVE_TITLES: "false"
+    DISABLE_TRACK_PARAM: nostat
+    LOGS_FORMAT: json
+  cpus: ${APP_CPUS:-1}
+  mem_limit: ${APP_MEMORY:-512m}
+  memswap_limit: ${APP_MEMORY:-512m}
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: shlink
+    cpus: 2
+    mem_limit: 2g
+    ports: ["35432:5432"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 1s
+      retries: 60
+
+  php:
+    <<: *app
+    image: shlinkio/shlink:5.1.8
+    profiles: [php]
+    ports: ["38080:8080"]
+
+  go:
+    <<: *app
+    image: shlink-go:dev
+    profiles: [go]
+    ports: ["38081:8080"]

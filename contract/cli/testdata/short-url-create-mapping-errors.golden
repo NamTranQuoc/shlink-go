@@ -1,0 +1,14 @@
+exit: 1
+--- stdout
+--- stderr
+
+In TypeTreeMapper.php line 38:
+                                                                               
+  Could not map type `Shlinkio\Shlink\Core\ShortUrl\Model\ShortUrlCreation` w  
+  ith value array{tags: array{…}, title: 'it\'s a "quoted" title that is long  
+  er than fifty…', longUrl: 'foo', domain: 'a b', customSlug: null, shortCode  
+  Length: 5, …}. A total of 2 errors were encountered.                         
+                                                                               
+
+short-url:create [-t|--tag TAG] [-s|--valid-since VALID-SINCE] [-u|--valid-until VALID-UNTIL] [-m|--max-visits MAX-VISITS] [--title TITLE] [-r|--crawlable|--no-crawlable] [-w|--no-forward-query|--no-no-forward-query] [-d|--domain DOMAIN] [-c|--custom-slug CUSTOM-SLUG] [-l|--short-code-length SHORT-CODE-LENGTH] [-p|--path-prefix PATH-PREFIX] [-f|--find-if-exists] [--] <long-url>
+

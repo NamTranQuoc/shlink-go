@@ -1,0 +1,29 @@
+# Upstream Shlink source and vendor tree, read locally only
+/reference/
+
+# Local runtime state (sqlite files, logs, schema dumps, GeoLite2 databases)
+/var/
+/data/
+*.mmdb
+*.sqlite
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Build output
+/bin/
+/dist/
+*.test
+*.out
+coverage.*
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+/bench/data/
+/shlink
+/.playwright-mcp/
+node_modules/

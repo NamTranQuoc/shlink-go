@@ -1,0 +1,12 @@
+exit: 0
+--- stdout
+
+ URL to redirect to when a user hits this domain's base URL (Leave empty for no redirect):
+ > 
+ URL to redirect to when a user hits a not found URL other than an invalid short URL (Leave empty for no redirect):
+ > 
+ URL to redirect to when a user hits an invalid short URL (Leave empty for no redirect):
+ > 
+ [OK] "Not found" redirects properly set for "example.com"                      
+
+--- stderr

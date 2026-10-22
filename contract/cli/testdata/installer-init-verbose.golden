@@ -1,0 +1,8 @@
+exit: 0
+--- stdout
+Updating database... [Running "/usr/local/bin/php bin/cli db:migrate"]  Success!
+Generating proxies... [Running "/usr/local/bin/php bin/doctrine orm:generate-proxies"]  Success!
+Creating first API key... [Running "/usr/local/bin/php bin/cli api-key:initial valid_api_key"]  Success!
+ Other API keys already exist. Initial API key creation skipped.
+
+--- stderr

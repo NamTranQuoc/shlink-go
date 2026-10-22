@@ -1,0 +1,6 @@
+exit: 1
+--- stdout
+
+ [ERROR] No URL found with short code "nope" for domain "foo.com"               
+
+--- stderr

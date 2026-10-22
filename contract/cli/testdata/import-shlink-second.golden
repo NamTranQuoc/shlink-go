@@ -1,0 +1,31 @@
+exit: 0
+--- stdout
+
+ Do you want to import each short URL's visits too? (yes/no) [yes]:
+ > 
+ Do you want to import orphan visits too? (yes/no) [yes]:
+ > 
+ What is your Shlink instance base URL?:
+ > 
+ What is your Shlink instance API key?:
+ > 
+Importing short URLs
+====================
+
+ https://shlink.io/imported-1: Skipped
+
+ Failed to import URL "https://shlink.io/conflicting" because its short-code "abc123" is already in use. Do you want to generate a new one or skip it? [Skip]:
+  [0] Generate new short-code
+  [1] Skip
+ > 
+ https://shlink.io/conflicting: Error
+ https://shlink.io/imported-3: Skipped
+
+Importing orphan visits
+=======================
+
+ Imported 0 orphan visits.
+
+ [OK] Data properly imported!                                                   
+
+--- stderr

@@ -1,0 +1,7 @@
+exit: 0
+--- stdout
+
+ [OK] Database already exists. Run "db:migrate" command to make sure it is up to
+      date.                                                                     
+
+--- stderr

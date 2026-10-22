@@ -1,0 +1,6 @@
+exit: 0
+--- stdout
+
+ [OK] Short URL "http://example.com/ghi789" properly edited                     
+
+--- stderr

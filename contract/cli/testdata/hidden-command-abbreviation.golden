@@ -1,0 +1,9 @@
+exit: 1
+--- stdout
+
+                                
+  Command "db" is not defined.  
+                                
+
+ Do you want to run "visit:download-db" instead?  (yes/no) [no]:
+ > --- stderr

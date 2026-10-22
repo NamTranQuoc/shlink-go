@@ -1,0 +1,17 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                     
+  Command "tag:lst" is not defined.  
+                                     
+  Did you mean one of these?         
+      api-key:list                   
+      domain:list                    
+      short-url:list                 
+      tag:delete                     
+      tag:list                       
+      tag:rename                     
+      tag:visits                     
+                                     
+

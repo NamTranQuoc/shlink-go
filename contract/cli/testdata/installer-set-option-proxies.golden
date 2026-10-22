@@ -1,0 +1,79 @@
+exit: 0
+--- stdout
+
+ What config option do you want to change:
+  [0 ] Memory limit
+  [1 ] Logs format
+  [2 ] Database > Driver
+  [3 ] Database > Name
+  [4 ] Database > Host (or unix socket for PostgreSQL)
+  [5 ] Database > Port
+  [6 ] Database > User
+  [7 ] Database > Password
+  [8 ] Database > Unix socket (Mysql/MariaDB)
+  [9 ] Database > Use encryption
+  [10] URL shortener > Short domain
+  [11] URL shortener > Schema
+  [12] URL shortener > Short codes length
+  [13] URL shortener > Auto resolve titles
+  [14] URL shortener > Extra path mode
+  [15] URL shortener > Multi-segment slugs
+  [16] URL shortener > Trailing slashes
+  [17] URL shortener > Mode
+  [18] GeoLite2 license key
+  [19] Redirects > Status code (301/302/307/308)
+  [20] Redirects > Caching life time
+  [21] Redirects > Caching visibility
+  [22] Tracking > Orphan visits tracking
+  [23] Tracking > Param to disable tracking
+  [24] Tracking > Disabled IP addresses
+  [25] Tracking > Disable tracking
+  [26] Tracking > Disable IP address tracking
+  [27] Tracking > IP Anonymization
+  [28] Tracking > Disable user agent tracking
+  [29] Tracking > Disable referrer tracking
+  [30] Redirects > Base URL
+  [31] Redirects > Invalid short URL
+  [32] Redirects > Regular 404
+  [33] Robots.txt > allow all
+  [34] Robots.txt > user agents
+  [35] CORS > Allow origin
+  [36] CORS > Allow credentials
+  [37] CORS > Max age
+  [38] Delete short URLs > Visits threshold
+  [39] Base path
+  [40] Timezone
+  [41] Cache > namespace
+  [42] Trusted proxies
+  [43] Redis > servers
+  [44] Redis > sentinels service
+  [45] Redis > servers user
+  [46] Redis > servers password
+  [47] Redis > Pub/sub enabled
+  [48] Mercure > Public URL
+  [49] Mercure > Internal URL
+  [50] Mercure > JWT Secret
+  [51] RabbitMQ > Enable
+  [52] RabbitMQ > Host
+  [53] RabbitMQ > SSL
+  [54] RabbitMQ > Port
+  [55] RabbitMQ > User
+  [56] RabbitMQ > Password
+  [57] RabbitMQ > VHost
+  [58] Matomo > Enable
+  [59] Matomo > Server URL
+  [60] Matomo > Site ID
+  [61] Matomo > API token
+  [62] Real-time updates > topics
+ > 
+ Do you have more than one proxy in front of this Shlink instance? (yes/no) [no]:
+ > 
+ How do you want your proxies IP addresses to be identified, so that the visitor IP address can be properly determined? [Define a comma-separated list of IP addresses, CIDR blocks or wildcard addresses (1.2.*.*)]:
+  [amount] Just set the amount of proxies
+  [list  ] Define a comma-separated list of IP addresses, CIDR blocks or wildcard addresses (1.2.*.*)
+ > 
+ Provide a comma-separated list of your proxies' IP addresses, CIDR blocks or wildcard addresses (1.2.*.*):
+ > 
+ [OK] Configuration properly updated                                            
+
+--- stderr

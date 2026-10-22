@@ -1,0 +1,12 @@
+exit: 0
+--- stdout
++------------+----------------+----------------------------------------+------------------------------+---------------------------+--------------+-------------------+----------------------+
+| Short Code | Title          | Short URL                              | Long URL                     | Date created              | Visits count | Tags              | Domain               |
++------------+----------------+----------------------------------------+------------------------------+---------------------------+--------------+-------------------+----------------------+
+| imported-3 |                | http://imported.example.com/imported-3 | https://shlink.io/imported-3 | YYYY-MM-DDTHH:MM:SS+00:00 | 0            | bar               | imported.example.com |
+| imported-1 | Imported title | http://s.test/imported-1               | https://shlink.io/imported-1 | YYYY-MM-DDTHH:MM:SS+00:00 | 3            | Imported Tag, foo | DEFAULT              |
++------------+----------------+----------------------------------------+---------------- Page 1 of 1 -+---------------------------+--------------+-------------------+----------------------+
+
+ [OK] Short URLs properly listed                                                
+
+--- stderr

@@ -1,0 +1,9 @@
+exit: 1
+--- stdout
+
+Importing short URLs
+====================
+
+ [ERROR] An error occurred while importing URLs.                                
+
+--- stderr

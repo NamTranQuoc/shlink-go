@@ -1,0 +1,8 @@
+exit: 2
+--- stdout
+
+ [WARNING] You are about to delete an API key. This action cannot be undone.    
+
+ Are you sure you want to delete the API key? (yes/no) [yes]:
+ > 
+--- stderr

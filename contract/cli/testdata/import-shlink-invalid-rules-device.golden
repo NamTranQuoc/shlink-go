@@ -1,0 +1,34 @@
+exit: 255
+--- stdout
+
+ Do you want to import each short URL's visits too? (yes/no) [yes]:
+ > 
+ Do you want to import orphan visits too? (yes/no) [yes]:
+ > 
+ What is your Shlink instance base URL?:
+ > 
+ What is your Shlink instance API key?:
+ > 
+Importing short URLs
+====================
+
+
+Fatal error: Uncaught ValueError: "smartwatch" is not a valid backing value for enum Shlinkio\Shlink\Core\Model\DeviceType in /etc/shlink/module/Core/src/RedirectRule/Entity/RedirectCondition.php:114
+Stack trace:
+#0 /etc/shlink/module/Core/src/RedirectRule/Entity/RedirectCondition.php(114): Shlinkio\Shlink\Core\Model\DeviceType::from('smartwatch')
+#1 /etc/shlink/module/Core/src/Importer/ShortUrlImporting.php(83): Shlinkio\Shlink\Core\RedirectRule\Entity\RedirectCondition::fromImport(Object(Shlinkio\Shlink\Importer\Model\ImportedShlinkRedirectCondition))
+#2 /etc/shlink/module/Core/functions/array-utils.php(60): Shlinkio\Shlink\Core\Importer\ShortUrlImporting::{closure:Shlinkio\Shlink\Core\Importer\ShortUrlImporting::importRedirectRules():78}(Object(Shlinkio\Shlink\Importer\Model\ImportedShlinkRedirectRule), 0)
+#3 /etc/shlink/module/Core/src/Importer/ShortUrlImporting.php(76): Shlinkio\Shlink\Core\ArrayUtils\map(Array, Object(Closure))
+#4 /etc/shlink/module/Core/src/Importer/ImportedLinksProcessor.php(88): Shlinkio\Shlink\Core\Importer\ShortUrlImporting->importRedirectRules(Array, Object(Shlinkio\Shlink\Common\Doctrine\ReopeningEntityManager), Object(Shlinkio\Shlink\Core\RedirectRule\ShortUrlRedirectRuleService))
+#5 /etc/shlink/module/Core/src/Importer/ImportedLinksProcessor.php(42): Shlinkio\Shlink\Core\Importer\ImportedLinksProcessor->importShortUrls(Object(Symfony\Component\Console\Style\SymfonyStyle), Object(Generator), Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#6 /etc/shlink/vendor/shlinkio/shlink-importer/src/Command/ImportCommand.php(48): Shlinkio\Shlink\Core\Importer\ImportedLinksProcessor->process(Object(Symfony\Component\Console\Style\SymfonyStyle), Object(Shlinkio\Shlink\Importer\Model\ImportResult), Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#7 [internal function]: Shlinkio\Shlink\Importer\Command\ImportCommand->__invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::SHLINK)
+#8 /etc/shlink/vendor/symfony/console/Command/InvokableCommand.php(65): ReflectionFunction->invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::SHLINK)
+#9 /etc/shlink/vendor/symfony/console/Command/Command.php(282): Symfony\Component\Console\Command\InvokableCommand->__invoke(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#10 /etc/shlink/vendor/symfony/console/Application.php(1129): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#11 /etc/shlink/vendor/symfony/console/Application.php(380): Symfony\Component\Console\Application->doRunCommand(Object(Shlinkio\Shlink\Importer\Command\ImportCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#12 /etc/shlink/vendor/symfony/console/Application.php(219): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 /etc/shlink/bin/cli(10): Symfony\Component\Console\Application->run()
+#14 {main}
+  thrown in /etc/shlink/module/Core/src/RedirectRule/Entity/RedirectCondition.php on line 114
+--- stderr

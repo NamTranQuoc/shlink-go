@@ -1,0 +1,8 @@
+exit: 0
+--- stdout
+
+ Which URL do you want to shorten?:
+ > 
+Processed long URL: https://example.com/asked
+Generated short URL: http://example.com/asked
+--- stderr

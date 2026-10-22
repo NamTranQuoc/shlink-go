@@ -1,0 +1,23 @@
+exit: 0
+--- stdout
+Shlink 5.1.8
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display help for the given command. When no command is given display help for the list command
+      --silent          Do not output any message
+  -q, --quiet           Only errors are displayed. All other output is suppressed
+  -V, --version         Display this application version
+      --ansi|--no-ansi  Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Available commands for the "visit" namespace:
+  visit:download-db    Checks if the GeoLite2 db file is too old or it does not exist, and tries to download an up-to-date copy if so
+  visit:locate         Resolves visits origin locations. It implicitly downloads/updates the GeoLite2 db file if needed
+  visit:non-orphan     Returns the list of non-orphan visits
+  visit:orphan         Returns the list of orphan visits
+  visit:orphan-delete  Deletes all orphan visits
+--- stderr

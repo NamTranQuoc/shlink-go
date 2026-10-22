@@ -1,0 +1,10 @@
+exit: 0
+--- stdout
++---------------------------+---------------+--------------------+--------------------+---------+---------+---------+-------------+--------------+-----------------+
+| Date                      | Potential bot | User agent         | Referer            | Country | Region  | City    | Visited URL | Redirect URL | Type            |
++---------------------------+---------------+--------------------+--------------------+---------+---------+---------+-------------+--------------+-----------------+
+| YYYY-MM-DDTHH:MM:SS+00:00 |               | shlink-tests-agent |                    | Unknown | Unknown | Unknown |             | Unknown      | valid_short_url |
+| YYYY-MM-DDTHH:MM:SS+00:00 |               | shlink-tests-agent | https://google.com | Unknown | Unknown | Unknown |             | Unknown      | valid_short_url |
+| YYYY-MM-DDTHH:MM:SS+00:00 |               | shlink-tests-agent |                    | Unknown | Unknown | Unknown |             | Unknown      | valid_short_url |
++---------------------------+---------------+--------------------+--------- Page 1 of 1 --------+---------+---------+-------------+--------------+-----------------+
+--- stderr

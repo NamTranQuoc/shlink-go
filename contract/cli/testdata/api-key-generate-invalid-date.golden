@@ -1,0 +1,12 @@
+exit: 1
+--- stdout
+--- stderr
+
+In Chronos.php line 242:
+                                                                               
+  Failed to parse time string (invalid) at position 0 (i): The timezone could  
+   not be found in the database                                                
+                                                                               
+
+api-key:generate [-m|--name NAME] [-e|--expiration-date EXPIRATION-DATE] [-a|--author-only] [-d|--domain-only DOMAIN-ONLY] [-o|--no-orphan-visits]
+

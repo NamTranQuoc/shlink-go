@@ -1,0 +1,6 @@
+exit: 1
+--- stdout
+
+ [ERROR] Tag with name "invalid" could not be found                             
+
+--- stderr

@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+In ShortUrlNotFoundException.php line 27:
+                                       
+  No URL found with short code "nope"  
+                                       
+
+short-url:visits [-s|--start-date START-DATE] [-e|--end-date END-DATE] [-f|--format FORMAT] [-d|--domain DOMAIN] [--] <short-code>
+

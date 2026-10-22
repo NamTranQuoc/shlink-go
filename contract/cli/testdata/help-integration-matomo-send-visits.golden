@@ -1,0 +1,40 @@
+exit: 0
+--- stdout
+Description:
+  Send existing visits to the configured matomo instance
+
+Usage:
+  integration:matomo:send-visits [options]
+
+Options:
+  -s, --since=SINCE     Only visits created since this date, inclusively, will be sent to Matomo
+  -u, --until=UNTIL     Only visits created until this date, inclusively, will be sent to Matomo
+  -h, --help            Display help for the given command. When no command is given display help for the list command
+      --silent          Do not output any message
+  -q, --quiet           Only errors are displayed. All other output is suppressed
+  -V, --version         Display this application version
+      --ansi|--no-ansi  Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Help:
+  This command allows you to send existing visits from this Shlink instance to the configured Matomo server.
+  
+  Its intention is to allow you to configure Matomo at some point in time, and still have your whole visits 
+  history tracked there.
+  
+  This command will unconditionally send to Matomo all visits for a specific date range, so make sure you 
+  provide the proper limits to avoid duplicated visits.
+  
+  Send all visits created so far:
+      integration:matomo:send-visits
+  
+  Send all visits created before 2024:
+      integration:matomo:send-visits --until 2023-12-31
+  
+  Send all visits created after a specific day:
+      integration:matomo:send-visits --since 2022-03-27
+  
+  Send all visits created during 2022:
+      integration:matomo:send-visits --since 2022-01-01 --until 2022-12-31
+--- stderr

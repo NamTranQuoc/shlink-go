@@ -1,0 +1,4 @@
+exit: 2
+--- stdout
+--- stderr
+Detected shell "pwsh", which is not supported by Symfony shell completion (supported shells: "bash", "fish", "zsh").

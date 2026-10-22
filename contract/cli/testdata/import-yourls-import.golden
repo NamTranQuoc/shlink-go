@@ -1,0 +1,22 @@
+exit: 0
+--- stdout
+
+ Do you want to import each short URL's visits too? (yes/no) [yes]:
+ > 
+ What is your YOURLS instance base URL?:
+ > 
+ What is your YOURLS instance username?:
+ > 
+ What is your YOURLS instance password?:
+ > 
+ To what domain do you want the URLs to be linked? (leave empty to link them to default domain):
+ > 
+Importing short URLs
+====================
+
+ https://yourls.org/one: Imported with 2 visits
+ https://yourls.org/conflicting: Imported
+
+ [OK] Data properly imported!                                                   
+
+--- stderr

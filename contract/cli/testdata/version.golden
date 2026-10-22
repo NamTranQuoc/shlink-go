@@ -1,0 +1,4 @@
+exit: 0
+--- stdout
+Shlink 5.1.8
+--- stderr

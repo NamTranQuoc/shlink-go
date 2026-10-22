@@ -1,0 +1,14 @@
+exit: 0
+--- stdout
+
+ What API key do you want to disable?:
+  [0] valid_api_key
+  [1] expired_api_key
+  [2] author_api_key
+  [3] domain_api_key
+  [4] no_orphans_api_key
+ > 
+
+ [OK] API key "expired_api_key" properly disabled                               
+
+--- stderr

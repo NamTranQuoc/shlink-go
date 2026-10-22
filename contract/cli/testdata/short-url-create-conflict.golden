@@ -1,0 +1,6 @@
+exit: 1
+--- stdout
+
+ [ERROR] Provided slug "custom" is already in use.                              
+
+--- stderr

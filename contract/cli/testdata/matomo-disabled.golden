@@ -1,0 +1,6 @@
+exit: 2
+--- stdout
+
+ [WARNING] Matomo integration is not enabled in this Shlink instance            
+
+--- stderr

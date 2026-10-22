@@ -1,0 +1,12 @@
+exit: 1
+--- stdout
+--- stderr
+
+In InvalidRoleConfigException.php line 16:
+                                                                               
+  You cannot create an API key with the "DOMAIN_SPECIFIC" role attached to th  
+  e default domain. The role is currently limited to non-default domains.      
+                                                                               
+
+api-key:generate [-m|--name NAME] [-e|--expiration-date EXPIRATION-DATE] [-a|--author-only] [-d|--domain-only DOMAIN-ONLY] [-o|--no-orphan-visits]
+

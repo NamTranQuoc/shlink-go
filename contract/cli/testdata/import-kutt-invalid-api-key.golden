@@ -1,0 +1,16 @@
+exit: 1
+--- stdout
+
+ What is your Kutt.it instance base URL?:
+ > 
+ What is your Kutt.it instance API key?:
+ > 
+ Do you want to import URLs created anonymously? (yes/no) [no]:
+ > 
+
+Importing short URLs
+====================
+
+ [ERROR] An error occurred while importing URLs.                                
+
+--- stderr

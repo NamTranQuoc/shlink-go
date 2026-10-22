@@ -1,0 +1,14 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                     
+  Command "tag:foo" is not defined.  
+                                     
+  Did you mean one of these?         
+      tag:delete                     
+      tag:list                       
+      tag:rename                     
+      tag:visits                     
+                                     
+

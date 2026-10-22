@@ -1,0 +1,10 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                                              
+  No arguments expected for "tag:list" command, got "extra".  
+                                                              
+
+tag:list
+

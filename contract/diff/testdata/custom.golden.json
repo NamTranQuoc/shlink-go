@@ -1,0 +1,221 @@
+{
+  "base path": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://example.com/localhost:8080/base"
+    },
+    "body": ""
+  },
+  "base path slash": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://example.com/localhost:8080/base"
+    },
+    "body": ""
+  },
+  "cors allowed origin": {
+    "status": 204,
+    "headers": {
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Headers": "x-api-key",
+      "Access-Control-Allow-Methods": "GET,POST",
+      "Access-Control-Allow-Origin": "https://b.test",
+      "Access-Control-Max-Age": "600",
+      "Allow": "GET,POST"
+    },
+    "body": ""
+  },
+  "cors get": {
+    "status": 200,
+    "headers": {
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Origin": "https://a.test",
+      "Content-Length": "120",
+      "Content-Type": "application/health+json"
+    },
+    "body": "{\"status\":\"pass\",\"version\":\"5.1.8\",\"links\":{\"about\":\"https://shlink.io\",\"project\":\"https://github.com/shlinkio/shlink\"}}"
+  },
+  "cors other origin": {
+    "status": 204,
+    "headers": {
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Headers": "",
+      "Access-Control-Allow-Methods": "GET,POST",
+      "Access-Control-Max-Age": "600",
+      "Allow": "GET,POST"
+    },
+    "body": ""
+  },
+  "create multi segment slug": {
+    "status": 200,
+    "headers": {
+      "Content-Length": "363",
+      "Content-Type": "application/json"
+    },
+    "body": "{\"shortUrl\":\"https://s.test/s/foo/bar-baz/qux\",\"shortCode\":\"foo/bar-baz/qux\",\"longUrl\":\"https://e.test/multi\",\"dateCreated\":\"\u003cnow\u003e\",\"tags\":[],\"meta\":{\"validSince\":null,\"validUntil\":null,\"maxVisits\":null},\"domain\":null,\"title\":null,\"crawlable\":false,\"forwardQuery\":true,\"visitsSummary\":{\"total\":0,\"nonBots\":0,\"bots\":0},\"hasRedirectRules\":false}"
+  },
+  "create with path prefix": {
+    "status": 200,
+    "headers": {
+      "Content-Length": "368",
+      "Content-Type": "application/json"
+    },
+    "body": "{\"shortUrl\":\"https://s.test/s/some-prefix/xslug\",\"shortCode\":\"some-prefix/xslug\",\"longUrl\":\"https://e.test/prefix\",\"dateCreated\":\"\u003cnow\u003e\",\"tags\":[],\"meta\":{\"validSince\":null,\"validUntil\":null,\"maxVisits\":null},\"domain\":null,\"title\":null,\"crawlable\":false,\"forwardQuery\":true,\"visitsSummary\":{\"total\":0,\"nonBots\":0,\"bots\":0},\"hasRedirectRules\":false}"
+  },
+  "health in base path": {
+    "status": 200,
+    "headers": {
+      "Content-Length": "120",
+      "Content-Type": "application/health+json"
+    },
+    "body": "{\"status\":\"pass\",\"version\":\"5.1.8\",\"links\":{\"about\":\"https://shlink.io\",\"project\":\"https://github.com/shlinkio/shlink\"}}"
+  },
+  "health outside base path": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://example.com/404?from=localhost%3A8080\u0026path=%2Frest%2Fhealth"
+    },
+    "body": ""
+  },
+  "list shows https urls": {
+    "status": 200,
+    "headers": {
+      "Content-Length": "820",
+      "Content-Type": "application/json"
+    },
+    "body": "{\"shortUrls\":{\"data\":[{\"shortUrl\":\"https://s.test/s/abc123\",\"shortCode\":\"abc123\",\"longUrl\":\"https://shlink.io\",\"dateCreated\":\"2018-05-01T00:00:00+00:00\",\"tags\":[\"foo\"],\"meta\":{\"validSince\":null,\"validUntil\":null,\"maxVisits\":2},\"domain\":null,\"title\":\"My cool title\",\"crawlable\":true,\"forwardQuery\":true,\"visitsSummary\":{\"total\":3,\"nonBots\":3,\"bots\":0},\"hasRedirectRules\":false},{\"shortUrl\":\"https://s.test/s/custom\",\"shortCode\":\"custom\",\"longUrl\":\"https://shlink.io\",\"dateCreated\":\"2019-01-01T00:00:20+00:00\",\"tags\":[],\"meta\":{\"validSince\":null,\"validUntil\":null,\"maxVisits\":2},\"domain\":null,\"title\":null,\"crawlable\":true,\"forwardQuery\":false,\"visitsSummary\":{\"total\":0,\"nonBots\":0,\"bots\":0},\"hasRedirectRules\":false}],\"pagination\":{\"currentPage\":1,\"pagesCount\":3,\"itemsPerPage\":2,\"itemsInCurrentPage\":2,\"totalItems\":6}}}"
+  },
+  "not found deep": {
+    "status": 404,
+    "headers": {
+      "Content-Length": "1488",
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "body": "\u003c!DOCTYPE html\u003e\n\u003chtml lang=\"en\"\u003e\n    \u003chead\u003e\n        \u003ctitle\u003eInvalid Short URL | Shlink\u003c/title\u003e\n        \u003cmeta charset=\"utf-8\"\u003e\n        \u003cmeta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"\u003e\n        \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\"\u003e\n        \u003clink rel=\"shortcut icon\" href=\"/favicon.ico\"\u003e\n        \u003cstyle\u003e\n            *, :before, :after {box-sizing: border-box;}\n            html, body {\n                margin: 0; padding: 0; height: 100%; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; text-align: center;\n                font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n            }\n            p {margin-bottom: 20px;}\n            hr {margin-top: 1rem; margin-bottom: 1rem; border: 0; border-top: 1px solid rgba(0, 0, 0, .1);}\n            .app {min-height: 100%; display: flex; align-items: center; justify-content: center; flex-flow: column;}\n            .container {width: 100%; max-width: 1140px; padding: 0 20px;}\n        \u003c/style\u003e\n    \u003c/head\u003e\n    \u003cbody\u003e\n        \u003cdiv class=\"app\"\u003e\n            \u003cmain class=\"container\"\u003e\n                \u003ch1\u003eOops!\u003c/h1\u003e\n                \u003chr\u003e\n                \u003cp\u003eThis short URL doesn't seem to be valid.\u003c/p\u003e\n                \u003cp\u003eMake sure you included all the characters, with no extra punctuation.\u003c/p\u003e\n            \u003c/main\u003e\n        \u003c/div\u003e\n    \u003c/body\u003e\n\u003c/html\u003e\n"
+  },
+  "orphan visits": {
+    "status": 200,
+    "headers": {
+      "Content-Length": "1485",
+      "Content-Type": "application/json"
+    },
+    "body": "{\"visits\":{\"data\":[{\"referer\":\"\",\"date\":\"\u003cnow\u003e\",\"userAgent\":\"GuzzleHttp/7\",\"visitLocation\":null,\"potentialBot\":true,\"visitedUrl\":\"http://localhost:8080/elsewhere\",\"redirectUrl\":\"https://example.com/404?from=localhost%3A8080\\u0026path=%2Felsewhere\",\"type\":\"regular_404\"},{\"referer\":\"\",\"date\":\"\u003cnow\u003e\",\"userAgent\":\"GuzzleHttp/7\",\"visitLocation\":null,\"potentialBot\":true,\"visitedUrl\":\"http://localhost:8080/s\",\"redirectUrl\":\"https://example.com/localhost:8080/base\",\"type\":\"base_url\"},{\"referer\":\"\",\"date\":\"\u003cnow\u003e\",\"userAgent\":\"GuzzleHttp/7\",\"visitLocation\":null,\"potentialBot\":true,\"visitedUrl\":\"http://localhost:8080/s/nope\",\"redirectUrl\":null,\"type\":\"invalid_short_url\"},{\"referer\":\"https://s.test/foo\",\"date\":\"2020-03-01T00:00:00+00:00\",\"userAgent\":\"cf-facebook\",\"visitLocation\":null,\"potentialBot\":true,\"visitedUrl\":\"https://example.com/short\",\"redirectUrl\":null,\"type\":\"invalid_short_url\"},{\"referer\":\"https://s.test/foo/bar\",\"date\":\"2020-02-01T00:00:00+00:00\",\"userAgent\":\"shlink-tests-agent\",\"visitLocation\":null,\"potentialBot\":false,\"visitedUrl\":\"https://s.test/bar\",\"redirectUrl\":null,\"type\":\"regular_404\"},{\"referer\":\"https://s.test\",\"date\":\"2020-01-01T00:00:00+00:00\",\"userAgent\":\"shlink-tests-agent\",\"visitLocation\":null,\"potentialBot\":false,\"visitedUrl\":\"https://s.test/foo\",\"redirectUrl\":null,\"type\":\"base_url\"}],\"pagination\":{\"currentPage\":1,\"pagesCount\":1,\"itemsPerPage\":6,\"itemsInCurrentPage\":6,\"totalItems\":6}}}"
+  },
+  "pixel": {
+    "status": 200,
+    "headers": {
+      "Content-Length": "43",
+      "Content-Type": "image/gif"
+    },
+    "body": "GIF89a\u0001\u0000\u0001\u0000�\u0000\u0000�\u0000\u0000\u0000\u0000\u0000!�\u0004\u0005\u0010\u0000\u0000\u0000,\u0000\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000\u0002\u0002\u0004\u0001\u0000;"
+  },
+  "redirect": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://blog.alejandrocelaya.com/2017/12/09/acmailer-7-0-the-most-important-release-in-a-long-time/"
+    },
+    "body": ""
+  },
+  "redirect disable track param": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://blog.alejandrocelaya.com/2017/12/09/acmailer-7-0-the-most-important-release-in-a-long-time/?a=b"
+    },
+    "body": ""
+  },
+  "redirect extra path": {
+    "status": 404,
+    "headers": {
+      "Content-Length": "1488",
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "body": "\u003c!DOCTYPE html\u003e\n\u003chtml lang=\"en\"\u003e\n    \u003chead\u003e\n        \u003ctitle\u003eInvalid Short URL | Shlink\u003c/title\u003e\n        \u003cmeta charset=\"utf-8\"\u003e\n        \u003cmeta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"\u003e\n        \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\"\u003e\n        \u003clink rel=\"shortcut icon\" href=\"/favicon.ico\"\u003e\n        \u003cstyle\u003e\n            *, :before, :after {box-sizing: border-box;}\n            html, body {\n                margin: 0; padding: 0; height: 100%; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; text-align: center;\n                font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n            }\n            p {margin-bottom: 20px;}\n            hr {margin-top: 1rem; margin-bottom: 1rem; border: 0; border-top: 1px solid rgba(0, 0, 0, .1);}\n            .app {min-height: 100%; display: flex; align-items: center; justify-content: center; flex-flow: column;}\n            .container {width: 100%; max-width: 1140px; padding: 0 20px;}\n        \u003c/style\u003e\n    \u003c/head\u003e\n    \u003cbody\u003e\n        \u003cdiv class=\"app\"\u003e\n            \u003cmain class=\"container\"\u003e\n                \u003ch1\u003eOops!\u003c/h1\u003e\n                \u003chr\u003e\n                \u003cp\u003eThis short URL doesn't seem to be valid.\u003c/p\u003e\n                \u003cp\u003eMake sure you included all the characters, with no extra punctuation.\u003c/p\u003e\n            \u003c/main\u003e\n        \u003c/div\u003e\n    \u003c/body\u003e\n\u003c/html\u003e\n"
+  },
+  "redirect extra path trailing": {
+    "status": 404,
+    "headers": {
+      "Content-Length": "1488",
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "body": "\u003c!DOCTYPE html\u003e\n\u003chtml lang=\"en\"\u003e\n    \u003chead\u003e\n        \u003ctitle\u003eInvalid Short URL | Shlink\u003c/title\u003e\n        \u003cmeta charset=\"utf-8\"\u003e\n        \u003cmeta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"\u003e\n        \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\"\u003e\n        \u003clink rel=\"shortcut icon\" href=\"/favicon.ico\"\u003e\n        \u003cstyle\u003e\n            *, :before, :after {box-sizing: border-box;}\n            html, body {\n                margin: 0; padding: 0; height: 100%; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; text-align: center;\n                font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n            }\n            p {margin-bottom: 20px;}\n            hr {margin-top: 1rem; margin-bottom: 1rem; border: 0; border-top: 1px solid rgba(0, 0, 0, .1);}\n            .app {min-height: 100%; display: flex; align-items: center; justify-content: center; flex-flow: column;}\n            .container {width: 100%; max-width: 1140px; padding: 0 20px;}\n        \u003c/style\u003e\n    \u003c/head\u003e\n    \u003cbody\u003e\n        \u003cdiv class=\"app\"\u003e\n            \u003cmain class=\"container\"\u003e\n                \u003ch1\u003eOops!\u003c/h1\u003e\n                \u003chr\u003e\n                \u003cp\u003eThis short URL doesn't seem to be valid.\u003c/p\u003e\n                \u003cp\u003eMake sure you included all the characters, with no extra punctuation.\u003c/p\u003e\n            \u003c/main\u003e\n        \u003c/div\u003e\n    \u003c/body\u003e\n\u003c/html\u003e\n"
+  },
+  "redirect head": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://blog.alejandrocelaya.com/2017/12/09/acmailer-7-0-the-most-important-release-in-a-long-time/"
+    },
+    "body": ""
+  },
+  "redirect multi segment": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://e.test/multi?k=v"
+    },
+    "body": ""
+  },
+  "redirect post": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://example.com/404?from=localhost%3A8080\u0026path=%2Fs%2Fdef456"
+    },
+    "body": ""
+  },
+  "redirect trailing slash": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://blog.alejandrocelaya.com/2017/12/09/acmailer-7-0-the-most-important-release-in-a-long-time/"
+    },
+    "body": ""
+  },
+  "resolve multi segment": {
+    "status": 200,
+    "headers": {
+      "Content-Length": "457",
+      "Content-Type": "application/json"
+    },
+    "body": "{\"shortUrl\":\"https://s.test/s/def456\",\"shortCode\":\"def456\",\"longUrl\":\"https://blog.alejandrocelaya.com/2017/12/09/acmailer-7-0-the-most-important-release-in-a-long-time/\",\"dateCreated\":\"2019-01-01T00:00:10+00:00\",\"tags\":[\"bar\",\"foo\"],\"meta\":{\"validSince\":\"2020-05-01T00:00:00+00:00\",\"validUntil\":null,\"maxVisits\":null},\"domain\":null,\"title\":null,\"crawlable\":false,\"forwardQuery\":true,\"visitsSummary\":{\"total\":2,\"nonBots\":1,\"bots\":1},\"hasRedirectRules\":true}"
+  },
+  "robots": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "body": "# For more information about the robots.txt standard, see:\n# https://www.robotstxt.org/orig.html\n\nUser-agent: Googlebot\nUser-agent: Bingbot\nDisallow: /rest/"
+  },
+  "robots outside base path": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://example.com/404?from=localhost%3A8080\u0026path=%2Frobots.txt"
+    },
+    "body": ""
+  },
+  "root outside base path": {
+    "status": 301,
+    "headers": {
+      "Cache-Control": "private,max-age=120",
+      "Content-Length": "0",
+      "Location": "https://example.com/404?from=localhost%3A8080\u0026path=%2F"
+    },
+    "body": ""
+  }
+}

@@ -1,0 +1,6 @@
+exit: 1
+--- stdout
+
+ [ERROR] You cannot rename tag foo to bar, because it already exists            
+
+--- stderr

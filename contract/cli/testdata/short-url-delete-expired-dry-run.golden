@@ -1,0 +1,6 @@
+exit: 0
+--- stdout
+
+ [OK] There are 1 expired short URLs matching provided conditions               
+
+--- stderr

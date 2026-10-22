@@ -1,0 +1,27 @@
+exit: 255
+--- stdout
+
+Importing short URLs
+====================
+
+
+Fatal error: Uncaught ValueError: Path must not be empty in /etc/shlink/vendor/league/csv/src/Stream.php:138
+Stack trace:
+#0 /etc/shlink/vendor/league/csv/src/Stream.php(138): fopen('', 'r', false, NULL)
+#1 /etc/shlink/vendor/league/csv/src/AbstractCsv.php(108): League\Csv\Stream::from('', 'r', NULL)
+#2 /etc/shlink/vendor/league/csv/src/Reader.php(55): League\Csv\AbstractCsv::from('', 'r', NULL)
+#3 /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Csv/CsvImporter.php(47): League\Csv\Reader::from('')
+#4 /etc/shlink/module/Core/src/Util/DoctrineBatchHelper.php(29): Shlinkio\Shlink\Importer\Sources\Csv\CsvImporter->importShortUrls(Object(Shlinkio\Shlink\Importer\Sources\Csv\CsvParams))
+#5 /etc/shlink/module/Core/src/Importer/ImportedLinksProcessor.php(60): Shlinkio\Shlink\Core\Util\DoctrineBatchHelper->wrapIterable(Object(Generator), 100)
+#6 /etc/shlink/module/Core/src/Importer/ImportedLinksProcessor.php(42): Shlinkio\Shlink\Core\Importer\ImportedLinksProcessor->importShortUrls(Object(Symfony\Component\Console\Style\SymfonyStyle), Object(Generator), Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#7 /etc/shlink/vendor/shlinkio/shlink-importer/src/Command/ImportCommand.php(48): Shlinkio\Shlink\Core\Importer\ImportedLinksProcessor->process(Object(Symfony\Component\Console\Style\SymfonyStyle), Object(Shlinkio\Shlink\Importer\Model\ImportResult), Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#8 [internal function]: Shlinkio\Shlink\Importer\Command\ImportCommand->__invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::CSV)
+#9 /etc/shlink/vendor/symfony/console/Command/InvokableCommand.php(65): ReflectionFunction->invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::CSV)
+#10 /etc/shlink/vendor/symfony/console/Command/Command.php(282): Symfony\Component\Console\Command\InvokableCommand->__invoke(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#11 /etc/shlink/vendor/symfony/console/Application.php(1129): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#12 /etc/shlink/vendor/symfony/console/Application.php(380): Symfony\Component\Console\Application->doRunCommand(Object(Shlinkio\Shlink\Importer\Command\ImportCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 /etc/shlink/vendor/symfony/console/Application.php(219): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#14 /etc/shlink/bin/cli(10): Symfony\Component\Console\Application->run()
+#15 {main}
+  thrown in /etc/shlink/vendor/league/csv/src/Stream.php on line 138
+--- stderr

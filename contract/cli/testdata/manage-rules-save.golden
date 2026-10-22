@@ -1,0 +1,26 @@
+exit: 0
+--- stdout
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+  Priority   Conditions                                                            Redirect to                                
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+  1          en language is accepted AND query string contains  param              https://example.com/english-and-foo-query  
+  2          query string contains hello=world AND query string contains foo=bar   https://example.com/multiple-query-params  
+  3          en language is accepted                                               https://example.com/only-english           
+  4          device is android                                                     android://foo/bar                          
+  5          device is ios                                                         fb://profile/33138223345                   
+  6          IP address matches 1.2.3.4                                            https://example.com/static-ip-address      
+  7          device is linux                                                       https://example.com/linux                  
+ ---------- --------------------------------------------------------------------- ------------------------------------------- 
+
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+
+ [OK] Rules properly saved                                                      
+
+--- stderr

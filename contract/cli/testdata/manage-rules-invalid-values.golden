@@ -1,0 +1,62 @@
+exit: 0
+--- stdout
+
+ // No rules found.
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+ Rule priority (the lower the value, the higher the priority) [1]:
+ > 
+
+ [ERROR] The priority must be a numeric positive value                          
+
+ Rule priority (the lower the value, the higher the priority) [1]:
+ > 
+ Long URL to redirect when the rule matches:
+ > 
+
+ [ERROR] Provided value does not match a loose URI pattern                      
+
+ Long URL to redirect when the rule matches:
+ > 
+ Type of the condition?:
+  [0 ] device
+  [1 ] language
+  [2 ] query-param
+  [3 ] any-value-query-param
+  [4 ] valueless-query-param
+  [5 ] ip-address
+  [6 ] geolocation-country-code
+  [7 ] geolocation-city-name
+  [8 ] before-date
+  [9 ] after-date
+  [10] browser
+ > 
+ Language to match?:
+ > 
+
+ [ERROR] The value is mandatory                                                 
+
+ Language to match?:
+ > 
+ Do you want to add another condition? (yes/no) [yes]:
+ > 
+ ---------- ---------------------------- --------------------- 
+  Priority   Conditions                   Redirect to          
+ ---------- ---------------------------- --------------------- 
+  1          es-ES language is accepted   https://example.com  
+ ---------- ---------------------------- --------------------- 
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+--- stderr

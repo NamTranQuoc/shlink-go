@@ -1,0 +1,18 @@
+exit: 0
+--- stdout
+ ---------- ------------------------------------------------------------------------------------------------------------- --------------------------- 
+  Priority   Conditions                                                                                                    Redirect to                
+ ---------- ------------------------------------------------------------------------------------------------------------- --------------------------- 
+  1          device is android                                                                                             https://shlink.io/android  
+  2          query string contains foo=bar AND query string contains  param AND date is before 2030-01-01T08:00:00+00:00   https://shlink.io/query    
+ ---------- ------------------------------------------------------------------------------------------------------------- --------------------------- 
+
+
+ What do you want to do next? [Save and exit]:
+  [0] Add new rule
+  [1] Remove existing rule
+  [2] Re-arrange rule
+  [3] Save and exit
+  [4] Discard changes
+ > 
+--- stderr

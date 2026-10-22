@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                                                               
+  The value "x" is not valid for the "short-code-length" option. Expected a v  
+  alue of type "int".                                                          
+                                                                               
+
+short-url:create [-t|--tag TAG] [-s|--valid-since VALID-SINCE] [-u|--valid-until VALID-UNTIL] [-m|--max-visits MAX-VISITS] [--title TITLE] [-r|--crawlable|--no-crawlable] [-w|--no-forward-query|--no-no-forward-query] [-d|--domain DOMAIN] [-c|--custom-slug CUSTOM-SLUG] [-l|--short-code-length SHORT-CODE-LENGTH] [-p|--path-prefix PATH-PREFIX] [-f|--find-if-exists] [--] <long-url>
+

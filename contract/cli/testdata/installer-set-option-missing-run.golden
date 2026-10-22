@@ -1,0 +1,12 @@
+exit: 1
+--- stdout
+--- stderr
+
+In InvalidShlinkPathException.php line 13:
+                                                                               
+  This command needs to be run inside a Shlink installation directory where t  
+  he "install" command has been run first                                      
+                                                                               
+
+set-option
+

@@ -1,0 +1,10 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                                  
+  FOO is not a valid Shlink environment variable  
+                                                  
+
+env-var:read <env-var>
+

@@ -1,0 +1,18 @@
+exit: 255
+--- stdout
+
+Fatal error: Uncaught TypeError: Shlinkio\Shlink\Importer\Sources\Bitly\BitlyApiParams::__construct(): Argument #1 ($accessToken) must be of type string, null given, called in /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Bitly/BitlyApiParams.php on line 22 and defined in /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Bitly/BitlyApiParams.php:12
+Stack trace:
+#0 /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Bitly/BitlyApiParams.php(22): Shlinkio\Shlink\Importer\Sources\Bitly\BitlyApiParams->__construct(NULL, true, false, true, false, NULL)
+#1 /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Bitly/BitlyApiImporter.php(37): Shlinkio\Shlink\Importer\Sources\Bitly\BitlyApiParams::fromImportParams(Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#2 /etc/shlink/vendor/shlinkio/shlink-importer/src/Command/ImportCommand.php(47): Shlinkio\Shlink\Importer\Sources\Bitly\BitlyApiImporter->import(Object(Shlinkio\Shlink\Importer\Params\ImportParams))
+#3 [internal function]: Shlinkio\Shlink\Importer\Command\ImportCommand->__invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::BITLY)
+#4 /etc/shlink/vendor/symfony/console/Command/InvokableCommand.php(65): ReflectionFunction->invoke(Object(Symfony\Component\Console\Style\SymfonyStyle), Shlinkio\Shlink\Importer\Sources\ImportSource::BITLY)
+#5 /etc/shlink/vendor/symfony/console/Command/Command.php(282): Symfony\Component\Console\Command\InvokableCommand->__invoke(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /etc/shlink/vendor/symfony/console/Application.php(1129): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 /etc/shlink/vendor/symfony/console/Application.php(380): Symfony\Component\Console\Application->doRunCommand(Object(Shlinkio\Shlink\Importer\Command\ImportCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#8 /etc/shlink/vendor/symfony/console/Application.php(219): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#9 /etc/shlink/bin/cli(10): Symfony\Component\Console\Application->run()
+#10 {main}
+  thrown in /etc/shlink/vendor/shlinkio/shlink-importer/src/Sources/Bitly/BitlyApiParams.php on line 12
+--- stderr

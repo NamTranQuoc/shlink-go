@@ -1,0 +1,17 @@
+exit: 1
+--- stdout
+
+ Do you want to import each short URL's visits too? (yes/no) [yes]:
+ > 
+ Do you want to import orphan visits too? (yes/no) [yes]:
+ > 
+ What is your Shlink instance base URL?:
+ > 
+ What is your Shlink instance API key?:
+ > 
+Importing short URLs
+====================
+
+ [ERROR] An error occurred while importing URLs.                                
+
+--- stderr

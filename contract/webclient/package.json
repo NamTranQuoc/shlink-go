@@ -1,0 +1,8 @@
+{
+  "name": "shlink-go-webclient-check",
+  "private": true,
+  "description": "Drives shlink-web-client against a Shlink server to check API compatibility",
+  "type": "module",
+  "scripts": { "check": "node check.mjs" },
+  "devDependencies": { "playwright": "1.56.1" }
+}

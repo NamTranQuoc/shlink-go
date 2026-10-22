@@ -1,0 +1,210 @@
+{
+  "tables": {
+    "api_key_roles": [
+      "api_key_id | BIGINT UNSIGNED | 1 |  | 0",
+      "id | INTEGER | 1 |  | 1",
+      "meta | CLOB | 1 |  | 0",
+      "role_name | VARCHAR(255) | 1 |  | 0"
+    ],
+    "api_keys": [
+      "enabled | BOOLEAN | 1 |  | 0",
+      "expiration_date | DATETIME | 0 | NULL | 0",
+      "id | INTEGER | 1 |  | 1",
+      "key | VARCHAR(255) | 1 |  | 0",
+      "name | VARCHAR(255) | 0 | NULL | 0"
+    ],
+    "domains": [
+      "authority | VARCHAR(255) | 1 |  | 0",
+      "base_url_redirect | CLOB | 0 | NULL | 0",
+      "id | INTEGER | 1 |  | 1",
+      "invalid_short_url_redirect | CLOB | 0 | NULL | 0",
+      "regular_not_found_redirect | CLOB | 0 | NULL | 0"
+    ],
+    "geolocation_db_updates": [
+      "date_created | DATETIME | 1 |  | 0",
+      "date_updated | DATETIME | 0 | NULL | 0",
+      "error | VARCHAR(1024) | 0 | NULL | 0",
+      "filesystem_id | VARCHAR(512) | 1 |  | 0",
+      "id | INTEGER | 1 |  | 1",
+      "reason | VARCHAR(1024) | 1 |  | 0",
+      "status | VARCHAR(128) | 1 |  | 0"
+    ],
+    "migrations": [
+      "executed_at | DATETIME | 0 | NULL | 0",
+      "execution_time | INTEGER | 0 | NULL | 0",
+      "version | VARCHAR(191) | 1 |  | 1"
+    ],
+    "orphan_visits_counts": [
+      "count | BIGINT UNSIGNED | 1 | 1 | 0",
+      "id | INTEGER | 1 |  | 1",
+      "potential_bot | BOOLEAN | 1 | 0 | 0",
+      "slot_id | INTEGER UNSIGNED | 1 |  | 0"
+    ],
+    "redirect_conditions": [
+      "id | INTEGER | 1 |  | 1",
+      "match_key | VARCHAR(512) | 0 | NULL | 0",
+      "match_value | VARCHAR(512) | 0 | NULL | 0",
+      "type | VARCHAR(255) | 1 |  | 0"
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "redirect_condition_id | BIGINT UNSIGNED | 1 |  | 2",
+      "short_url_redirect_rule_id | BIGINT UNSIGNED | 1 |  | 1"
+    ],
+    "short_url_redirect_rules": [
+      "id | INTEGER | 1 |  | 1",
+      "long_url | CLOB | 1 |  | 0",
+      "priority | INTEGER | 1 |  | 0",
+      "short_url_id | BIGINT UNSIGNED | 1 |  | 0"
+    ],
+    "short_url_visits_counts": [
+      "count | BIGINT UNSIGNED | 1 | 1 | 0",
+      "id | INTEGER | 1 |  | 1",
+      "potential_bot | BOOLEAN | 1 | 0 | 0",
+      "short_url_id | BIGINT UNSIGNED | 0 | NULL | 0",
+      "slot_id | INTEGER UNSIGNED | 1 |  | 0"
+    ],
+    "short_urls": [
+      "author_api_key_id | BIGINT UNSIGNED | 0 | NULL | 0",
+      "crawlable | BOOLEAN | 1 | 0 | 0",
+      "date_created | DATETIME | 1 |  | 0",
+      "domain_id | BIGINT UNSIGNED | 0 | NULL | 0",
+      "forward_query | BOOLEAN | 1 | 1 | 0",
+      "id | INTEGER | 1 |  | 1",
+      "import_original_short_code | VARCHAR(255) | 0 | NULL | 0",
+      "import_source | VARCHAR(255) | 0 | NULL | 0",
+      "long_url_hash | BLOB | 1 |  | 0",
+      "max_visits | INTEGER | 0 | NULL | 0",
+      "original_url | CLOB | 1 |  | 0",
+      "short_code | VARCHAR(255) | 1 |  | 0",
+      "title | VARCHAR(512) | 0 | NULL | 0",
+      "title_was_auto_resolved | BOOLEAN | 1 | 0 | 0",
+      "valid_since | DATETIME | 0 | NULL | 0",
+      "valid_until | DATETIME | 0 | NULL | 0"
+    ],
+    "short_urls_in_tags": [
+      "short_url_id | BIGINT UNSIGNED | 1 |  | 1",
+      "tag_id | BIGINT UNSIGNED | 1 |  | 2"
+    ],
+    "tags": [
+      "id | INTEGER | 1 |  | 1",
+      "name | VARCHAR(255) | 1 |  | 0"
+    ],
+    "visit_locations": [
+      "city_name | VARCHAR(255) | 0 | NULL | 0",
+      "country_code | VARCHAR(255) | 0 | NULL | 0",
+      "country_name | VARCHAR(255) | 0 | NULL | 0",
+      "id | INTEGER | 1 |  | 1",
+      "is_empty | BOOLEAN | 1 | 0 | 0",
+      "lat | DOUBLE PRECISION | 1 |  | 0",
+      "lon | DOUBLE PRECISION | 1 |  | 0",
+      "region_name | VARCHAR(255) | 0 | NULL | 0",
+      "timezone | VARCHAR(255) | 0 | NULL | 0"
+    ],
+    "visits": [
+      "date | DATETIME | 1 |  | 0",
+      "id | INTEGER | 1 |  | 1",
+      "potential_bot | BOOLEAN | 1 | 0 | 0",
+      "redirect_url | VARCHAR(2048) | 0 | NULL | 0",
+      "referer | VARCHAR(1024) | 0 | NULL | 0",
+      "remote_addr | VARCHAR(256) | 0 | NULL | 0",
+      "short_url_id | BIGINT UNSIGNED | 0 | NULL | 0",
+      "type | VARCHAR(255) | 1 |  | 0",
+      "user_agent | VARCHAR(512) | 0 | NULL | 0",
+      "visit_location_id | BIGINT UNSIGNED | 0 | NULL | 0",
+      "visited_url | VARCHAR(2048) | 0 | NULL | 0"
+    ]
+  },
+  "indexes": {
+    "api_key_roles": [
+      "CREATE INDEX IDX_29D4F6738BE312B3 ON api_key_roles (api_key_id)",
+      "CREATE UNIQUE INDEX UQ_role_plus_api_key ON api_key_roles (role_name, api_key_id)"
+    ],
+    "api_keys": [
+      "CREATE UNIQUE INDEX UNIQ_9579321FF48571EB ON api_keys (\"key\")"
+    ],
+    "domains": [
+      "CREATE UNIQUE INDEX UNIQ_8C7BBF9D4AF96AFC ON domains (authority)"
+    ],
+    "geolocation_db_updates": [
+      "CREATE INDEX IDX_geolocation_date_updated ON geolocation_db_updates (date_updated)",
+      "CREATE INDEX IDX_geolocation_status_filesystem ON geolocation_db_updates (filesystem_id)"
+    ],
+    "migrations": [
+      "sqlite_autoindex_migrations_1"
+    ],
+    "orphan_visits_counts": [
+      "CREATE UNIQUE INDEX UQ_slot ON orphan_visits_counts (potential_bot, slot_id)"
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "CREATE INDEX IDX_62CF4FA49AE7732E ON redirect_conditions_in_short_url_redirect_rules (redirect_condition_id)",
+      "CREATE INDEX IDX_62CF4FA4BE19B441 ON redirect_conditions_in_short_url_redirect_rules (short_url_redirect_rule_id)",
+      "sqlite_autoindex_redirect_conditions_in_short_url_redirect_rules_1"
+    ],
+    "short_url_redirect_rules": [
+      "CREATE INDEX IDX_448348BCF1252BC8 ON short_url_redirect_rules (short_url_id)"
+    ],
+    "short_url_visits_counts": [
+      "CREATE INDEX IDX_28E514E3F1252BC8 ON short_url_visits_counts (short_url_id)",
+      "CREATE UNIQUE INDEX UQ_slot_per_short_url ON short_url_visits_counts (short_url_id, potential_bot, slot_id)"
+    ],
+    "short_urls": [
+      "CREATE INDEX IDX_4A53F934115F0EE5 ON short_urls (domain_id)",
+      "CREATE INDEX IDX_4A53F934C9EA6E08 ON short_urls (author_api_key_id)",
+      "CREATE INDEX IDX_long_url_hash ON short_urls (long_url_hash)",
+      "CREATE UNIQUE INDEX unique_short_code_plus_domain ON short_urls (short_code, domain_id)"
+    ],
+    "short_urls_in_tags": [
+      "CREATE INDEX IDX_59775203BAD26311 ON short_urls_in_tags (tag_id)",
+      "CREATE INDEX IDX_59775203F1252BC8 ON short_urls_in_tags (short_url_id)",
+      "sqlite_autoindex_short_urls_in_tags_1"
+    ],
+    "tags": [
+      "CREATE UNIQUE INDEX UNIQ_6FBC94265E237E06 ON tags (name)"
+    ],
+    "visits": [
+      "CREATE INDEX IDX_444839EA8297882E ON visits (visit_location_id)",
+      "CREATE INDEX IDX_444839EAF1252BC8 ON visits (short_url_id)",
+      "CREATE INDEX IDX_visits_date ON visits (date)",
+      "CREATE INDEX visits_potential_bot_IDX ON visits (potential_bot)"
+    ]
+  },
+  "foreignKeys": {
+    "api_key_roles": [
+      "api_key_id | api_keys | id | CASCADE"
+    ],
+    "redirect_conditions_in_short_url_redirect_rules": [
+      "redirect_condition_id | redirect_conditions | id | CASCADE",
+      "short_url_redirect_rule_id | short_url_redirect_rules | id | CASCADE"
+    ],
+    "short_url_redirect_rules": [
+      "short_url_id | short_urls | id | CASCADE"
+    ],
+    "short_url_visits_counts": [
+      "short_url_id | short_urls | id | CASCADE"
+    ],
+    "short_urls": [
+      "author_api_key_id | api_keys | id | SET NULL",
+      "domain_id | domains | id | RESTRICT"
+    ],
+    "short_urls_in_tags": [
+      "short_url_id | short_urls | id | CASCADE",
+      "tag_id | tags | id | CASCADE"
+    ],
+    "visits": [
+      "short_url_id | short_urls | id | CASCADE",
+      "visit_location_id | visit_locations | id | SET NULL"
+    ]
+  },
+  "migrations": [
+    "ShlinkMigrations\\Version20230211171904",
+    "ShlinkMigrations\\Version20230303164233",
+    "ShlinkMigrations\\Version20240220214031",
+    "ShlinkMigrations\\Version20240318084804",
+    "ShlinkMigrations\\Version20240331111447",
+    "ShlinkMigrations\\Version20241105094747",
+    "ShlinkMigrations\\Version20241105215309",
+    "ShlinkMigrations\\Version20250722060208",
+    "ShlinkMigrations\\Version20260524105410",
+    "ShlinkMigrations\\Version20260607082210"
+  ]
+}

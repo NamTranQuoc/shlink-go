@@ -1,0 +1,10 @@
+exit: 0
+--- stdout
++---------------------------+---------------+-----------------------------------------------+---------------------+---------+---------+---------+-------------+--------------+----------+
+| Date                      | Potential bot | User agent                                    | Referer             | Country | Region  | City    | Visited URL | Redirect URL | Type     |
++---------------------------+---------------+-----------------------------------------------+---------------------+---------+---------+---------+-------------+--------------+----------+
+| YYYY-MM-DDTHH:MM:SS+00:00 | Potential bot | Googlebot/2.1                                 | https://google.com  | Unknown | Unknown | Unknown | Unknown     | Unknown      | imported |
+| YYYY-MM-DDTHH:MM:SS+00:00 |               | Mozilla/5.0 (X11; Linux x86_64) Firefox/120.0 |                     | Spain   | Madrid  | Madrid  | Unknown     | Unknown      | imported |
+| YYYY-MM-DDTHH:MM:SS+00:00 | Potential bot | curl/8.0                                      | https://example.com | Unknown | Unknown | Unknown | Unknown     | Unknown      | imported |
++---------------------------+---------------+----------------------------------------- Page 1 of 1 ---------------+---------+---------+---------+-------------+--------------+----------+
+--- stderr

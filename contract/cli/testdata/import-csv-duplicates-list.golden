@@ -1,0 +1,13 @@
+exit: 0
+--- stdout
++------------+-------+------------------------+--------------------+---------------------------+--------------+--------+-----------+
+| Short Code | Title | Short URL              | Long URL           | Date created              | Visits count | Tags   | Domain    |
++------------+-------+------------------------+--------------------+---------------------------+--------------+--------+-----------+
+| dup-1      |       | http://new1.test/dup-1 | https://dup.test/1 | YYYY-MM-DDTHH:MM:SS+00:00 | 0            | newtag | new1.test |
+| dup-3      |       | http://new1.test/dup-3 | https://dup.test/3 | YYYY-MM-DDTHH:MM:SS+00:00 | 0            | newtag | new1.test |
+| dup-4      |       | http://s.test/dup-4    | https://dup.test/4 | YYYY-MM-DDTHH:MM:SS+00:00 | 0            |        | DEFAULT   |
++------------+-------+------------------------+------------ Page 1 of 1 -----------------------+--------------+--------+-----------+
+
+ [OK] Short URLs properly listed                                                
+
+--- stderr

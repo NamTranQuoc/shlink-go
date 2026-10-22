@@ -1,0 +1,10 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                         
+  The "--name" option requires a value.  
+                                         
+
+api-key:generate [-m|--name NAME] [-e|--expiration-date EXPIRATION-DATE] [-a|--author-only] [-d|--domain-only DOMAIN-ONLY] [-o|--no-orphan-visits]
+

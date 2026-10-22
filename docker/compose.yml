@@ -1,0 +1,135 @@
+# Development and contract-test stack. Credentials here are throwaway local defaults.
+name: shlink-go
+
+x-shlink-env: &shlink-env
+  DEFAULT_DOMAIN: ${DEFAULT_DOMAIN:-s.test}
+  IS_HTTPS_ENABLED: ${IS_HTTPS_ENABLED:-false}
+  AUTO_RESOLVE_TITLES: "false"
+  SKIP_INITIAL_GEOLITE_DOWNLOAD: "true"
+  DB_DRIVER: ${DB_DRIVER:-sqlite}
+  DB_HOST: ${DB_HOST:-}
+  DB_PORT: ${DB_PORT:-}
+  DB_NAME: shlink
+  DB_USER: ${DB_USER:-}
+  DB_PASSWORD: ${DB_PASSWORD:-}
+  TIMEZONE: UTC
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    profiles: [postgres]
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: shlink
+    ports: ["15432:5432"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 2s
+      retries: 30
+
+  mysql:
+    image: mysql:8.0
+    profiles: [mysql]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shlink
+    ports: ["13306:3306"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 2s
+      retries: 60
+
+  maria:
+    image: mariadb:12.3
+    profiles: [maria]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shlink
+      MYSQL_INITDB_SKIP_TZINFO: 1
+    ports: ["13307:3306"]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 2s
+      retries: 60
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    profiles: [mssql]
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: Passw0rd!
+      MSSQL_MEMORY_LIMIT_MB: 1536
+    ports: ["11433:1433"]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P 'Passw0rd!' -Q 'SELECT 1' || exit 1"]
+      interval: 3s
+      retries: 60
+
+  redis:
+    image: redis:7.4-alpine
+    profiles: [integrations]
+    ports: ["16379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      retries: 30
+
+  mercure:
+    image: dunglas/mercure:v0.18
+    profiles: [integrations]
+    environment:
+      SERVER_NAME: ":80"
+      MERCURE_PUBLISHER_JWT_KEY: mercure_jwt_key_long_enough_to_be_secure
+      MERCURE_SUBSCRIBER_JWT_KEY: mercure_jwt_key_long_enough_to_be_secure
+      MERCURE_EXTRA_DIRECTIVES: "anonymous\ncors_origins *"
+    ports: ["13080:80"]
+
+  rabbitmq:
+    image: rabbitmq:3.11-management-alpine
+    profiles: [integrations]
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit
+    ports: ["15672:5672", "25672:15672"]
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 3s
+      retries: 40
+
+  shlink-php:
+    image: shlinkio/shlink:5.1.8
+    depends_on: &db-deps
+      postgres: {condition: service_healthy, required: false}
+      mysql: {condition: service_healthy, required: false}
+      maria: {condition: service_healthy, required: false}
+      mssql: {condition: service_healthy, required: false}
+      redis: {condition: service_healthy, required: false}
+      rabbitmq: {condition: service_healthy, required: false}
+      mercure: {condition: service_started, required: false}
+    profiles: [php]
+    env_file: &profile-env
+      - path: ${PROFILE_ENV_FILE:-env/profiles/default.env}
+        required: false
+    environment:
+      <<: *shlink-env
+      # Upstream's own API test env runs a single RoadRunner worker (config/roadrunner/.rr.test.yml)
+      WEB_WORKER_NUM: "1"
+    ports: ["18080:8080"]
+    volumes:
+      - ${PHP_DATA_DIR:-../var/data-php}:/etc/shlink/data
+    extra_hosts: ["host.docker.internal:host-gateway"]
+
+  shlink-go:
+    image: shlink-go:dev
+    depends_on: *db-deps
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    profiles: [go]
+    env_file: *profile-env
+    environment: *shlink-env
+    ports: ["28080:8080"]
+    volumes:
+      - ${GO_DATA_DIR:-../var/data-go}:/etc/shlink/data
+    extra_hosts: ["host.docker.internal:host-gateway"]

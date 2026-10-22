@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+In TagNotFoundException.php line 23:
+                                              
+  Tag with name "invalid" could not be found  
+                                              
+
+tag:visits [-s|--start-date START-DATE] [-e|--end-date END-DATE] [-f|--format FORMAT] [-d|--domain DOMAIN] [--] <tag>
+

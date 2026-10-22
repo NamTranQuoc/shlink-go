@@ -1,0 +1,6 @@
+exit: 0
+--- stdout
+
+ [OK] Short URL with short code "abc123" successfully deleted.                  
+
+--- stderr

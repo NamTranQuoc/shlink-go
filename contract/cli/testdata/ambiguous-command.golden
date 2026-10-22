@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                                                              
+  Command "s:v" is ambiguous.                                                 
+  Did you mean one of these?                                                  
+      short-url:visits        Returns the detailed visits information for...  
+      short-url:visits-delete Deletes visits from a short URL                 
+                                                                              
+

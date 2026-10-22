@@ -1,0 +1,21 @@
+exit: 255
+--- stdout
+
+Deprecated: Using null as an array offset is deprecated, use an empty string instead in /etc/shlink/vendor/shlinkio/shlink-installer/src/Command/SetOptionCommand.php on line 75
+
+Warning: Undefined array key "" in /etc/shlink/vendor/shlinkio/shlink-installer/src/Command/SetOptionCommand.php on line 75
+
+Fatal error: Uncaught TypeError: Laminas\ServiceManager\AbstractPluginManager::get(): Argument #1 ($id) must be of type string, null given, called in /etc/shlink/vendor/shlinkio/shlink-installer/src/Command/SetOptionCommand.php on line 75 and defined in /etc/shlink/vendor/laminas/laminas-servicemanager/src/AbstractPluginManager.php:187
+Stack trace:
+#0 /etc/shlink/vendor/shlinkio/shlink-installer/src/Command/SetOptionCommand.php(75): Laminas\ServiceManager\AbstractPluginManager->get(NULL)
+#1 [internal function]: Shlinkio\Shlink\Installer\Command\SetOptionCommand->__invoke(Object(Symfony\Component\Console\Style\SymfonyStyle))
+#2 /etc/shlink/vendor/symfony/console/Command/InvokableCommand.php(65): ReflectionFunction->invoke(Object(Symfony\Component\Console\Style\SymfonyStyle))
+#3 /etc/shlink/vendor/symfony/console/Command/Command.php(282): Symfony\Component\Console\Command\InvokableCommand->__invoke(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /etc/shlink/vendor/symfony/console/Application.php(1129): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /etc/shlink/vendor/symfony/console/Application.php(380): Symfony\Component\Console\Application->doRunCommand(Object(Shlinkio\Shlink\Installer\Command\SetOptionCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 /etc/shlink/vendor/symfony/console/Application.php(219): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 /etc/shlink/vendor/shlinkio/shlink-installer/bin/shlink-installer(13): Symfony\Component\Console\Application->run()
+#8 /etc/shlink/vendor/bin/shlink-installer(119): include('/etc/shlink/ven...')
+#9 {main}
+  thrown in /etc/shlink/vendor/laminas/laminas-servicemanager/src/AbstractPluginManager.php on line 187
+--- stderr

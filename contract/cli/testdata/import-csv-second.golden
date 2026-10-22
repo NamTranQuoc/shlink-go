@@ -1,0 +1,31 @@
+exit: 0
+--- stdout
+
+ What's the path for the CSV file you want to import:
+ > 
+ What's the delimiter used to separate values? [Comma]:
+  [,] Comma
+  [;] Semicolon
+ > 
+Importing short URLs
+====================
+
+ https://shlink.io/csv-1: Skipped
+
+ Failed to import URL "https://shlink.io/csv-2" because its short-code "custom" is already in use. Do you want to generate a new one or skip it? [Skip]:
+  [0] Generate new short-code
+  [1] Skip
+ > 
+ https://shlink.io/csv-2: Error
+ https://shlink.io/csv-3: Skipped
+ https://shlink.io/csv-4: Skipped. Reason: URL-reserved characters cannot be used in a custom slug or path prefix.
+
+ Failed to import URL "https://shlink.io/csv-5" because its short-code "abc123" is already in use. Do you want to generate a new one or skip it? [Skip]:
+  [0] Generate new short-code
+  [1] Skip
+ > 
+ https://shlink.io/csv-5: Error
+
+ [OK] Data properly imported!                                                   
+
+--- stderr

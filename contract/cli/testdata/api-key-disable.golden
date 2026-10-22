@@ -1,0 +1,6 @@
+exit: 0
+--- stdout
+
+ [OK] API key "valid_api_key" properly disabled                                 
+
+--- stderr

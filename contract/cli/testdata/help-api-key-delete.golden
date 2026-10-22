@@ -1,0 +1,32 @@
+exit: 0
+--- stdout
+Description:
+  Deletes an API key by name
+
+Usage:
+  api-key:delete [<name>]
+
+Arguments:
+  name                  The API key to delete.
+
+Options:
+  -h, --help            Display help for the given command. When no command is given display help for the list command
+      --silent          Do not output any message
+  -q, --quiet           Only errors are displayed. All other output is suppressed
+  -V, --version         Display this application version
+      --ansi|--no-ansi  Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Help:
+  The api-key:delete command allows you to delete an existing API key via its name.
+  
+  If no arguments are provided, you will be prompted to select one of the existing API keys.
+  
+      /usr/local/bin/shlink api-key:delete
+  
+  You can optionally pass the API key name to be disabled:
+  
+      /usr/local/bin/shlink api-key:delete the_key_name
+  
+--- stderr

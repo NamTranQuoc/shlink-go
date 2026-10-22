@@ -1,0 +1,10 @@
+exit: 1
+--- stdout
+--- stderr
+
+                                   
+  The "-x" option does not exist.  
+                                   
+
+tag:list
+

@@ -1,0 +1,6 @@
+exit: 1
+--- stdout
+
+ [ERROR] API key with name "invalid" not found                                  
+
+--- stderr

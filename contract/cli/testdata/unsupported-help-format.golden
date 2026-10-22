@@ -1,0 +1,10 @@
+exit: 1
+--- stdout
+--- stderr
+
+                             
+  Unsupported format "foo".  
+                             
+
+help [--format FORMAT] [--raw] [--] [<command_name>]
+

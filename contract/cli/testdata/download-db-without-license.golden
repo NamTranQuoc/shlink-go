@@ -1,0 +1,8 @@
+exit: 2
+--- stdout
+ Downloading GeoLite2 db file...
+
+ [WARNING] It was not possible to download GeoLite2 db, because a license was   
+           not provided.                                                        
+
+--- stderr

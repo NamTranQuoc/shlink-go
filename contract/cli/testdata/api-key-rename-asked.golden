@@ -1,0 +1,12 @@
+exit: 0
+--- stdout
+
+ What API key do you want to rename?:
+ > 
+
+ What is the new name you want to set?:
+ > 
+
+ [OK] API key properly renamed                                                  
+
+--- stderr

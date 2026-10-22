@@ -1,0 +1,11 @@
+exit: 1
+--- stdout
+--- stderr
+
+In Pagerfanta.php line 221:
+                                                                    
+  Page "2" does not exist. The currentPage must be inferior to "1"  
+                                                                    
+
+short-url:list [-p|--page PAGE] [--all] [-s|--start-date START-DATE] [-e|--end-date END-DATE] [-st|--search-term SEARCH-TERM] [-d|--domain DOMAIN] [-t|--tag TAG] [--tags-all] [-et|--exclude-tag EXCLUDE-TAG] [--exclude-tags-all] [--exclude-max-visits-reached] [--exclude-past-valid-until] [-o|--order-by ORDER-BY] [-kn|--api-key-name API-KEY-NAME] [--show-tags] [--show-domain] [-k|--show-api-key]
+

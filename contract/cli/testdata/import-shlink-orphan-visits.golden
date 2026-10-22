@@ -1,0 +1,9 @@
+exit: 0
+--- stdout
++---------------------------+---------------+-------------+---------+---------+---------+---------+-------------------------+--------------+-------------+
+| Date                      | Potential bot | User agent  | Referer | Country | Region  | City    | Visited URL             | Redirect URL | Type        |
++---------------------------+---------------+-------------+---------+---------+---------+---------+-------------------------+--------------+-------------+
+| YYYY-MM-DDTHH:MM:SS+00:00 |               | Mozilla/5.0 |         | Unknown | Unknown | Unknown | https://source.test/foo | Unknown      | regular_404 |
+| YYYY-MM-DDTHH:MM:SS+00:00 |               | Mozilla/5.0 |         | Unknown | Unknown | Unknown | https://source.test     | Unknown      | imported    |
++---------------------------+---------------+-------------+---------+- Page 1 of 1 -----+---------+-------------------------+--------------+-------------+
+--- stderr

@@ -1,0 +1,23 @@
+exit: 0
+--- stdout
+Description:
+  Returns the list of visits for provided domain
+
+Usage:
+  domain:visits [options] [--] <domain>
+
+Arguments:
+  domain                       The domain which visits we want to get
+
+Options:
+  -s, --start-date=START-DATE  Only return visits older than this date
+  -e, --end-date=END-DATE      Only return visits newer than this date
+  -f, --format=FORMAT          Output format ("full", "paginated" or "csv") [default: "full"]
+  -h, --help                   Display help for the given command. When no command is given display help for the list command
+      --silent                 Do not output any message
+  -q, --quiet                  Only errors are displayed. All other output is suppressed
+  -V, --version                Display this application version
+      --ansi|--no-ansi         Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction         Do not ask any interactive question
+  -v|vv|vvv, --verbose         Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+--- stderr

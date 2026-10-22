@@ -1,0 +1,34 @@
+exit: 0
+--- stdout
+Description:
+  List all short URLs
+
+Usage:
+  short-url:list [options]
+
+Options:
+  -p, --page=PAGE                   The first page to list (10 items per page unless "--all" is provided). [default: 1]
+      --all                         Disables pagination and just displays all existing URLs. Caution! If the amount of short URLs is big,this may end up failing due to memory usage.
+  -s, --start-date=START-DATE       Only return short URLs older than this date
+  -e, --end-date=END-DATE           Only return short URLs newer than this date
+  -d, --domain=DOMAIN               Used to filter results by domain. Use DEFAULT keyword to filter by default domain
+  -t, --tag=TAG                     A list of tags that short URLs need to include (multiple values allowed)
+      --tags-all                    If --tag is provided, returns only short URLs including ALL of them
+      --exclude-tags-all            If --exclude-tag is provided, returns only short URLs not including ANY of them
+      --exclude-max-visits-reached  Excludes short URLs which reached their max amount of visits
+      --exclude-past-valid-until    Excludes short URLs which have a "validUntil" date in the past
+  -o, --order-by=ORDER-BY           Field name to order the list by. Set the dir by optionally passing ASC or DESC after "-": --orderBy=tags-ASC
+      --show-tags                   Whether to display the tags or not
+      --show-domain                 Whether to display the domain or not. Those belonging to default domain will have value "DEFAULT"
+  -k, --show-api-key                Whether to display the API key name from which the URL was generated or not
+  -h, --help                        Display help for the given command. When no command is given display help for the list command
+      --silent                      Do not output any message
+  -q, --quiet                       Only errors are displayed. All other output is suppressed
+  -V, --version                     Display this application version
+      --ansi|--no-ansi              Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction              Do not ask any interactive question
+  -st, --search-term=SEARCH-TERM    A query used to filter results by searching for it on the longUrl and shortCode fields
+  -et, --exclude-tag=EXCLUDE-TAG    A list of tags that short URLs should NOT include (multiple values allowed)
+  -kn, --api-key-name=API-KEY-NAME  List only short URLs created by the API key matching provided name
+  -v|vv|vvv, --verbose              Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+--- stderr

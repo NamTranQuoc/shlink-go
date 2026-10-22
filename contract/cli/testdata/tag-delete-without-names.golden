@@ -1,0 +1,6 @@
+exit: 2
+--- stdout
+
+ [WARNING] You have to provide at least one tag name                            
+
+--- stderr
