@@ -17,6 +17,11 @@ func run(args []string) error {
 		if err != nil {
 			return err
 		}
+		// On macOS os.Executable returns the shlink-installer link itself, which would run the installer again in
+		// every child process
+		if exe, err = filepath.EvalSymlinks(exe); err != nil {
+			return err
+		}
 		os.Exit(cli.NewInstallerApplication(exe).Run(args))
 	}
 	// Promote env vars from the installer's config, like config/container.php
