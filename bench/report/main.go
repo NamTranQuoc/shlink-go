@@ -1,5 +1,5 @@
 // Command report renders the benchmark tables from the raw results of one run (bench/results/<run-id>/) and writes
-// them into README.md between the bench markers. Numbers are never edited by hand: rerun this instead.
+// them into docs/benchmark.md between the bench markers. Numbers are never edited by hand: rerun this instead.
 package main
 
 import (
@@ -150,7 +150,7 @@ func render(dir string) string {
 	fmt.Fprintf(&b, "Run `%v` on %v; Docker %v; app limits %v; k6 `%v`; warm-up %v, measured %v, median of %v runs.\n\n",
 		env["runId"], env["host"], env["docker"], env["limits"], env["k6"], env["warmup"], env["duration"], env["runs"])
 
-	b.WriteString("#### Latency at a fixed arrival rate\n\n")
+	b.WriteString("### Latency at a fixed arrival rate\n\n")
 	b.WriteString("| Scenario | Target | RPS | p50 (ms) | p95 (ms) | p99 (ms) | Errors | CPU avg / peak | Memory avg / peak |\n")
 	b.WriteString("|---|---|---:|---:|---:|---:|---:|---:|---:|\n")
 	for _, s := range scenarios {
@@ -164,7 +164,7 @@ func render(dir string) string {
 		}
 	}
 
-	b.WriteString("\n#### Highest sustained arrival rate (p99 ≤ 500 ms, errors ≤ 1%)\n\n")
+	b.WriteString("\n### Highest sustained arrival rate (p99 ≤ 500 ms, errors ≤ 1%)\n\n")
 	b.WriteString("| Scenario | " + targetNames["php"] + " | " + targetNames["go"] + " | Ratio |\n|---|---:|---:|---:|\n")
 	for _, s := range scenarios {
 		php, golang := collect(dir, "php", s), collect(dir, "go", s)
@@ -178,7 +178,7 @@ func render(dir string) string {
 		fmt.Fprintf(&b, "| %s | %d req/s | %d req/s | %s |\n", s, php.capacity, golang.capacity, ratio)
 	}
 
-	b.WriteString("\n#### Footprint\n\n| Metric | " + targetNames["php"] + " | " + targetNames["go"] + " |\n|---|---:|---:|\n")
+	b.WriteString("\n### Footprint\n\n| Metric | " + targetNames["php"] + " | " + targetNames["go"] + " |\n|---|---:|---:|\n")
 	sizes, _ := env["imageSizes"].(map[string]any)
 	startup := map[string][]float64{}
 	idle := map[string][]float64{}
@@ -226,7 +226,7 @@ func render(dir string) string {
 
 func main() {
 	dir := flag.String("dir", "", "results directory (default: latest under bench/results)")
-	readme := flag.String("readme", "README.md", "README to update; empty to only print")
+	doc := flag.String("doc", "docs/benchmark.md", "document to update; empty to only print")
 	flag.Parse()
 	if *dir == "" {
 		dirs, _ := filepath.Glob("bench/results/*")
@@ -238,10 +238,10 @@ func main() {
 	}
 	out := render(*dir)
 	fmt.Print(out)
-	if *readme == "" {
+	if *doc == "" {
 		return
 	}
-	raw, err := os.ReadFile(*readme)
+	raw, err := os.ReadFile(*doc)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -249,10 +249,10 @@ func main() {
 	s := string(raw)
 	i, j := strings.Index(s, start), strings.Index(s, end)
 	if i < 0 || j < i {
-		log.Fatalf("%s has no %s ... %s block", *readme, start, end)
+		log.Fatalf("%s has no %s ... %s block", *doc, start, end)
 	}
 	s = s[:i+len(start)] + "\n" + out + s[j:]
-	if err := os.WriteFile(*readme, []byte(s), 0o644); err != nil {
+	if err := os.WriteFile(*doc, []byte(s), 0o644); err != nil {
 		log.Fatal(err)
 	}
 }

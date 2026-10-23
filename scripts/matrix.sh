@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs the contract suite for every target × engine × profile combination and writes the results table into README.md
+# Runs the contract suite for every target × engine × profile combination and writes the results table into docs/parity.md
 # (between the matrix markers). Raw go test output is kept under var/matrix/<run-id>/.
 # Usage: scripts/matrix.sh            Env: TARGETS="php go", ENGINES="sqlite postgres mysql maria mssql"
 set -uo pipefail
@@ -55,8 +55,8 @@ table = (f"Run `{os.path.basename(out)}`. Each cell is upstream / port; – mean
          "| Suite | Profile | " + " | ".join(names[e] for e in engines) + " |\n|---|---|" + "---|" * len(engines) + "\n"
          + "\n".join(rows) + "\n")
 print(table)
-readme = open("README.md").read()
+doc = open("docs/parity.md").read()
 start, end = "<!-- matrix:start -->", "<!-- matrix:end -->"
-i, j = readme.index(start), readme.index(end)
-open("README.md", "w").write(readme[:i + len(start)] + "\n" + table + readme[j:])
+i, j = doc.index(start), doc.index(end)
+open("docs/parity.md", "w").write(doc[:i + len(start)] + "\n" + table + doc[j:])
 PY

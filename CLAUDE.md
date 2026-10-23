@@ -54,6 +54,8 @@ bench/                  benchmark harness (see bench/CLAUDE.md)
 docker/                 Dockerfile, compose stack, per-DB and per-profile env files
 scripts/                contract, matrix and web client runners
 docs/plan.md            implementation plan and progress (read it before resuming work)
+docs/parity.md          drop-in guarantees, contract suite, matrix results, differences from upstream
+docs/benchmark.md       benchmark results and findings
 ```
 
 ## Commands

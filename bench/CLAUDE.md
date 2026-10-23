@@ -19,7 +19,7 @@ How the benchmark compares upstream Shlink 5.1.8 and this port, and the rules th
 make image
 bench/run.sh                        # all scenarios, both targets, 3 runs each
 TARGETS=go RUNS=1 bench/run.sh redirect
-go run ./bench/report               # renders tables from the latest run into README.md
+go run ./bench/report               # renders tables from the latest run into docs/benchmark.md
 ```
 
 - Per run: restore DB, start the target and time it to a healthy `/rest/health`, record idle memory, warm up (`WARMUP`, 30s, discarded), then measure at a fixed arrival rate (`DURATION`, 60s) while `docker stats` is sampled every second.
@@ -28,7 +28,7 @@ go run ./bench/report               # renders tables from the latest run into RE
 
 ## Rules
 
-- Never hand-edit numbers in `bench/results/` or in README tables; rerun the benchmark and `bench/report`.
-- Keep raw results (`*.k6.json`, `*.stats.csv`, `*.startup.json`, `env.json`) of the run the README cites.
-- Run with nothing else heavy on the machine (no contract suite, builds or other containers under load), and say in the README when that was not possible.
+- Never hand-edit numbers in `bench/results/` or in the `docs/benchmark.md` tables; rerun the benchmark and `bench/report`.
+- Keep raw results (`*.k6.json`, `*.stats.csv`, `*.startup.json`, `env.json`) of the run `docs/benchmark.md` cites.
+- Run with nothing else heavy on the machine (no contract suite, builds or other containers under load), and say in `docs/benchmark.md` when that was not possible.
 - Report what was measured, including scenarios where the port is not faster.

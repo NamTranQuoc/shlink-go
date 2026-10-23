@@ -4,7 +4,7 @@ Plan for re-implementing Shlink v5.1.8 in Go as a drop-in replacement, proving f
 
 ## Goal
 
-Build a Go implementation of [Shlink](https://github.com/shlinkio/shlink) pinned to tag **v5.1.8** (latest stable on 2026-10-21) that an existing Shlink deployment can switch to by changing only the Docker image. Measure speed and resource use of both under identical conditions and publish the results in `README.md`.
+Build a Go implementation of [Shlink](https://github.com/shlinkio/shlink) pinned to tag **v5.1.8** (latest stable on 2026-10-21) that an existing Shlink deployment can switch to by changing only the Docker image. Measure speed and resource use of both under identical conditions and publish the results in `docs/benchmark.md`.
 
 - Public repo `https://github.com/NamTranQuoc/shlink-go` (remote `origin`, branch `main`). Go module path: `github.com/NamTranQuoc/shlink-go`. This file is the plan and the progress record; it lives in the repo at `docs/plan.md`.
 - Upstream source for reading: `reference/shlink` (shallow clone of v5.1.8) and `reference/shlink-vendor` (its `vendor/` tree), gitignored and never pushed; `make reference` recreates them. Behavior is derived from reading this source, `docs/swagger/swagger.json` and `docs/async-api/async-api.json`.
@@ -25,7 +25,7 @@ Written in phase 0 and kept current:
 
 - `CLAUDE.md` (root): what the project is (public, MIT, unofficial Go port of Shlink v5.1.8, port only — no new features, upstream behavior wins any disagreement), where upstream source lives (`reference/shlink`, gitignored), layout, build/test/contract/bench commands, drop-in rules (schema, JSON, env vars, CLI names must match), license rules (keep `LICENSE` and `THIRD_PARTY_NOTICES.md` in sync when porting third-party code or data), secret rules (no real keys, tokens, license keys or `.env` in the repo; dev credentials only in compose files and obviously fake).
 - `contract/CLAUDE.md`: how the suite targets either implementation, fixture porting rules, coverage gates, how to add a test.
-- `bench/CLAUDE.md`: fairness rules, how to run and regenerate README tables, never hand-edit result numbers.
+- `bench/CLAUDE.md`: fairness rules, how to run and regenerate the benchmark tables, never hand-edit result numbers.
 
 ## Scope (v5.1.8, everything below is in)
 
@@ -104,7 +104,7 @@ Go unit tests cover logic-heavy parts in isolation and pin PHP semantics with ou
 
 `bench/` holds a compose file, seed generator, k6 scenarios, the runner (`bench/run.sh`) and the report generator (`bench/report`). Rules for running it live in `bench/CLAUDE.md`.
 
-- Topology: one PostgreSQL 17 container (2 CPU / 2 GB), one app container at a time, k6 (`grafana/k6:1.3.0`) on the same Docker network. All on Docker Desktop on one machine; README records the machine the published numbers come from.
+- Topology: one PostgreSQL 17 container (2 CPU / 2 GB), one app container at a time, k6 (`grafana/k6:1.3.0`) on the same Docker network. All on Docker Desktop on one machine; `docs/benchmark.md` records the machine the published numbers come from.
 - Targets: `shlinkio/shlink:5.1.8` (default RoadRunner runtime and worker count) and the Go image, each with default runtime settings.
 - Fairness: identical CPU and memory limits on the app container (1 CPU / 1 GiB; at 512 MB upstream with its default RoadRunner worker count is OOM-killed under load), same Postgres instance and config, same seed (100k short URLs, 1M visits, 200 tags, 5 domains; deterministic), DB restored from the same dump before each run, 30 s warm-up excluded from results, same env vars (geolocation and real-time updates off).
 - Scenarios:
@@ -118,15 +118,13 @@ Go unit tests cover logic-heavy parts in isolation and pin PHP semantics with ou
   8. mixed workload (90% redirects, 10% API).
 - Load: a fixed arrival rate per scenario that both targets sustain (latency comparison at equal load), then a step test that doubles the arrival rate (20 s per step) until p99 > 500 ms, errors > 1% or the achieved rate drops below 95% of the target; the last passing step is the highest sustained rate.
 - Metrics: RPS, p50/p95/p99 latency, error rate, CPU avg/peak, memory avg/peak (sampled from `docker stats` every second), idle memory, image size, time from container start to healthy `/rest/health`.
-- Each scenario runs 3 times at the fixed rate and the report uses the median; the step test runs once per scenario and target. Raw k6 JSON and sampler CSV are kept under `bench/results/<run-id>/`; `go run ./bench/report` renders the README tables from them.
+- Each scenario runs 3 times at the fixed rate and the report uses the median; the step test runs once per scenario and target. Raw k6 JSON and sampler CSV are kept under `bench/results/<run-id>/`; `go run ./bench/report` renders the tables in `docs/benchmark.md` from them.
 
-## README sections
+## Published docs
 
-1. What the project is and the upstream version it matches.
-2. Running it (Docker image, binary, env vars — same as upstream docs).
-3. Feature parity: scope table, how the contract suite works, current matrix result, how to run it.
-4. Benchmark: method, environment (machine, Docker limits, versions), results tables per scenario, resource table, findings stated as measured, including any scenario where Go is not faster, and threats to validity (Docker Desktop noise, single host for load generator and target).
-5. Differences from upstream, if any remain at the end, each with the reason.
+1. `README.md`: what the project is and the upstream version it matches; running it (Docker image, binary, env vars — same as upstream docs); links to the two docs below.
+2. `docs/parity.md`: drop-in guarantees, how the contract suite works and how to run it, current matrix result, differences from upstream that remain, each with the reason.
+3. `docs/benchmark.md`: method, environment (machine, Docker limits, versions), results tables per scenario, resource table, findings stated as measured, including any scenario where Go is not faster, and threats to validity (Docker Desktop noise, single host for load generator and target).
 
 ## Phases and exit criteria
 
@@ -140,18 +138,18 @@ Go unit tests cover logic-heavy parts in isolation and pin PHP semantics with ou
 | 5 | CLI complete, incl. importer command and installer | all CLI contract tests + command-list gate green for Go |
 | 6 | Integrations: GeoLite2, Mercure, RabbitMQ, Redis, Matomo, importer sources | integration tests green for Go |
 | 7 | Docker image drop-in + web client check | full matrix green for Go on all 5 engines; Playwright web client script passes |
-| 8 | Benchmark + README | results saved under `bench/results/`, README complete |
+| 8 | Benchmark + published docs | results saved under `bench/results/`, `docs/benchmark.md` complete |
 | 9 | Security review, license check, publish | review report has no open high/critical finding; secret scan clean; license check clean; then push after approval (see below) |
 
-Done = phase 7 matrix fully green for both targets, phase 8 README written from measured data, phase 9 report clean and pushed.
+Done = phase 7 matrix fully green for both targets, phase 8 benchmark doc written from measured data, phase 9 report clean and pushed.
 
 ### Status
 
 | Phase | State |
 |---|---|
 | 0–6 | Done. REST (31 ported files + pixel, mercure-info), CLI (all 32 commands incl. `short-url:import` with 5 sources and installer `init`/`install`/`update`/`set-option`), differential, integration and schema suites; swagger and command-list gates. |
-| 7 | Done: the matrix (3 profiles × 5 engines × 2 targets, `scripts/matrix.sh`) passes in all 30 runs; the table is in README. Web client check passes for both targets. |
-| 8 | Done: run `bench/results/20261023-003134` (48 runs, no target crashed), tables and findings in README. |
+| 7 | Done: the matrix (3 profiles × 5 engines × 2 targets, `scripts/matrix.sh`) passes in all 30 runs; the table is in `docs/parity.md`. Web client check passes for both targets. |
+| 8 | Done: run `bench/results/20261023-003134` (48 runs, no target crashed), tables and findings in `docs/benchmark.md`. |
 | 9 | Done: secret scan, scanners, license check and manual review are clean (checklist below); published to `main`. |
 
 Phase 9 checklist:
@@ -182,7 +180,7 @@ Open items: none.
    - outbound HTTP (title auto-resolve, importers, Matomo, GeoLite2 download): timeouts, size limits, redirect limits;
    - header handling (trusted proxies / client IP, CORS, redirect `Location`), error responses not leaking internals;
    - Docker image: non-root user (`USER_ID=1001` as upstream), no secrets baked in.
-   Where upstream has the same weakness, the port keeps upstream behavior and the README lists it under differences only if it was changed.
+   Where upstream has the same weakness, the port keeps upstream behavior and `docs/parity.md` lists it under differences only if it was changed.
 3. License check: `LICENSE` and `THIRD_PARTY_NOTICES.md` cover all ported code and data; `make licenses` clean; README disclaimer present.
 4. Write the report to `~/Desktop/memory/shlink/doc/security-review.md` and stop for approval.
 
@@ -193,7 +191,7 @@ Commits and pushes happen only when asked; every push is preceded by the secret 
 - Docker Desktop VM: 8 CPU / 8 GB / 62 GB disk, enough for all five engines, both targets and the benchmark.
 - MSSQL on Apple Silicon runs `mcr.microsoft.com/mssql/server:2022-latest` and the upstream image under amd64 emulation; those runs are slower but results are compared, not timed.
 - GeoLite2 download tests need a MaxMind license key; without one, geolocation is verified with MaxMind's public test `.mmdb` (not committed, pointed to by `SHLINK_GEOIP_TEST_DB`) and the download path stays unverified against MaxMind.
-- Load generator and target share one machine, so absolute numbers are machine-specific; the comparison between targets under the same limits is what the README reports.
+- Load generator and target share one machine, so absolute numbers are machine-specific; the comparison between targets under the same limits is what `docs/benchmark.md` reports.
 
 ## Key decisions locked
 
