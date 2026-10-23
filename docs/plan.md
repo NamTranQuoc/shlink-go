@@ -152,7 +152,7 @@ Done = phase 7 matrix fully green for both targets, phase 8 README written from 
 | 0–6 | Done. REST (31 ported files + pixel, mercure-info), CLI (all 32 commands incl. `short-url:import` with 5 sources and installer `init`/`install`/`update`/`set-option`), differential, integration and schema suites; swagger and command-list gates. |
 | 7 | Done: the matrix (3 profiles × 5 engines × 2 targets, `scripts/matrix.sh`) passes in all 30 runs; the table is in README. Web client check passes for both targets. |
 | 8 | Done: run `bench/results/20261023-003134` (48 runs, no target crashed), tables and findings in README. |
-| 9 | Done up to publishing: secret scan, scanners, license check and manual review are clean (checklist below); commit and push wait for approval. |
+| 9 | Done: secret scan, scanners, license check and manual review are clean (checklist below); published to `main`. |
 
 Phase 9 checklist:
 
@@ -164,9 +164,7 @@ Phase 9 checklist:
 - [x] `make licenses` clean.
 - [x] Manual review (step 2 below), report at `~/Desktop/memory/shlink/doc/security-review.md`: no open high or critical finding; auth and roles identical to upstream on every REST operation (368-request probe, SQLite and PostgreSQL); upstream weaknesses kept are listed there.
 
-Open items:
-
-- D2: the benchmark runs both apps at 1 CPU / 1 GiB instead of the planned 512 MB, because upstream with its default RoadRunner worker count is OOM-killed under load at 512 MB. Awaiting confirmation. Owner: Nam.
+Open items: none.
 
 ## Resuming on another machine
 
