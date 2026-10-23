@@ -18,10 +18,10 @@ func init() {
 	register("integration:matomo:send-visits", Body{Execute: sendVisitsToMatomo})
 }
 
-// downloadProgress ports DownloadGeoLiteDbCommand's progress handler. The progress bar itself is not drawn.
+// downloadProgress ports DownloadGeoLiteDbCommand's progress handler.
 type downloadProgress struct {
-	style   *console.SymfonyStyle
-	started bool
+	style *console.SymfonyStyle
+	bar   *console.ProgressBar
 }
 
 func (p *downloadProgress) BeforeDownload(olderDBExists bool) {
@@ -30,10 +30,15 @@ func (p *downloadProgress) BeforeDownload(olderDBExists bool) {
 		action = "Updating"
 	}
 	p.style.Text(fmt.Sprintf("<fg=blue>%s GeoLite2 db file...</>", action))
-	p.started = true
+	p.bar = console.NewProgressBar(p.style)
 }
 
-func (p *downloadProgress) HandleProgress(int64, int64, bool) {}
+func (p *downloadProgress) HandleProgress(total, downloaded int64, _ bool) {
+	if p.bar != nil {
+		p.bar.SetMaxSteps(int(total))
+		p.bar.SetProgress(int(downloaded))
+	}
+}
 
 func downloadGeoLiteDb(env *Env, io *console.IO) (int, error) {
 	style := io.Style()
@@ -72,9 +77,10 @@ func downloadGeoLiteDb(env *Env, io *console.IO) (int, error) {
 		style.Warning("A geolocation db is already being downloaded by another process.")
 		return console.Invalid, nil
 	}
-	if !progress.started {
+	if progress.bar == nil {
 		style.Info("GeoLite2 db file is up to date.")
 	} else {
+		progress.bar.Finish()
 		style.Success("GeoLite2 db file properly downloaded.")
 	}
 	return console.Success, nil
@@ -139,18 +145,13 @@ func locateVisits(env *Env, io *console.IO) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	// CommandUtils::executeWithLock() with a non-blocking lock
-	release, err := s.Locks.TryAcquire("visit:locate")
-	if err != nil {
-		return 0, err
-	}
-	if release == nil {
-		style.Writeln(`<comment>Command "visit:locate" is already in progress. Skipping.</comment>`, console.OutputNormal)
-		return console.Invalid, nil
-	}
-	defer release()
+	return executeWithLock(env, s.Locks, "visit:locate", false, style, func() (int, error) {
+		return locateVisitsWithLock(env, io, style, s, retry, all)
+	})
+}
 
-	err = func() error {
+func locateVisitsWithLock(env *Env, io *console.IO, style *console.SymfonyStyle, s *Services, retry, all bool) (int, error) {
+	err := func() error {
 		download, err := io.App.Find("visit:download-db")
 		if err != nil {
 			return err

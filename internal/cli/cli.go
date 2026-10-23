@@ -11,6 +11,7 @@ import (
 	"github.com/NamTranQuoc/shlink-go/internal/core"
 	"github.com/NamTranQuoc/shlink-go/internal/db"
 	"github.com/NamTranQuoc/shlink-go/internal/integration/geolocation"
+	"github.com/NamTranQuoc/shlink-go/internal/integration/lock"
 	"github.com/NamTranQuoc/shlink-go/internal/integration/matomo"
 )
 
@@ -26,8 +27,9 @@ type Services struct {
 	Visits      *core.VisitsStatsHelper
 	Tracker     *core.VisitsTracker
 	Transformer core.ShortURLDataTransformer
-	// Locks are the file locks shared with the server (data/locks), like upstream's LockFactory.
-	Locks           *geolocation.Locks
+	// Locks is upstream's LockFactory: Redis when REDIS_SERVERS is set, otherwise file locks in data/locks shared
+	// with the server.
+	Locks           *lock.Factory
 	VisitLocator    *geolocation.VisitLocator
 	VisitToLocation *geolocation.VisitToLocation
 	GeoDbUpdater    *geolocation.GeolocationDbUpdater

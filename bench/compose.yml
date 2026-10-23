@@ -18,8 +18,9 @@ x-app: &app
     DISABLE_TRACK_PARAM: nostat
     LOGS_FORMAT: json
   cpus: ${APP_CPUS:-1}
-  mem_limit: ${APP_MEMORY:-512m}
-  memswap_limit: ${APP_MEMORY:-512m}
+  # 1 GiB: upstream, with RoadRunner pools sized from the host CPUs, is OOM-killed under load at 512 MB
+  mem_limit: ${APP_MEMORY:-1g}
+  memswap_limit: ${APP_MEMORY:-1g}
 
 services:
   postgres:

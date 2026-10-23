@@ -79,11 +79,22 @@ type DbUpdater struct {
 	Client  *http.Client
 }
 
-// NewDbUpdater creates an updater whose HTTP client honors the connection timeout.
+// maxRedirects is Guzzle's default allow_redirects max, which the download request does not override.
+const maxRedirects = 5
+
+// NewDbUpdater creates an updater whose HTTP client honors the connection timeout and Guzzle's redirect limit.
 func NewDbUpdater(o Options) *DbUpdater {
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	transport.DialContext = (&netDialer{timeout: o.ConnectionTimeout}).DialContext
-	return &DbUpdater{Options: o, Client: &http.Client{Transport: transport}}
+	return &DbUpdater{Options: o, Client: &http.Client{
+		Transport: transport,
+		CheckRedirect: func(_ *http.Request, via []*http.Request) error {
+			if len(via) > maxRedirects {
+				return fmt.Errorf("Will not follow more than %d redirects", maxRedirects)
+			}
+			return nil
+		},
+	}}
 }
 
 // DatabaseFileExists ports DbUpdater::databaseFileExists().
@@ -133,6 +144,11 @@ func (u *DbUpdater) download(ctx context.Context, dest string, progress func(tot
 	if err != nil {
 		return err
 	}
+	// Like curl's progress callback under Guzzle: zeros before the response headers are known, then the total before
+	// the first body bytes
+	if progress != nil {
+		progress(0, 0)
+	}
 	resp, err := u.Client.Do(req)
 	if err != nil {
 		return err
@@ -153,6 +169,9 @@ func (u *DbUpdater) download(ctx context.Context, dest string, progress func(tot
 	pw := &progressWriter{total: resp.ContentLength, fn: progress}
 	if pw.total < 0 {
 		pw.total = 0
+	}
+	if progress != nil {
+		progress(pw.total, 0)
 	}
 	_, err = io.Copy(io.MultiWriter(f, pw), resp.Body)
 	return err

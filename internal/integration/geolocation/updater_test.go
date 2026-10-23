@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -15,6 +16,7 @@ import (
 	"github.com/NamTranQuoc/shlink-go/internal/config"
 	"github.com/NamTranQuoc/shlink-go/internal/core"
 	"github.com/NamTranQuoc/shlink-go/internal/db"
+	"github.com/NamTranQuoc/shlink-go/internal/integration/lock"
 )
 
 func newTestStore(t *testing.T) *core.Store {
@@ -63,7 +65,7 @@ func TestCheckDbUpdate(t *testing.T) {
 	store := newTestStore(t)
 	now := time.Now()
 	u := &GeolocationDbUpdater{
-		Updater: NewDbUpdater(o), Store: store, Tracking: config.TrackingOptions{}, Locks: &Locks{Dir: filepath.Join(dir, "locks")},
+		Updater: NewDbUpdater(o), Store: store, Tracking: config.TrackingOptions{}, Locks: lock.NewFlockFactory(filepath.Join(dir, "locks")),
 		Now: func() time.Time { return now },
 	}
 
@@ -101,5 +103,35 @@ func TestCheckDbUpdate(t *testing.T) {
 	u.Tracking.DisableTracking = true
 	if r, _ := u.CheckDbUpdate(ctx, nil); r != CheckSkipped {
 		t.Fatalf("expected skip, got %v", r)
+	}
+}
+
+// TestDownloadFollowsGuzzleRedirectLimit pins Guzzle's default of at most 5 redirects.
+func TestDownloadFollowsGuzzleRedirectLimit(t *testing.T) {
+	var hops int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var n int
+		_, _ = fmt.Sscanf(r.URL.Path, "/%d", &n)
+		if n < hops {
+			http.Redirect(w, r, fmt.Sprintf("/%d", n+1), http.StatusFound)
+			return
+		}
+		_, _ = w.Write(fakeArchive(t))
+	}))
+	defer server.Close()
+
+	key := "fake-license"
+	for _, tc := range []struct {
+		hops int
+		ok   bool
+	}{{5, true}, {6, false}} {
+		hops = tc.hops
+		dir := t.TempDir()
+		o := NewOptions(&key, filepath.Join(dir, "GeoLite2-City.mmdb"), filepath.Join(dir, "tmp"))
+		o.DownloadFrom = server.URL + "/0"
+		err := NewDbUpdater(o).DownloadFreshCopy(context.Background(), nil)
+		if (err == nil) != tc.ok {
+			t.Fatalf("%d redirects: err = %v", tc.hops, err)
+		}
 	}
 }

@@ -182,6 +182,12 @@ func New(source Source, client *http.Client, now func() time.Time, loc *time.Loc
 	return nil
 }
 
+// NewHTTPClient returns the client the importers use: Guzzle's PSR-18 sendRequest(), which RestApiConsumer calls,
+// sets no timeout and does not follow redirects, so a 3xx response is returned as is.
+func NewHTTPClient() *http.Client {
+	return &http.Client{CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+}
+
 // apiConsumer ports RestApiConsumer.
 type apiConsumer struct {
 	client *http.Client

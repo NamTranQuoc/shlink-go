@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -202,7 +201,7 @@ func importShortURLs(env *Env, cio *console.IO) (int, error) {
 		return 0, err
 	}
 	loc := s.Store.Loc()
-	result, err := importer.New(source, http.DefaultClient, time.Now, loc).Import(params)
+	result, err := importer.New(source, importer.NewHTTPClient(), time.Now, loc).Import(params)
 	if errors.Is(err, importer.BitlyMissingTokenError) {
 		return 0, bitlyMissingTokenFatal(params)
 	}
@@ -439,9 +438,18 @@ func processImport(env *Env, s *Services, io *console.SymfonyStyle, result impor
 }
 
 func importShortURLsInTx(t *core.ImportTx, io *console.SymfonyStyle, loc *time.Location, result importer.Result, params importer.Params) error {
+	// DoctrineBatchHelper::wrapIterable()'s batch size
+	batchSize := 100
+	if params.ImportVisits {
+		batchSize = 10
+	}
+	iteration := 0
 	for imported, err := range result.ShortURLs {
 		if err != nil {
 			return err
+		}
+		if iteration++; iteration > 1 && (iteration-1)%batchSize == 0 {
+			t.Flush()
 		}
 		longURL := imported.LongURL
 		su, isNew, err := resolveImportedShortURL(t, io, imported, params.ImportShortCodes)

@@ -72,13 +72,3 @@ func TestExtractFile(t *testing.T) {
 		t.Errorf("unexpected error %v", err)
 	}
 }
-
-func TestLockFileName(t *testing.T) {
-	// Name produced by Symfony's FlockStore for the key used by GeolocationDbUpdater
-	l := &Locks{Dir: "data/locks"}
-	if got := filepath.Base(l.lockFile("geolocation-db-update")); got != lockNameFromSymfony {
-		t.Errorf("got %s, want %s", got, lockNameFromSymfony)
-	}
-}
-
-const lockNameFromSymfony = "sf.geolocation-db-update.UVCVIku.lock"

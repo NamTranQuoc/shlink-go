@@ -18,13 +18,16 @@ scenarios=("$@")
 if [[ ${#scenarios[@]} -eq 0 ]]; then
   scenarios=(redirect redirect-no-tracking create list short-url-visits tags-stats global-visits mixed)
 fi
-# Fixed arrival rates (requests/s), low enough for both targets to sustain on 1 CPU; latency is compared at these.
+# Fixed arrival rates (requests/s), about half of what upstream sustains on 1 CPU with p99 under 100 ms (measured with
+# short probes before the first full run); latency is compared at these.
 rate_for() {
   case $1 in
-    redirect | redirect-no-tracking) echo 200 ;;
-    mixed) echo 150 ;;
-    create | short-url-visits | global-visits) echo 50 ;;
-    list | tags-stats) echo 20 ;;
+    redirect | mixed) echo 50 ;;
+    redirect-no-tracking) echo 75 ;;
+    create) echo 25 ;;
+    list | short-url-visits) echo 10 ;;
+    global-visits) echo 5 ;;
+    tags-stats) echo 2 ;;
   esac
 }
 
@@ -82,7 +85,7 @@ k6() {
   echo "  \"host\": \"$(sysctl -n machdep.cpu.brand_string 2>/dev/null || uname -m), $(sysctl -n hw.ncpu 2>/dev/null) cores, $(( $(sysctl -n hw.memsize 2>/dev/null || echo 0) / 1073741824 )) GB\","
   echo "  \"docker\": \"$(docker info --format '{{.ServerVersion}}, {{.NCPU}} CPU, {{.MemTotal}} bytes')\","
   echo "  \"k6\": \"$k6_image\","
-  echo "  \"limits\": \"${APP_CPUS:-1} CPU, ${APP_MEMORY:-512m}\","
+  echo "  \"limits\": \"${APP_CPUS:-1} CPU, ${APP_MEMORY:-1g}\","
   echo "  \"warmup\": \"$warmup\", \"duration\": \"$duration\", \"runs\": $runs,"
   echo "  \"imageSizes\": {\"php\": $(docker image inspect shlinkio/shlink:5.1.8 --format '{{.Size}}'), \"go\": $(docker image inspect shlink-go:dev --format '{{.Size}}')}"
   echo "}"
@@ -108,6 +111,10 @@ for target in $targets; do
       k6 "$target" "$scenario" "$(rate_for "$scenario")" "$duration" "$tag.k6.json"
       kill "$sampler" 2>/dev/null || true
       wait "$sampler" 2>/dev/null || true
+      # A target that crashed or was OOM-killed during the measurement is recorded, not silently compared
+      docker inspect "shlink-bench-$target-1" --format \
+        '{"running": {{.State.Running}}, "oomKilled": {{.State.OOMKilled}}, "exitCode": {{.State.ExitCode}}, "restarts": {{.RestartCount}}}' \
+        >"$out/$tag.state.json"
 
       if [[ $capacity == 1 && $run == 1 ]]; then
         # Step test: double the rate until p99 > 500 ms, errors > 1% or the target cannot keep up

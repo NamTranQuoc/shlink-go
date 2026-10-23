@@ -12,6 +12,7 @@ import (
 
 	"github.com/NamTranQuoc/shlink-go/internal/config"
 	"github.com/NamTranQuoc/shlink-go/internal/core"
+	"github.com/NamTranQuoc/shlink-go/internal/integration/lock"
 )
 
 // Result ports GeolocationResult.
@@ -56,8 +57,9 @@ type GeolocationDbUpdater struct {
 	Updater  *DbUpdater
 	Store    *core.Store
 	Tracking config.TrackingOptions
-	Locks    *Locks
-	Now      func() time.Time
+	// Locks is the LOCAL_LOCK_FACTORY upstream injects: always a FlockStore.
+	Locks *lock.Factory
+	Now   func() time.Time
 }
 
 // currentFilesystemID ports GeolocationDbUpdate::currentFilesystemId(): the device id of the filesystem holding the
@@ -89,11 +91,11 @@ func (u *GeolocationDbUpdater) CheckDbUpdate(ctx context.Context, handler Progre
 	if !u.Tracking.IsGeolocationRelevant() {
 		return CheckSkipped, nil
 	}
-	release, err := u.Locks.Acquire(ctx, "geolocation-db-update")
-	if err != nil {
+	l := u.Locks.CreateLock("geolocation-db-update", lock.DefaultTTL)
+	if _, err := l.Acquire(ctx, true); err != nil {
 		return 0, err
 	}
-	defer release()
+	defer func() { _ = l.Release(ctx) }()
 	return u.downloadIfNeeded(ctx, handler)
 }
 

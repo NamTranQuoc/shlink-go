@@ -331,12 +331,24 @@ func dispatchMiddleware(r *Request, next Handler) (*Response, error) {
 // maxRequestSize is RoadRunner's default http.max_request_size (1000 MB), which upstream does not override.
 const maxRequestSize = 1000 << 20
 
+// readBody reads the whole request body, up to maxRequestSize, into a buffer sized from Content-Length when it is
+// declared, so a large body is held in memory once.
+func readBody(w http.ResponseWriter, hr *http.Request) ([]byte, error) {
+	limited := http.MaxBytesReader(w, hr.Body, maxRequestSize)
+	if hr.ContentLength <= 0 || hr.ContentLength > maxRequestSize {
+		return io.ReadAll(limited)
+	}
+	body := make([]byte, hr.ContentLength)
+	n, err := io.ReadFull(limited, body)
+	return body[:n], err
+}
+
 // ServeHTTP adapts net/http to the pipeline, the way RoadRunner hands requests to the PHP worker.
 func (a *App) ServeHTTP(w http.ResponseWriter, hr *http.Request) {
 	if a.serveStatic(w, hr) {
 		return
 	}
-	body, err := io.ReadAll(http.MaxBytesReader(w, hr.Body, maxRequestSize))
+	body, err := readBody(w, hr)
 	if maxErr := (*http.MaxBytesError)(nil); errors.As(err, &maxErr) {
 		http.Error(w, "serve_http: http: request body too large", http.StatusRequestEntityTooLarge)
 		return

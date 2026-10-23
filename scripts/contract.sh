@@ -53,13 +53,28 @@ if [[ $db != sqlite ]]; then
       "IF DB_ID('shlink') IS NOT NULL BEGIN ALTER DATABASE shlink SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE shlink; END" >/dev/null ;;
   esac
 fi
+# With REDIS_SERVERS set, upstream keeps its Doctrine metadata cache in Redis and its init clears it only after creating
+# and migrating the database, so a cache left by a run on another engine would make it create that engine's schema.
+if [[ $profile == integrations ]]; then
+  compose up -d --wait redis >/dev/null
+  docker exec shlink-go-redis-1 redis-cli FLUSHALL >/dev/null
+fi
 compose up -d --wait
 
 container="shlink-go-shlink-$target-1"
-for _ in $(seq 1 60); do
-  if curl -fs "http://127.0.0.1:$([[ $target == php ]] && echo 18080 || echo 28080)$base_path/rest/health" >/dev/null; then break; fi
+healthy=0
+for _ in $(seq 1 120); do
+  if curl -fs "http://127.0.0.1:$([[ $target == php ]] && echo 18080 || echo 28080)$base_path/rest/health" >/dev/null; then
+    healthy=1
+    break
+  fi
   sleep 1
 done
+if [[ $healthy != 1 ]]; then
+  echo "$container did not become healthy" >&2
+  docker logs "$container" >&2 || true
+  exit 1
+fi
 
 case $db in
   sqlite) dsn="file:$data_dir/database.sqlite?_pragma=busy_timeout(10000)" ;;

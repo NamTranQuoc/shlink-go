@@ -60,7 +60,7 @@ internal/core/          short URLs, visits, tags, domains, redirect rules, API k
 internal/web/           FastRoute-compatible router, Mezzio middleware pipeline, REST + public actions, problem details
 internal/console/       symfony/console-compatible framework
 internal/cli/           the Shlink CLI commands
-internal/integration/   events (async listeners), realtime (Mercure/RabbitMQ/Redis), matomo, geolocation, title
+internal/integration/   events (async listeners), realtime (Mercure/RabbitMQ/Redis), lock, matomo, geolocation, title
 internal/phpx/          PHP semantics: json_encode flags, urlencode/parse_str, Guzzle URIs, date parsing
 internal/valinor/       the CuyZ/Valinor mapping rules upstream relies on
 internal/pcre/          backtracking regex engine with PCRE semantics for ported UA/crawler patterns
@@ -106,7 +106,7 @@ Go unit tests cover logic-heavy parts in isolation and pin PHP semantics with ou
 
 - Topology: one PostgreSQL 17 container (2 CPU / 2 GB), one app container at a time, k6 (`grafana/k6:1.3.0`) on the same Docker network. All on Docker Desktop on one machine; README records the machine the published numbers come from.
 - Targets: `shlinkio/shlink:5.1.8` (default RoadRunner runtime and worker count) and the Go image, each with default runtime settings.
-- Fairness: identical CPU and memory limits on the app container (1 CPU / 512 MB), same Postgres instance and config, same seed (100k short URLs, 1M visits, 200 tags, 5 domains; deterministic), DB restored from the same dump before each run, 30 s warm-up excluded from results, same env vars (geolocation and real-time updates off).
+- Fairness: identical CPU and memory limits on the app container (1 CPU / 1 GiB; at 512 MB upstream with its default RoadRunner worker count is OOM-killed under load), same Postgres instance and config, same seed (100k short URLs, 1M visits, 200 tags, 5 domains; deterministic), DB restored from the same dump before each run, 30 s warm-up excluded from results, same env vars (geolocation and real-time updates off).
 - Scenarios:
   1. redirect hot path with visit tracking;
   2. redirect with tracking disabled (`DISABLE_TRACK_PARAM`);
@@ -150,32 +150,30 @@ Done = phase 7 matrix fully green for both targets, phase 8 README written from 
 | Phase | State |
 |---|---|
 | 0–6 | Done. REST (31 ported files + pixel, mercure-info), CLI (all 32 commands incl. `short-url:import` with 5 sources and installer `init`/`install`/`update`/`set-option`), differential, integration and schema suites; swagger and command-list gates. |
-| 7 | Done for the port: the matrix (3 profiles × 5 engines × 2 targets, `scripts/matrix.sh`) passes in all 15 Go runs; the table is in README. Two upstream runs in the `integrations` profile fail only in sequence (open item below). Web client check passes for both targets. |
-| 8 | Not started. Benchmark harness (`bench/`) is written but has never run. |
-| 9 | Partly done (see the checklist below). |
+| 7 | Done: the matrix (3 profiles × 5 engines × 2 targets, `scripts/matrix.sh`) passes in all 30 runs; the table is in README. Web client check passes for both targets. |
+| 8 | Done: run `bench/results/20261023-003134` (48 runs, no target crashed), tables and findings in README. |
+| 9 | Done up to publishing: secret scan, scanners, license check and manual review are clean (checklist below); commit and push wait for approval. |
 
 Phase 9 checklist:
 
 - [x] gitleaks `dir` mode: clean outside `reference/` (gitignored). Two fake Mercure JWTs in `internal/integration/realtime/mercure_test.go` are marked `gitleaks:allow`.
 - [x] gitleaks `git` mode over the pushed commit.
 - [x] govulncheck with `toolchain go1.27.3`: no reachable vulnerability. Only GO-2026-5932 (`golang.org/x/crypto/openpgp`, no fix) is in a required module; the code does not import it.
-- [x] gosec: 35 findings, all triaged as not exploitable (env var names, config-path file reads as upstream, `math/rand` only for counter slots and temp names, md5 for Matomo ids as upstream). Short codes and API keys use `crypto/rand`.
+- [x] gosec: 34 findings, all triaged as not exploitable (env var names, config-path file reads as upstream, upstream's file modes, `math/rand` only for counter slots, temp names and lock retry jitter, md5 for Matomo ids as upstream). Short codes and API keys use `crypto/rand`.
 - [x] Request body limit: 1000 MiB with RoadRunner's 413 response, measured against upstream (exactly 1048576000 bytes passes).
 - [x] `make licenses` clean.
-- [ ] Manual review (step 2 below) and the report at `~/Desktop/memory/shlink/doc/security-review.md`.
+- [x] Manual review (step 2 below), report at `~/Desktop/memory/shlink/doc/security-review.md`: no open high or critical finding; auth and roles identical to upstream on every REST operation (368-request probe, SQLite and PostgreSQL); upstream weaknesses kept are listed there.
 
 Open items:
 
-- Matrix flake, upstream only, `integrations` profile: in the matrix sequence upstream's SQLite container exits with code 1 during start, and on MS SQL the schema is missing (`redirect_conditions_in_short_url_redirect_rules`) right after it reports healthy. Both pass when rerun alone (`PROFILE=integrations scripts/contract.sh php sqlite|mssql`). Suspect state left by the previous run in the shared Redis/RabbitMQ/Mercure services or the DB reset ordering in `scripts/contract.sh`; capture `docker logs` of the failing container before fixing.
-- Known differences are listed in README ("Differences from upstream"): no PHP traces on `-v`, `config/params/*.php` must be data, some installer type errors and endless prompts, Bit.ly import has no contract test.
-- Fork-era gaps still open: `visit:download-db` progress bar output, GeoLite2 real download unverified without a MaxMind key, locks always use flock (upstream uses Redis when configured).
+- D2: the benchmark runs both apps at 1 CPU / 1 GiB instead of the planned 512 MB, because upstream with its default RoadRunner worker count is OOM-killed under load at 512 MB. Awaiting confirmation. Owner: Nam.
 
 ## Resuming on another machine
 
 1. Prerequisites: Go (the toolchain line in `go.mod` downloads 1.27.3), Docker with at least 8 CPU / 8 GB for the VM, Node 20+ and Google Chrome for the web client check, Python 3.
 2. `git clone https://github.com/NamTranQuoc/shlink-go && cd shlink-go && make reference` (needs Docker; pulls `shlinkio/shlink:5.1.8`).
 3. Sanity check: `make test lint`, `make image`, `scripts/contract.sh go sqlite`.
-4. Next: phase 8 (`make bench` on a quiet machine, then `make bench-report`; read `bench/CLAUDE.md` first), then the rest of phase 9.
+4. Full checks: `scripts/matrix.sh` (about 40 min), `BROWSER_CHANNEL=chrome scripts/webclient.sh go|php`, and `make bench` then `make bench-report` on a quiet machine (about 2.5 h; read `bench/CLAUDE.md` first).
 
 ## Phase 9: security review and publish
 
@@ -207,7 +205,7 @@ Commits and pushes happen only when asked; every push is preceded by the secret 
 - Done is judged by one Go contract suite (REST, CLI, differential, integration, schema) that passes against both implementations on all engines and env profiles, plus swagger/CLI/env/schema gates.
 - QR code generation is not in scope: upstream removed it in 5.0.0 (CHANGELOG #2514).
 - REA is not used; behavior comes from reading upstream source.
-- Benchmark: k6 + `docker stats`, local Docker Desktop, upstream on RoadRunner, equal container limits (1 CPU / 512 MB), median of 3 runs, step test for highest sustained rate.
+- Benchmark: k6 + `docker stats`, local Docker Desktop, upstream on RoadRunner, equal container limits (1 CPU / 1 GiB), median of 3 runs, step test for highest sustained rate.
 - Database access is hand-written SQL over `database/sql` mirroring Doctrine's queries; routing is a FastRoute port, not a Go router library.
 - Public repo `NamTranQuoc/shlink-go`, MIT with upstream copyright kept, third-party ported code/data credited in `THIRD_PARTY_NOTICES.md`.
 - `reference/` (upstream source) is gitignored and never pushed; no GeoLite2 database is committed.

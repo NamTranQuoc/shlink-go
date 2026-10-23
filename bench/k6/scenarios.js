@@ -36,8 +36,10 @@ const requests = {
     longUrl: `https://example.com/bench/${__VU}/${created++}/${Math.random()}`,
     tags: [pick(inputs.tags)],
   }), { headers: { ...API.headers, 'Content-Type': 'application/json' } }),
+  // The first page: a tag and search term combination may have a single page, and Shlink answers 500 for a page past
+  // the last one (Pagerfanta's OutOfRangeCurrentPageException)
   list: () => http.get(`${BASE_URL}/rest/v3/short-urls?searchTerm=${pick(inputs.words)}&tags[]=${pick(inputs.tags)}`
-    + `&page=${1 + Math.floor(Math.random() * 5)}&itemsPerPage=20`, API),
+    + '&page=1&itemsPerPage=20', API),
   'short-url-visits': () => http.get(`${BASE_URL}/rest/v3/short-urls/${pick(inputs.codes)}/visits?itemsPerPage=20`, API),
   'tags-stats': () => http.get(`${BASE_URL}/rest/v3/tags/stats?itemsPerPage=20`, API),
   'global-visits': () => http.get(`${BASE_URL}/rest/v3/visits`, API),

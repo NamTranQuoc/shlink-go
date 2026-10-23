@@ -168,7 +168,7 @@ THE SOFTWARE.
 
 ## symfony/lock
 
-Ported to `internal/integration/geolocation` (`FlockStore` lock file naming).
+Ported to `internal/integration/lock` (`Lock` acquisition, `FlockStore` lock file naming, `RedisStore` and its Lua scripts).
 Source: https://github.com/symfony/lock
 
 ```
@@ -195,7 +195,8 @@ THE SOFTWARE.
 
 ## shlinkio/shlink-common
 
-Ported to `internal/integration/realtime` (Mercure, RabbitMQ and Redis publishing helpers, Redis server parsing).
+Ported to `internal/integration/realtime` (Mercure, RabbitMQ and Redis publishing helpers, Redis server parsing) and
+`internal/integration/lock` (`NamespacedStore`).
 Source: https://github.com/shlinkio/shlink-common
 
 ```

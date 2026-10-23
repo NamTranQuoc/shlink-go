@@ -123,8 +123,7 @@ func bodyParserMiddleware(r *Request, next Handler) (*Response, error) {
 	if !phpEmptyBody(r.Body) || r.Method == http.MethodGet || r.Method == http.MethodHead || r.Method == http.MethodOptions {
 		return next(r)
 	}
-	raw := string(r.RawBody)
-	if raw == "" || raw == "0" {
+	if len(r.RawBody) == 0 || string(r.RawBody) == "0" {
 		return next(r)
 	}
 	parsed, err := decodeJSON(r.RawBody)

@@ -1,6 +1,15 @@
 package matomo
 
-import "testing"
+import (
+	"context"
+	"fmt"
+	"io"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/NamTranQuoc/shlink-go/internal/core"
+)
 
 // The expected request was produced by MatomoTrackerBuilder + MatomoTracker::getUrlTrackPageView() in the
 // shlinkio/shlink:5.1.8 image, with the same tracked values; random parts (r, _idts, _id) are pinned here.
@@ -22,5 +31,38 @@ func TestPageViewRequestMatchesUpstream(t *testing.T) {
 	}
 	if body != want {
 		t.Errorf("body:\n got %s\nwant %s", body, want)
+	}
+}
+
+// TestRedirectsArePostedAgain pins curl's CURL_REDIR_POST_ALL with its default limit of 30 redirects.
+func TestRedirectsArePostedAgain(t *testing.T) {
+	var final *http.Request
+	var finalBody string
+	limit := 0
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var n int
+		_, _ = fmt.Sscanf(r.URL.Path, "/%d", &n)
+		if n < limit {
+			http.Redirect(w, r, fmt.Sprintf("/%d", n+1), []int{301, 302, 303, 307, 308}[n%5])
+			return
+		}
+		b, _ := io.ReadAll(r.Body)
+		final, finalBody = r, string(b)
+	}))
+	defer srv.Close()
+	s := NewVisitSender(Options{}, nil, core.ShortURLStringifier{})
+
+	limit = 30
+	if err := s.post(context.Background(), srv.URL+"/0", "idsite=3", "agent"); err != nil {
+		t.Fatal(err)
+	}
+	if final.Method != http.MethodPost || finalBody != "idsite=3" || final.URL.Path != "/30" ||
+		final.Header.Get("User-Agent") != "agent" {
+		t.Fatalf("final request: %s %s %q %q", final.Method, final.URL.Path, finalBody, final.Header.Get("User-Agent"))
+	}
+	limit = 31
+	if err := s.post(context.Background(), srv.URL+"/0", "idsite=3", "agent"); err == nil ||
+		err.Error() != "Maximum (30) redirects followed" {
+		t.Fatalf("31 redirects: %v", err)
 	}
 }

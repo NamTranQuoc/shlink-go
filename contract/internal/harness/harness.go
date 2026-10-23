@@ -5,6 +5,7 @@ package harness
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -72,11 +73,22 @@ func Seed(t testing.TB) {
 		}
 		t.Fatal("CONTRACT_DB_DSN is not set")
 	}
-	if err := db.Purge(); err != nil {
-		t.Fatalf("purge: %v", err)
-	}
-	if err := db.SeedFixtures(); err != nil {
-		t.Fatalf("seed: %v", err)
+	// The SQLite file is shared with the target's container through a Docker Desktop bind mount, where journal file
+	// operations occasionally fail with a disk I/O error; purging and seeding again from scratch is safe.
+	for attempt := 1; ; attempt++ {
+		err := db.Purge()
+		if err != nil {
+			err = fmt.Errorf("purge: %w", err)
+		} else if err = db.SeedFixtures(); err != nil {
+			err = fmt.Errorf("seed: %w", err)
+		}
+		if err == nil {
+			break
+		}
+		if attempt == 3 || db.Driver != "sqlite" || !strings.Contains(err.Error(), "disk I/O error") {
+			t.Fatal(err)
+		}
+		time.Sleep(200 * time.Millisecond)
 	}
 }
 

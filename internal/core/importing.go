@@ -35,9 +35,19 @@ type ImportTx struct {
 
 // InImportTx runs fn in an import transaction, committed when fn returns no error.
 func (s *Store) InImportTx(ctx context.Context, o config.URLShortenerOptions, fn func(t *ImportTx) error) error {
+	ctx, releaseLocks := s.withRelationLocks(ctx)
+	defer releaseLocks()
 	return s.DB.InTx(ctx, func(tx *sql.Tx) error {
 		return fn(&ImportTx{ctx: ctx, store: s, tx: tx, defaultDomain: o.DefaultDomain, mode: o.Mode})
 	})
+}
+
+// Flush ports the entity manager flush DoctrineBatchHelper does after each batch: the relation resolver releases the
+// locks it kept for new domains and tags.
+func (t *ImportTx) Flush() {
+	if l := relationLocksFrom(t.ctx); l != nil {
+		l.releaseAll()
+	}
 }
 
 // FindImportedShortURL ports ShortUrlRepository::findOneByImportedUrl().
@@ -122,6 +132,13 @@ func (t *ImportTx) EnsureShortCodeUniqueness(su *ShortURL, hasCustomSlug bool) (
 
 // Persist inserts a short URL created by NewShortURL, with its domain and tags.
 func (t *ImportTx) Persist(su *ShortURL) error {
+	var domain *string
+	if su.Domain != nil && su.Domain.ID == 0 {
+		domain = &su.Domain.Authority
+	}
+	if err := t.store.lockRelations(t.ctx, t.tx, su.Tags, domain); err != nil {
+		return err
+	}
 	if su.Domain != nil && su.Domain.ID == 0 {
 		d, err := t.store.findOrCreateDomain(t.ctx, t.tx, su.Domain.Authority)
 		if err != nil {

@@ -5,7 +5,7 @@ How the benchmark compares upstream Shlink 5.1.8 and this port, and the rules th
 ## Topology
 
 - `bench/compose.yml` (project `shlink-bench`): one PostgreSQL 17 container (2 CPU, 2 GB) and one app container at a time, `php` (`shlinkio/shlink:5.1.8`, default RoadRunner runtime) or `go` (`shlink-go:dev`, built with `make image`).
-- Both apps get the same limits (`APP_CPUS`, default 1; `APP_MEMORY`, default 512m), the same env vars and their default runtime settings (RoadRunner worker count, Go runtime defaults). Do not tune one target only.
+- Both apps get the same limits (`APP_CPUS`, default 1; `APP_MEMORY`, default 1g: at 512m upstream with its default worker count is OOM-killed under load), the same env vars and their default runtime settings (RoadRunner worker count, Go runtime defaults). Do not tune one target only.
 - k6 runs in the `grafana/k6` image on the same Docker network.
 
 ## Data

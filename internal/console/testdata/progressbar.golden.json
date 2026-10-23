@@ -1,0 +1,11 @@
+{
+    "jump-to-max": " Downloading GeoLite2 db file...\n\n 1000/1000 [============================] 100%\n\n [OK] GeoLite2 db file properly downloaded.                                                                             \n\n",
+    "rapid-steps": " Downloading GeoLite2 db file...\n   0/300 [>---------------------------]   0%\n 300/300 [============================] 100%\n\n [OK] GeoLite2 db file properly downloaded.                                                                             \n\n",
+    "first-then-max": " Downloading GeoLite2 db file...\n\n    16384/52428800 [>---------------------------]   0%\n 52428800/52428800 [============================] 100%\n\n [OK] GeoLite2 db file properly downloaded.                                                                             \n\n",
+    "unknown-size": " Downloading GeoLite2 db file...\n    0 [>---------------------------]\n\n [OK] GeoLite2 db file properly downloaded.                                                                             \n\n",
+    "over-max": " Downloading GeoLite2 db file...\n\n 15/15 [============================] 100%\n\n [OK] GeoLite2 db file properly downloaded.                                                                             \n\n",
+    "decorated": " \u001b[34mDownloading GeoLite2 db file...\u001b[39m\n   0/300 [>---------------------------]   0%\u001b]9;4;1;0\u001b\\\u001b[1G\u001b[2K 300/300 [============================] 100%\u001b]9;4;1;100\u001b\\\u001b]9;4;0;0\u001b\\\n\n\u001b[30;42m      \u001b[114X\u001b[114C\u001b[39;49m\n\u001b[30;42m [OK] GeoLite2 db file properly downloaded.\u001b[77X\u001b[77C\u001b[39;49m\n\u001b[30;42m      \u001b[114X\u001b[114C\u001b[39;49m\n\n",
+    "verbose": " Downloading GeoLite2 db file...\n\n 300/300 [============================] 100% < 1 ms\n\n [OK] GeoLite2 db file properly downloaded.                                                                             \n\n",
+    "very-verbose": " Downloading GeoLite2 db file...\n\n 300/300 [============================] 100% < 1 ms/< 1 ms\n\n [OK] GeoLite2 db file properly downloaded.                                                                             \n\n",
+    "quiet": ""
+}

@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"regexp"
 	"strings"
@@ -55,9 +56,27 @@ type Mercure struct {
 	Now func() time.Time
 }
 
+// Symfony's HttpClient::create(), which the hub uses, waits up to default_socket_timeout (60s) for activity and
+// follows up to 20 redirects.
+const (
+	mercureIdleTimeout  = 60 * time.Second
+	mercureMaxRedirects = 20
+)
+
 // NewMercure creates the Mercure integration.
 func NewMercure(o MercureOptions) *Mercure {
-	return &Mercure{Options: o, Client: &http.Client{}, Now: time.Now}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.DialContext = (&net.Dialer{Timeout: mercureIdleTimeout, KeepAlive: 30 * time.Second}).DialContext
+	transport.ResponseHeaderTimeout = mercureIdleTimeout
+	return &Mercure{Options: o, Now: time.Now, Client: &http.Client{
+		Transport: transport,
+		CheckRedirect: func(_ *http.Request, via []*http.Request) error {
+			if len(via) > mercureMaxRedirects {
+				return fmt.Errorf("Too many redirects (%d)", mercureMaxRedirects)
+			}
+			return nil
+		},
+	}}
 }
 
 // PublicHubURL implements web.MercureTokens.

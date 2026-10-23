@@ -47,7 +47,7 @@ func cliServices() (*cli.Services, error) {
 		Visits:          c.Visits,
 		Tracker:         c.Tracker,
 		Transformer:     c.Transformer,
-		Locks:           c.Integrations.GeoDbUpdater.Locks,
+		Locks:           c.Locks,
 		VisitLocator:    c.Integrations.VisitLocator,
 		VisitToLocation: c.Integrations.VisitToLocation,
 		GeoDbUpdater:    c.Integrations.GeoDbUpdater,

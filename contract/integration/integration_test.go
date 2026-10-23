@@ -72,7 +72,8 @@ func requireProfile(t *testing.T) {
 var (
 	isoNow     = regexp.MustCompile(`\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}`)
 	matomoNorm = map[string]*regexp.Regexp{
-		"r":     regexp.MustCompile(`^\d{6}$`),
+		// substr(strval(mt_rand()), 2, 6): shorter when mt_rand() has fewer than 8 digits
+		"r":     regexp.MustCompile(`^\d{0,6}$`),
 		"_idts": regexp.MustCompile(`^\d{10}$`),
 		"_id":   regexp.MustCompile(`^[0-9a-f]{16}$`),
 		"pv_id": regexp.MustCompile(`^[0-9a-f]{6}$`),

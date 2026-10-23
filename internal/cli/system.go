@@ -110,6 +110,12 @@ func createDatabase(env *Env, io *console.IO) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	return executeWithLock(env, s.Locks, "db:create", true, style, func() (int, error) {
+		return createDatabaseWithLock(env, style, s)
+	})
+}
+
+func createDatabaseWithLock(env *Env, style *console.SymfonyStyle, s *Services) (int, error) {
 	exists, err := s.DB.AnyShlinkTableExists(env.Ctx)
 	if err != nil {
 		// Listing tables fails when the database does not exist yet: create it with a connection without dbname
@@ -138,6 +144,12 @@ func migrateDatabase(env *Env, io *console.IO) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	return executeWithLock(env, s.Locks, "db:migrate", true, style, func() (int, error) {
+		return migrateDatabaseWithLock(env, style, s)
+	})
+}
+
+func migrateDatabaseWithLock(env *Env, style *console.SymfonyStyle, s *Services) (int, error) {
 	style.Writeln("<fg=blue>Migrating database...</>", console.OutputNormal)
 	if err := runProcess(style, []string{"vendor/doctrine/migrations/bin/doctrine-migrations.php", "migrations:migrate", "--no-interaction"}, func() error {
 		_, err := s.DB.Migrate(env.Ctx)

@@ -13,10 +13,14 @@ import (
 	"github.com/NamTranQuoc/shlink-go/internal/core"
 	"github.com/NamTranQuoc/shlink-go/internal/integration/events"
 	"github.com/NamTranQuoc/shlink-go/internal/integration/geolocation"
+	"github.com/NamTranQuoc/shlink-go/internal/integration/lock"
 	"github.com/NamTranQuoc/shlink-go/internal/integration/matomo"
 	"github.com/NamTranQuoc/shlink-go/internal/integration/realtime"
 	"github.com/NamTranQuoc/shlink-go/internal/integration/title"
 )
+
+// LocksDir is config.locks.locks_dir, where FlockStore keeps its lock files.
+const LocksDir = "data/locks"
 
 // Integrations holds the integration services shared by the HTTP server and the CLI.
 type Integrations struct {
@@ -60,7 +64,7 @@ func New(p Params) (*Integrations, error) {
 	i.DbUpdater = geolocation.NewDbUpdater(i.GeoLiteOptions)
 	i.GeoResolver = &geolocation.Resolver{Updater: i.DbUpdater}
 	i.GeoDbUpdater = &geolocation.GeolocationDbUpdater{
-		Updater: i.DbUpdater, Store: p.Store, Tracking: p.Tracking, Locks: &geolocation.Locks{Dir: "data/locks"},
+		Updater: i.DbUpdater, Store: p.Store, Tracking: p.Tracking, Locks: lock.NewFlockFactory(LocksDir),
 	}
 	i.VisitLocator = &geolocation.VisitLocator{Store: p.Store}
 	i.VisitToLocation = &geolocation.VisitToLocation{Resolver: i.GeoResolver}

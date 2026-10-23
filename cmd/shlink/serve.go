@@ -16,6 +16,7 @@ import (
 	"github.com/NamTranQuoc/shlink-go/internal/core"
 	"github.com/NamTranQuoc/shlink-go/internal/db"
 	"github.com/NamTranQuoc/shlink-go/internal/integration"
+	"github.com/NamTranQuoc/shlink-go/internal/integration/lock"
 	"github.com/NamTranQuoc/shlink-go/internal/web"
 )
 
@@ -39,6 +40,8 @@ type container struct {
 	Transformer core.ShortURLDataTransformer
 	// Integrations holds Mercure, RabbitMQ, Redis, Matomo, GeoLite2 and title resolution, plus the event dispatcher.
 	Integrations *integration.Integrations
+	// Locks is the LockFactory: Redis when REDIS_SERVERS is set, otherwise file locks in data/locks.
+	Locks *lock.Factory
 }
 
 // newContainer builds the services for CLI commands. Like upstream outside RoadRunner, async event listeners are not
@@ -54,7 +57,12 @@ func buildContainer(async bool) (*container, error) {
 	if err != nil {
 		return nil, err
 	}
+	locks, err := lock.FromEnv(integration.LocksDir)
+	if err != nil {
+		return nil, err
+	}
 	store := core.NewStore(d)
+	store.Locks = locks
 	urls := config.URLShortenerOptionsFromEnv()
 	tracking := config.TrackingOptionsFromEnv()
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
@@ -82,6 +90,7 @@ func buildContainer(async bool) (*container, error) {
 		Logger:       logger,
 		Transformer:  transformer,
 		Integrations: integrations,
+		Locks:        locks,
 	}, nil
 }
 

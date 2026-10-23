@@ -43,7 +43,7 @@ internal/web/           HTTP layer: FastRoute-compatible router, Mezzio pipeline
 internal/console/       symfony/console-compatible framework (input parsing, help, tables, SymfonyStyle)
 internal/cli/           Shlink CLI commands and the shlink-installer application
 internal/importer/      port of shlinkio/shlink-importer sources
-internal/integration/   events (async listeners), realtime (Mercure/RabbitMQ/Redis), matomo, geolocation, title
+internal/integration/   events (async listeners), realtime (Mercure/RabbitMQ/Redis), lock, matomo, geolocation, title
 internal/phpx/          PHP semantics Go lacks: json_encode, urlencode/parse_str, Guzzle URIs, dates
 internal/valinor/       the subset of CuyZ/Valinor mapping rules upstream relies on
 internal/pcre/          backtracking regex engine with PCRE semantics, for the ported UA/crawler patterns

@@ -69,6 +69,7 @@ func (s *ShortURLService) Shorten(ctx context.Context, c *ShortURLCreation) (*Sh
 	}
 
 	var created *ShortURL
+	ctx, releaseLocks := s.Store.withRelationLocks(ctx)
 	err := s.Store.DB.InTx(ctx, func(tx *sql.Tx) error {
 		su, err := s.Store.newShortURL(ctx, tx, c, s.Options.DefaultDomain)
 		if err != nil {
@@ -83,6 +84,7 @@ func (s *ShortURLService) Shorten(ctx context.Context, c *ShortURLCreation) (*Sh
 		created = su
 		return nil
 	})
+	releaseLocks()
 	if err != nil {
 		return nil, err
 	}
@@ -163,9 +165,11 @@ func (s *ShortURLService) UpdateShortURL(ctx context.Context, id ShortURLIdentif
 	if err != nil {
 		return nil, err
 	}
+	ctx, releaseLocks := s.Store.withRelationLocks(ctx)
 	err = s.Store.DB.InTx(ctx, func(tx *sql.Tx) error {
 		return s.Store.updateShortURL(ctx, tx, su, e)
 	})
+	releaseLocks()
 	if err != nil {
 		return nil, err
 	}
@@ -217,12 +221,19 @@ func (s *Store) newShortURL(ctx context.Context, tx *sql.Tx, c *ShortURLCreation
 		shortCodeLength:       c.ShortCodeLength,
 	}
 	su.Tags, su.TagKeys = uniqueStrings(c.Tags, c.TagKeys)
+	var domain *string
+	if c.Domain != nil && *c.Domain != defaultDomain {
+		domain = c.Domain
+	}
+	if err := s.lockRelations(ctx, tx, su.Tags, domain); err != nil {
+		return nil, err
+	}
 	if c.APIKey != nil && c.APIKey.ID != 0 {
 		id := c.APIKey.ID
 		su.AuthorAPIKeyID = &id
 	}
-	if c.Domain != nil && *c.Domain != defaultDomain {
-		d, err := s.findOrCreateDomain(ctx, tx, *c.Domain)
+	if domain != nil {
+		d, err := s.findOrCreateDomain(ctx, tx, *domain)
 		if err != nil {
 			return nil, err
 		}
@@ -275,9 +286,16 @@ func (s *Store) FindDomainByAuthority(ctx context.Context, q db.Querier, authori
 	return &d, nil
 }
 
+// findOrCreateDomain ports PersistenceShortUrlRelationResolver::resolveDomain(), including its lock.
 func (s *Store) findOrCreateDomain(ctx context.Context, q db.Querier, authority string) (*Domain, error) {
+	locks, name := relationLocksFrom(ctx), "domain_"+authority
+	if err := locks.lock(ctx, name); err != nil {
+		return nil, err
+	}
 	d, err := s.FindDomainByAuthority(ctx, q, authority)
 	if err != nil || d != nil {
+		// The lock can be released immediately if the domain is not new
+		locks.release(name)
 		return d, err
 	}
 	id, err := s.DB.Insert(ctx, q, "domains",
@@ -289,14 +307,20 @@ func (s *Store) findOrCreateDomain(ctx context.Context, q db.Querier, authority 
 	return &Domain{ID: id, Authority: authority}, nil
 }
 
-// resolveTagIDs finds or creates tags by name, preserving order.
+// resolveTagIDs finds or creates tags by name, preserving order, with PersistenceShortUrlRelationResolver's locks.
 func (s *Store) resolveTagIDs(ctx context.Context, q db.Querier, names []string) ([]int64, error) {
+	locks := relationLocksFrom(ctx)
 	ids := make([]int64, 0, len(names))
 	for _, name := range names {
+		if err := locks.lock(ctx, "tag_"+name); err != nil {
+			return nil, err
+		}
 		var id int64
 		one := 1
 		err := s.DB.QueryRow(ctx, q, s.DB.Limit("SELECT id FROM tags WHERE name = ? ORDER BY id", &one, nil), name).Scan(&id)
-		if errors.Is(err, sql.ErrNoRows) {
+		if err == nil {
+			locks.release("tag_" + name)
+		} else if errors.Is(err, sql.ErrNoRows) {
 			id, err = s.DB.Insert(ctx, q, "tags", []string{"name"}, name)
 		}
 		if err != nil {
@@ -381,6 +405,9 @@ func (s *Store) updateShortURL(ctx context.Context, tx *sql.Tx, su *ShortURL, e 
 	tagsChanged := false
 	if e.Tags != nil {
 		su.Tags, su.TagKeys = uniqueStrings(e.Tags, e.TagKeys)
+		if err := s.lockRelations(ctx, tx, su.Tags, nil); err != nil {
+			return err
+		}
 		tagsChanged = true
 	}
 	if e.Crawlable != nil {

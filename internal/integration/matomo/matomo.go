@@ -168,7 +168,8 @@ type VisitSender struct {
 
 // NewVisitSender creates a sender with an HTTP client using the tracker's timeouts.
 func NewVisitSender(o Options, store *core.Store, s core.ShortURLStringifier) *VisitSender {
-	return &VisitSender{Options: o, Store: store, Stringifier: s, Client: &http.Client{Timeout: requestTimeout}, Now: time.Now}
+	return &VisitSender{Options: o, Store: store, Stringifier: s, Client: &http.Client{Timeout: requestTimeout,
+		CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}, Now: time.Now}
 }
 
 // buildTracker ports MatomoTrackerBuilder::buildMatomoTracker().
@@ -215,23 +216,53 @@ func (s *VisitSender) SendVisit(ctx context.Context, v *core.Visit, originalIPAd
 		title = *v.ShortURL.Title
 	}
 	endpoint, body := t.pageViewRequest(title, randomHex(6), mtRand())
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, strings.NewReader(body))
-	if err != nil {
-		return err
+	return s.post(ctx, endpoint, body, t.userAgent)
+}
+
+// post sends a tracking request. The tracker posts url-encoded data with CURLOPT_FOLLOWLOCATION and
+// CURL_REDIR_POST_ALL: every redirect is followed with the same POST, up to curl's default of 30.
+func (s *VisitSender) post(ctx context.Context, endpoint, body, userAgent string) error {
+	for redirects := 0; ; redirects++ {
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, strings.NewReader(body))
+		if err != nil {
+			return err
+		}
+		if userAgent != "" {
+			req.Header.Set("User-Agent", userAgent)
+		} else {
+			req.Header["User-Agent"] = nil
+		}
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		resp, err := s.Client.Do(req)
+		if err != nil {
+			return err
+		}
+		_, err = io.Copy(io.Discard, resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			return err
+		}
+		location, locErr := resp.Location()
+		if !isRedirect(resp.StatusCode) || locErr != nil {
+			return nil
+		}
+		if redirects == maxRedirects {
+			return fmt.Errorf("Maximum (%d) redirects followed", maxRedirects)
+		}
+		endpoint = location.String()
 	}
-	if t.userAgent != "" {
-		req.Header.Set("User-Agent", t.userAgent)
-	} else {
-		req.Header["User-Agent"] = nil
+}
+
+// maxRedirects is curl's default CURLOPT_MAXREDIRS.
+const maxRedirects = 30
+
+func isRedirect(status int) bool {
+	switch status {
+	case http.StatusMovedPermanently, http.StatusFound, http.StatusSeeOther, http.StatusTemporaryRedirect,
+		http.StatusPermanentRedirect:
+		return true
 	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	resp, err := s.Client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	_, err = io.Copy(io.Discard, resp.Body)
-	return err
+	return false
 }
 
 // urlToTrack ports resolveUrlToTrack().

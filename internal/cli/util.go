@@ -10,6 +10,7 @@ import (
 	"github.com/NamTranQuoc/shlink-go/internal/config"
 	"github.com/NamTranQuoc/shlink-go/internal/console"
 	"github.com/NamTranQuoc/shlink-go/internal/core"
+	"github.com/NamTranQuoc/shlink-go/internal/integration/lock"
 	"github.com/NamTranQuoc/shlink-go/internal/phpx"
 )
 
@@ -88,6 +89,26 @@ func shlinkTable(out console.Output, separators bool, headers []any, rows [][]an
 	}
 	console.NewTable(out).SetStyle(style).SetHeaders(headers).SetRows(tableRows).
 		SetFooterTitle(footerTitle).SetHeaderTitle(headerTitle).Render()
+}
+
+// commandLockTTL is LockConfig::DEFAULT_TTL.
+const commandLockTTL = 600 * time.Second
+
+// executeWithLock ports CommandUtils::executeWithLock(): callback runs while the named lock is held. A non-blocking
+// lock that is already held skips the command.
+func executeWithLock(env *Env, locks *lock.Factory, name string, blocking bool, io *console.SymfonyStyle,
+	callback func() (int, error)) (int, error) {
+	l := locks.CreateLock(name, commandLockTTL)
+	acquired, err := l.Acquire(env.Ctx, blocking)
+	if err != nil {
+		return 0, err
+	}
+	if !acquired {
+		io.Writeln(fmt.Sprintf(`<comment>Command "%s" is already in progress. Skipping.</comment>`, name), console.OutputNormal)
+		return console.Invalid, nil
+	}
+	defer func() { _ = l.Release(env.Ctx) }()
+	return callback()
 }
 
 // executeWithWarning ports CommandUtils::executeWithWarning().

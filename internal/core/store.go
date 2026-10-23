@@ -16,6 +16,8 @@ type Store struct {
 	DB *db.DB
 	// Now returns the current time; replaceable for tests.
 	Now func() time.Time
+	// Locks guards the creation of domains and tags across requests and processes; nil disables it.
+	Locks Locker
 }
 
 // NewStore creates a store bound to a database.

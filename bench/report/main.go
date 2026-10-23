@@ -202,6 +202,25 @@ func render(dir string) string {
 	fmt.Fprintf(&b, "| Image size | %s | %s |\n", size("php"), size("go"))
 	fmt.Fprintf(&b, "| Start to healthy (median) | %.0f ms | %.0f ms |\n", median(startup["php"]), median(startup["go"]))
 	fmt.Fprintf(&b, "| Idle memory (median) | %s | %s |\n", mib(median(idle["php"])), mib(median(idle["go"])))
+
+	// Runs whose target was not running after the measurement (crash, OOM kill) are listed so no median hides them
+	var crashed []string
+	files, _ := filepath.Glob(filepath.Join(dir, "*.state.json"))
+	sort.Strings(files)
+	for _, f := range files {
+		var s struct {
+			Running   bool `json:"running"`
+			OOMKilled bool `json:"oomKilled"`
+			ExitCode  int  `json:"exitCode"`
+		}
+		if readJSON(f, &s) && (!s.Running || s.OOMKilled) {
+			crashed = append(crashed, fmt.Sprintf("`%s` (exit %d, OOM killed: %t)", strings.TrimSuffix(filepath.Base(f),
+				".state.json"), s.ExitCode, s.OOMKilled))
+		}
+	}
+	if len(crashed) > 0 {
+		b.WriteString("\nThe target was not running at the end of these measurements: " + strings.Join(crashed, ", ") + ".\n")
+	}
 	return b.String()
 }
 
